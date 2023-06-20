@@ -5,8 +5,8 @@ OBJECTS	=		$(addprefix $(BUILD)/, $(SOURCES:.c=.o))
 NAME	=		minishell	
 FLAGS	=		-Wall -Werror -Wextra
 CC		=		gcc
-INCLUDE	=
-HEADER	=
+INCLUDE	=		-I inc/main.h
+HEADER	=		inc/main.h
 
 all: $(NAME)
 
