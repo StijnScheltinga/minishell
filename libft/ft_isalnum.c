@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.c                                            :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/22 15:43:46 by sschelti          #+#    #+#             */
-/*   Updated: 2023/06/22 17:58:50 by sschelti         ###   ########.fr       */
+/*   Created: 2022/10/06 17:04:59 by sschelti          #+#    #+#             */
+/*   Updated: 2022/10/06 17:09:22 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/main.h"
-
-int	main(void)
+int	ft_isalnum(int a)
 {
-	printf("Hello world %zu\n", ft_strlen("jo"));
-	return (0);
+	if ((a > 64 && a < 91) || (a > 96 && a < 123) || (a > 47 && a < 58))
+		return (1);
+	else
+		return (0);
 }

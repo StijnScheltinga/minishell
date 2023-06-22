@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.c                                            :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/22 15:43:46 by sschelti          #+#    #+#             */
-/*   Updated: 2023/06/22 17:58:50 by sschelti         ###   ########.fr       */
+/*   Created: 2022/10/14 15:10:35 by sschelti          #+#    #+#             */
+/*   Updated: 2022/10/14 15:16:16 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/main.h"
+#include "libft.h"
 
-int	main(void)
+void	ft_putchar_fd(char c, int fd)
 {
-	printf("Hello world %zu\n", ft_strlen("jo"));
-	return (0);
+	write(fd, &c, 1);
 }

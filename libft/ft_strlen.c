@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.c                                            :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/22 15:43:46 by sschelti          #+#    #+#             */
-/*   Updated: 2023/06/22 17:58:50 by sschelti         ###   ########.fr       */
+/*   Created: 2022/10/06 17:06:09 by sschelti          #+#    #+#             */
+/*   Updated: 2022/10/14 17:48:45 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/main.h"
+#include "libft.h"
 
-int	main(void)
+size_t	ft_strlen(const char *str)
 {
-	printf("Hello world %zu\n", ft_strlen("jo"));
-	return (0);
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }

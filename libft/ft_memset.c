@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.c                                            :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/22 15:43:46 by sschelti          #+#    #+#             */
-/*   Updated: 2023/06/22 17:58:50 by sschelti         ###   ########.fr       */
+/*   Created: 2022/10/06 17:06:05 by sschelti          #+#    #+#             */
+/*   Updated: 2022/10/21 13:47:38 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/main.h"
+#include "libft.h"
 
-int	main(void)
+void	*ft_memset(void *str, char a, size_t len)
 {
-	printf("Hello world %zu\n", ft_strlen("jo"));
-	return (0);
+	unsigned int	i;
+	unsigned char	*p;
+
+	i = 0;
+	p = (unsigned char *) str;
+	while (i < len)
+	{
+		*p = a;
+		p++;
+		i++;
+	}
+	return (str);
 }

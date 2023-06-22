@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.c                                            :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/22 15:43:46 by sschelti          #+#    #+#             */
-/*   Updated: 2023/06/22 17:58:50 by sschelti         ###   ########.fr       */
+/*   Created: 2022/10/06 17:05:02 by sschelti          #+#    #+#             */
+/*   Updated: 2022/10/06 17:10:49 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/main.h"
-
-int	main(void)
+int	ft_isalpha(int a)
 {
-	printf("Hello world %zu\n", ft_strlen("jo"));
-	return (0);
+	if ((a > 64 && a < 91) || (a > 96 && a < 123))
+		return (1);
+	else
+		return (0);
 }

@@ -1,19 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.c                                            :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/22 15:43:46 by sschelti          #+#    #+#             */
-/*   Updated: 2023/06/22 17:58:50 by sschelti         ###   ########.fr       */
+/*   Created: 2022/10/07 12:20:17 by sschelti          #+#    #+#             */
+/*   Updated: 2022/10/14 19:10:23 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/main.h"
+#include "libft.h"
 
-int	main(void)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	printf("Hello world %zu\n", ft_strlen("jo"));
-	return (0);
+	unsigned char	*d;
+	unsigned char	*s;
+	int				i;
+
+	d = (unsigned char *) dest;
+	s = (unsigned char *) src;
+	i = 0;
+	if (dest == 0 && src == 0)
+		return (dest);
+	while (i < (int) n)
+	{
+		d[i] = s[i];
+		i++;
+	}
+	return (dest);
 }

@@ -1,19 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.c                                            :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/22 15:43:46 by sschelti          #+#    #+#             */
-/*   Updated: 2023/06/22 17:58:50 by sschelti         ###   ########.fr       */
+/*   Created: 2022/10/10 11:00:37 by sschelti          #+#    #+#             */
+/*   Updated: 2022/10/20 17:38:30 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/main.h"
+#include "libft.h"
 
-int	main(void)
+char	*ft_strchr(const char *str, int ch)
 {
-	printf("Hello world %zu\n", ft_strlen("jo"));
+	int		i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == (char) ch)
+			return ((char *) str + i);
+		i++;
+	}
+	if ((char) ch == '\0')
+		return ((char *) str + i);
 	return (0);
 }
+
+// int main()
+// {
+//     char str[] = "";
+//     printf("%s", ft_strchr(str, '\0'));
+// }
