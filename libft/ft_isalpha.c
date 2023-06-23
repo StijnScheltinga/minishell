@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/20 13:52:58 by sschelti          #+#    #+#             */
-/*   Updated: 2023/06/22 17:57:44 by sschelti         ###   ########.fr       */
+/*   Created: 2022/10/06 17:05:02 by sschelti          #+#    #+#             */
+/*   Updated: 2022/10/06 17:10:49 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
-
-# include <stdio.h>
-# include <stdlib.h>
-# include "../libft/libft.h"
-
-#endif
+int	ft_isalpha(int a)
+{
+	if ((a > 64 && a < 91) || (a > 96 && a < 123))
+		return (1);
+	else
+		return (0);
+}

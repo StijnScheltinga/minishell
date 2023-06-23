@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/20 13:52:58 by sschelti          #+#    #+#             */
-/*   Updated: 2023/06/22 17:57:44 by sschelti         ###   ########.fr       */
+/*   Created: 2022/10/06 17:06:09 by sschelti          #+#    #+#             */
+/*   Updated: 2022/10/14 17:48:45 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include "../libft/libft.h"
+size_t	ft_strlen(const char *str)
+{
+	int	i;
 
-#endif
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}

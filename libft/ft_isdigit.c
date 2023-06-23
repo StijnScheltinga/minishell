@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/20 13:52:58 by sschelti          #+#    #+#             */
-/*   Updated: 2023/06/22 17:57:44 by sschelti         ###   ########.fr       */
+/*   Created: 2022/10/06 17:05:53 by sschelti          #+#    #+#             */
+/*   Updated: 2022/10/06 17:12:40 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
-
-# include <stdio.h>
-# include <stdlib.h>
-# include "../libft/libft.h"
-
-#endif
+int	ft_isdigit(int a)
+{
+	if (a > 47 && a < 58)
+		return (1);
+	else
+		return (0);
+}

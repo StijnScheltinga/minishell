@@ -1,20 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/20 13:52:58 by sschelti          #+#    #+#             */
-/*   Updated: 2023/06/22 17:57:44 by sschelti         ###   ########.fr       */
+/*   Created: 2022/10/11 13:17:22 by sschelti          #+#    #+#             */
+/*   Updated: 2022/10/11 16:19:35 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include "../libft/libft.h"
+char	*ft_strrchr(const char *str, int ch)
+{
+	int		i;
 
-#endif
+	i = ft_strlen((char *) str);
+	while (i >= 0)
+	{
+		if (str[i] == (char) ch)
+			return ((char *) str + i);
+		i--;
+	}
+	return (0);
+}
+
+// int main()
+// {
+//     char str[] = "dhdskkljfhafaipjfa\0ksfja";
+//     printf("%s", ft_strrchr(str, '\0'));
+// }

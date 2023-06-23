@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/20 13:52:58 by sschelti          #+#    #+#             */
-/*   Updated: 2023/06/22 17:57:44 by sschelti         ###   ########.fr       */
+/*   Created: 2022/10/06 17:06:05 by sschelti          #+#    #+#             */
+/*   Updated: 2022/10/21 13:47:38 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include "../libft/libft.h"
+void	*ft_memset(void *str, char a, size_t len)
+{
+	unsigned int	i;
+	unsigned char	*p;
 
-#endif
+	i = 0;
+	p = (unsigned char *) str;
+	while (i < len)
+	{
+		*p = a;
+		p++;
+		i++;
+	}
+	return (str);
+}

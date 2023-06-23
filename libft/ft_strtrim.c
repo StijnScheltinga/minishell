@@ -1,20 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/20 13:52:58 by sschelti          #+#    #+#             */
-/*   Updated: 2023/06/22 17:57:44 by sschelti         ###   ########.fr       */
+/*   Created: 2022/10/17 14:29:33 by sschelti          #+#    #+#             */
+/*   Updated: 2022/10/17 15:45:08 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include "../libft/libft.h"
+char	*ft_strtrim(char const *s1, char const *set)
+{
+	int		i;
+	int		j;
+	char	*ret;
 
-#endif
+	i = 0;
+	j = ft_strlen(s1) - 1;
+	while (ft_strchr(set, s1[i]))
+		i++;
+	while (ft_strrchr(set, s1[j]))
+		j--;
+	ret = ft_substr(s1, i, j - i + 1);
+	return (ret);
+}
+
+// int main()
+// {
+// 	printf("%s", ft_strtrim("halloNoheEhalko", "laho"));
+// }
