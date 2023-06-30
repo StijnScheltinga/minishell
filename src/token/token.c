@@ -3,30 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:38:34 by sschelti          #+#    #+#             */
-/*   Updated: 2023/06/27 18:12:57 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:26:46 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/token.h"
 
-t_token	*tokenize_string(char *input_string)
+void	tokenize_string(char *input_string, t_token **head)
 {
-	t_token	*head;
 	int		i;
 
-	head = NULL;
 	i = 0;
 	while (input_string[i])
 	{
 		if (ft_iswhitespace(input_string[i]) == false)
-			i += assign_token(&input_string[i], &head);
+			i += assign_token(&input_string[i], head);
 		else
 			i++;
 	}
-	return (head);
 }
 
 int	assign_token(char *str, t_token **head)

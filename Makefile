@@ -3,7 +3,7 @@ BUILD		:=	build
 VPATH		:=	src/ src/input src/token
 OBJECTS		:=	$(addprefix $(BUILD)/, $(SOURCES:.c=.o))
 NAME		:=	minishell
-FLAGS		:=	-Wall -Werror -Wextra
+FLAGS		:=	
 CC			:=	gcc
 HEADER		:=	inc/main.h libft/libft.h inc/token.h
 LIBFT		:=	libft/libft.a
@@ -44,6 +44,9 @@ test: $(BUILD) $(LIBFT) $(HEADER)
 	$(CC) $(FLAGS) -o test $(TEST_OBJECTS) $(LIBFT) $(LIBS)
 	rm -rf $(TEST_OBJECTS);
 
+test_clean: fclean
+	rm -rf $(TEST_OBJECTS) test;
+
 re: fclean all
 
-.PHONY: all test clean fclean re
+.PHONY: all test clean fclean re test_clean
