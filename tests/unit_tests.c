@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unit_tests.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:22:38 by sschelti          #+#    #+#             */
-/*   Updated: 2023/06/29 17:32:31 by stijn            ###   ########.fr       */
+/*   Updated: 2023/06/30 14:48:06 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	leaks(void)
 {
-	system("leaks test");
+	system("leaks -s test");
 }
 
 char *type_text(t_type type)
@@ -29,28 +29,12 @@ char *type_text(t_type type)
 		return ("WORD");
 }
 
-void free_func(t_token *head)
+void print_tokenize_string(char *text, t_token **head)
 {
-	t_token *temp;
-	t_token	*first;
-	
-	while (head != NULL)
-	{
-		first = head;
-		temp = first->next;
-		free(first);	
-		head = temp;
-	}
-}
-
-void print_tokenize_string(char *text)
-{
-	t_token		*head;
 	t_token		*iterate;
-
-	head = NULL;
-	tokenize_string(text, &head);
-	iterate = head;
+	
+	tokenize_string(text, head);
+	iterate = *head;
 	printf("input: %s\n", text);
 	while (iterate != NULL)
 	{
@@ -62,11 +46,14 @@ void print_tokenize_string(char *text)
 
 int	main(void)
 {
+	t_token *head;
+	
+	head = NULL;
 	atexit (leaks);
 	assert(ft_iswhitespace(' ') == true);
 	assert(ft_iswhitespace('a') == false);
-	print_tokenize_string("cat | sws_swa < infile");
-	// print_tokenize_string("swea | ls > outfile jo");
-
-	
+	print_tokenize_string("cat | sws_swa < infile", &head);
+	print_tokenize_string("swea | ls > outfile jo", &head);
+	print_tokenize_string("cat |cat | cat | ls \n| 			wc -w", &head);
+	print_tokenize_string("AADASD", &head);
 }

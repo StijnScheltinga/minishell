@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:42:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/06/29 16:12:42 by stijn            ###   ########.fr       */
+/*   Updated: 2023/06/30 13:00:22 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ void	create_token(t_type type, char *text, t_token **head);
 bool	ft_iswhitespace(char a);
 void	ft_lstadd_back(t_token **head, t_token *new);
 t_token	*ft_lstnew(t_type type, char *text);
+void 	free_func(t_token **head);
 
 #endif

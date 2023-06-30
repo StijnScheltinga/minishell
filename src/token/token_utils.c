@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/06/29 17:34:37 by stijn            ###   ########.fr       */
+/*   Updated: 2023/06/30 14:41:51 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,20 @@ void	ft_lstadd_back(t_token **head, t_token *new)
 		while (last->next != NULL)
 			last = last->next;
 		last->next = new;
+	}
+}
+
+void free_func(t_token **head)
+{
+	t_token *temp;
+	t_token	*first;
+	
+	while (*head != NULL)
+	{
+		first = *head;
+		temp = first->next;
+		free(first->text);
+		free(first);	
+		*head = temp;
 	}
 }

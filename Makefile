@@ -3,7 +3,7 @@ BUILD		:=	build
 VPATH		:=	src/ src/input src/token
 OBJECTS		:=	$(addprefix $(BUILD)/, $(SOURCES:.c=.o))
 NAME		:=	minishell
-FLAGS		:=	
+FLAGS		:=	-fsanitize=address
 CC			:=	gcc
 HEADER		:=	inc/main.h libft/libft.h inc/token.h
 LIBFT		:=	libft/libft.a
@@ -32,7 +32,7 @@ clean:
 	@printf "Cleaned ✅\n"
 
 fclean:
-	rm -rf $(OBJECTS) $(NAME) $(BUILD)
+	rm -rf $(OBJECTS) $(NAME) $(BUILD) test
 	$(MAKE) -C $(LIB_DIR) fclean
 	@printf "Fcleaned ✅\n"
 
