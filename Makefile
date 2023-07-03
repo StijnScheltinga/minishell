@@ -1,6 +1,6 @@
-SOURCES		:=	main.c token.c token_utils.c
+SOURCES		:=	main.c token.c token_utils.c token_list.c parser.c cmd_table.c
 BUILD		:=	build
-VPATH		:=	src/ src/input src/token
+VPATH		:=	src/ src/input src/token src/parser
 OBJECTS		:=	$(addprefix $(BUILD)/, $(SOURCES:.c=.o))
 NAME		:=	minishell
 FLAGS		:=	-fsanitize=address
@@ -36,8 +36,9 @@ fclean:
 	$(MAKE) -C $(LIB_DIR) fclean
 	@printf "Fcleaned ✅\n"
 
-TEST_SRC 		:= tests/unit_tests.c src/token/token.c src/token/token_utils.c
-TEST_OBJECTS	:= unit_tests.o token.o token_utils.o
+TEST_SRC 		:= tests/unit_tests.c tests/lexer_unit_tests.c tests/parser_unit_tests.c src/token/token.c src/token/token_utils.c src/token/token_list.c \
+				   src/parser/parser.c src/parser/cmd_table.c
+TEST_OBJECTS	:= unit_tests.o lexer_unit_tests.o parser_unit_tests.o token.o token_utils.o token_list.o parser.o cmd_table.o
 
 test: $(BUILD) $(LIBFT) $(HEADER)
 	$(CC) -g $(FLAGS) -c $(TEST_SRC)

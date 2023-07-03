@@ -1,40 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   token_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/23 13:10:05 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/03 13:14:02 by sschelti         ###   ########.fr       */
+/*   Created: 2023/07/03 15:23:43 by sschelti          #+#    #+#             */
+/*   Updated: 2023/07/03 15:24:23 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/main.h"
 #include "../../inc/token.h"
 
-void	leaks(void)
+t_token	*ft_lstnew(t_type type, char *text)
 {
-	system("leaks minishell");
+	t_token	*new;
+
+	new = malloc(sizeof(t_token));
+	if (!new)
+		return (NULL);
+	new->type = type;
+	new->text = text;
+	new->next = NULL;
+	return (new);
 }
 
-int	main(int argc, char **argv, char **envp)
+void	ft_lstadd_back(t_token **head, t_token *new)
 {
-	char	*input_string;
-	t_token	*token_head;
+	t_token	*last;
 
-	argc = 0;
-	argv = NULL;
-	envp = NULL;
-	token_head = NULL;
-	atexit(leaks);
-	while (1)
+	if (!*head)
+		*head = new;
+	else
 	{
-		input_string = readline(NULL);
-		tokenize_string(input_string, &token_head);
-		parse_tokens(&token_head);
-		free(input_string);
-		free_func(&token_head);
+		last = *head;
+		while (last->next != NULL)
+			last = last->next;
+		last->next = new;
 	}
-	return (0);
 }

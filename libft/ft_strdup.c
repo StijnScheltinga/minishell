@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 19:46:50 by sschelti          #+#    #+#             */
-/*   Updated: 2022/10/14 15:16:53 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/03 15:10:31 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strdup(const char *s)
 
 	i = ft_strlen(s);
 	str = malloc(i + 1);
-	if (str == 0)
+	if (str == NULL)
 		return (str);
 	i = 0;
 	while (s[i])

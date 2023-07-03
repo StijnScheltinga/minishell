@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unit_tests.c                                       :+:      :+:    :+:   */
+/*   test.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/27 14:22:38 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/03 18:06:55 by sschelti         ###   ########.fr       */
+/*   Created: 2023/07/03 17:53:15 by sschelti          #+#    #+#             */
+/*   Updated: 2023/07/03 18:05:42 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#ifndef TEST_H
+# define TEST_H
 
-void	leaks(void)
-{
-	system("leaks -s test");
-}
+# include "../inc/token.h"
+# include "../inc/parser.h"
+# include <stdio.h>
+# include <assert.h>
 
-int	main(void)
-{
-	t_token *head;
-	
-	head = NULL;
-	// atexit (leaks);
-	assert(ft_iswhitespace(' ') == true);
-	assert(ft_iswhitespace('a') == false);
-	test_num_of_arguments(&head);
-	// print_tokenize_string("ls | cat -a | wc -l -w > outfile", &head);
-}
+void	test_num_of_arguments(t_token **head);
+void 	print_tokenize_string(char *text, t_token **head);
+char 	*type_text(t_type type);
+
+#endif
