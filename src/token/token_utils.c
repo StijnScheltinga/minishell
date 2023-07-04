@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/03 15:39:29 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/04 15:45:51 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	count_cmd(t_token **head)
 	return (num_of_cmd);
 }
 
-void free_func(t_token **head)
+void free_func_token(t_token **head)
 {
 	t_token *temp;
 	t_token	*first;

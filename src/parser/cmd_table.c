@@ -6,17 +6,20 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:54:14 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/03 17:45:46 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/04 18:23:28 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parser.h"
 
-void	init_cmd_table(t_cmd_table *cmd_table, t_token **head)
+t_cmd_table	*init_cmd_table(t_token **head)
 {
-	cmd_table = malloc(sizeof(t_cmd_table));
+	t_cmd_table	*cmd_table;
+
+	cmd_table = malloc(sizeof(t_cmd_table)); 
 	cmd_table->cmd_arr = malloc(count_cmd(head) * sizeof(t_command));
 	fill_cmd_arr(cmd_table->cmd_arr, head);
+	return(cmd_table);
 }
 
 void	fill_cmd_arr(t_command *cmd_arr, t_token **head)
@@ -36,21 +39,25 @@ char	**single_command(t_token **head, int i)
 	t_token	*iterate;
 	char	**cmd;
 	int		cmd_n;
+	int		j;
 
 	iterate = *head;
-	cmd = NULL;
 	cmd_n = 0;
-	while (iterate != NULL)
+	j = 0;
+	while (iterate != NULL && i != cmd_n)
 	{
 		if (iterate->type == PIPE)
 			cmd_n++;
-		while (iterate != NULL && cmd_n == i && iterate->type == WORD)
-		{
-			cmd = malloc(num_of_arguments(head, i) * sizeof(char *));
-			iterate = iterate->next;
-		}
 		iterate = iterate->next;
 	}
+	cmd = malloc((num_of_arguments(head, i) + 1) * sizeof(char *));
+	while (iterate != NULL && iterate->type == WORD)
+	{
+		cmd[j] = ft_strdup(iterate->text);
+		j++;
+		iterate = iterate->next;
+	}
+	cmd[j] = NULL;
 	return (cmd);
 }
 

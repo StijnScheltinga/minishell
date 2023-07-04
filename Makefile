@@ -3,9 +3,9 @@ BUILD		:=	build
 VPATH		:=	src/ src/input src/token src/parser
 OBJECTS		:=	$(addprefix $(BUILD)/, $(SOURCES:.c=.o))
 NAME		:=	minishell
-FLAGS		:=	-fsanitize=address
+FLAGS		:=	
 CC			:=	gcc
-HEADER		:=	inc/main.h libft/libft.h inc/token.h
+HEADER		:=	inc/main.h libft/libft.h inc/token.h inc/parser.h
 LIBFT		:=	libft/libft.a
 LIB_DIR		:=	libft
 LIBS		:=	-lreadline

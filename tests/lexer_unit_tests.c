@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 18:03:11 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/03 18:03:47 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/04 18:11:13 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void print_tokenize_string(char *text, t_token **head)
 {
 	t_token		*iterate;
 	
-	tokenize_string(text, head);
 	iterate = *head;
 	printf("input: %s\n", text);
 	printf("Amount of commands: %d\n", count_cmd(head));
@@ -35,5 +34,4 @@ void print_tokenize_string(char *text, t_token **head)
 		printf("%s, %s\n", iterate->text, type_text(iterate->type));
 		iterate = iterate->next;
 	}
-	free_func(head);
 }

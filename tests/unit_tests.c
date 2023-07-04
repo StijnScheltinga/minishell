@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:22:38 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/03 18:06:55 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/04 18:12:34 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,18 @@ void	leaks(void)
 
 int	main(void)
 {
-	t_token *head;
+	t_token 	*head;
+	t_cmd_table	*cmd_table;
+	char		*text;
 	
 	head = NULL;
-	// atexit (leaks);
-	assert(ft_iswhitespace(' ') == true);
-	assert(ft_iswhitespace('a') == false);
-	test_num_of_arguments(&head);
-	// print_tokenize_string("ls | cat -a | wc -l -w > outfile", &head);
+	cmd_table = NULL;
+	text = "ls | cat -a | wc -l -w > outfile";
+	atexit(leaks);
+	tokenize_string(text, &head);
+	print_tokenize_string(text, &head);
+	cmd_table = parse_tokens(&head);
+	print_cmd_table(&head, cmd_table);
+	free_func_token(&head);
+	free_func_cmd_table(cmd_table);
 }
