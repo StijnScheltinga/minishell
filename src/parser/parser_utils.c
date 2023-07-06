@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.h                                             :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/03 17:53:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/06 13:31:54 by sschelti         ###   ########.fr       */
+/*   Created: 2023/07/06 13:06:23 by sschelti          #+#    #+#             */
+/*   Updated: 2023/07/06 13:26:32 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TEST_H
-# define TEST_H
+#include "../../inc/parser.h"
 
-# include "../inc/token.h"
-# include "../inc/parser.h"
-# include <stdio.h>
-# include <assert.h>
+void	free_func_cmd_table(t_cmd_table *cmd_table, t_token **head)
+{
+	int	i;
+	int j;
 
-void	test_num_of_arguments(t_token **head);
-void 	print_tokenize_string(char *text, t_token **head);
-char 	*type_text(t_type type);
-void	print_cmd_table(t_token **head, t_cmd_table *cmd_table);
-void	print_double_array(char **command);
-
-#endif
+	i = 0;
+	j = 0;
+	while (i != count_cmd(head))
+	{
+		while(cmd_table->cmd_arr[i].single_cmd[j])
+		{
+			free(cmd_table->cmd_arr[i].single_cmd[j]);
+			j++;
+		}
+		free(cmd_table->cmd_arr[i].single_cmd);
+		j = 0;
+		i++;
+	}
+	free(cmd_table->cmd_arr);
+	free(cmd_table);
+}

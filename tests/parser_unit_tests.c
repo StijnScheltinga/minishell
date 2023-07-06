@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:52:47 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/04 18:02:12 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/06 13:36:20 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	print_cmd_table(t_token **head, t_cmd_table *cmd_table)
 	int			i;
 
 	i = 0;
+	printf("command table:\n");
 	while (i != count_cmd(head))
 	{
 		print_double_array(cmd_table->cmd_arr[i].single_cmd);
