@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:52:47 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/07 12:15:24 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/07 15:41:54 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,17 @@ void	print_double_array(char **command)
 		i++;
 	}
 	printf("\n");
+}
+
+void	test_grammar_error(void)
+{
+	t_token *head;
+
+	head = NULL;
+	tokenize_string("ls | cat -c | jo jo jo > outfile < infile", &head);
+	assert(grammar_error(&head) == 0);
+	free_func_token(&head);
+	tokenize_string("| ls | cat -c | jo jo jo > outfile < infile", &head);
+	assert(grammar_error(&head) == 1);
+	free_func_token(&head);
 }
