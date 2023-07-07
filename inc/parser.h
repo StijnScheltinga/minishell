@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:51:46 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/06 14:10:30 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/07 13:14:09 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ typedef struct s_command {
 }	t_command;
 
 typedef struct s_cmd_table {
-	t_command	*cmd_arr;
-	char		*input_file;
-	char		*output_file;
+	t_command		*cmd_arr;
+	char			*input_file;
+	char			*output_file;
+	unsigned int	cmd_count;
 }	t_cmd_table;
 
 t_cmd_table	*parse_tokens(t_token **head);

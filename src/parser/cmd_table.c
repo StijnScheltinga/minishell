@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:54:14 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/06 13:29:12 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/07 13:15:24 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ t_cmd_table	*init_cmd_table(t_token **head)
 {
 	t_cmd_table	*cmd_table;
 
-	cmd_table = malloc(sizeof(t_cmd_table)); 
+	cmd_table = malloc(sizeof(t_cmd_table));
+	cmd_table->cmd_count = count_cmd(head); 
 	cmd_table->cmd_arr = malloc(count_cmd(head) * sizeof(t_command));
 	fill_cmd_arr(cmd_table->cmd_arr, head);
 	return(cmd_table);

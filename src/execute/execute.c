@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/06 20:07:08 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/07 13:26:37 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../../inc/builtin.h"
 #include "../../inc/execve.h"
 #include "../../inc/pipe_redirect.h"
+#include "../../inc/parser.h"
 
 char **env;
 int	pipe_count=3;
@@ -81,7 +82,7 @@ void	execute_commands(void)
 
 //restoring stdin and stdout after executing one or more command(s)
 
-void	execute(void)
+void	execute(t_cmd_table *cmd_table)
 {
 	int stdin_holder;
 	int stdout_holder;
@@ -93,9 +94,9 @@ void	execute(void)
 	dup2(stdout_holder, STDOUT_FILENO);
 }
 
-int main(int argc, char **argv, char **envp)
-{
-	env = envp;
-	execute();
-	return (0);
-}
+// int main(int argc, char **argv, char **envp)
+// {
+// 	env = envp;
+// 	execute();
+// 	return (0);
+// }
