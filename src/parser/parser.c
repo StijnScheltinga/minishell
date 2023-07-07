@@ -1,38 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 19:46:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/03 15:10:31 by sschelti         ###   ########.fr       */
+/*   Created: 2023/07/03 12:49:54 by sschelti          #+#    #+#             */
+/*   Updated: 2023/07/06 14:00:06 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+# include "../../inc/parser.h"
 
-char	*ft_strdup(const char *s)
+t_cmd_table	*parse_tokens(t_token **head)
 {
-	char	*str;
-	int		i;
+	t_cmd_table	*cmd_table;
 
-	i = ft_strlen(s);
-	str = malloc(i + 1);
-	if (str == NULL)
-		return (str);
-	i = 0;
-	while (s[i])
-	{
-		str[i] = s[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
+	// grammar_error(head);
+	cmd_table = init_cmd_table(head);
+	return (cmd_table);
 }
-
-// int main()
-// {
-// 	const char	str[] = "hallo";
-// 	printf("%s", ft_strdup(str));
-// }

@@ -1,38 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   grammar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 19:46:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/03 15:10:31 by sschelti         ###   ########.fr       */
+/*   Created: 2023/07/06 13:42:21 by sschelti          #+#    #+#             */
+/*   Updated: 2023/07/06 15:25:43 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/parser.h"
 
-char	*ft_strdup(const char *s)
+void	grammar_error(t_token **head)
 {
-	char	*str;
-	int		i;
+	t_token	*iterate;
 
-	i = ft_strlen(s);
-	str = malloc(i + 1);
-	if (str == NULL)
-		return (str);
-	i = 0;
-	while (s[i])
+	iterate = *head;
+	while (iterate != NULL)
 	{
-		str[i] = s[i];
-		i++;
+		
+		iterate = iterate->next;
 	}
-	str[i] = '\0';
-	return (str);
 }
-
-// int main()
-// {
-// 	const char	str[] = "hallo";
-// 	printf("%s", ft_strdup(str));
-// }

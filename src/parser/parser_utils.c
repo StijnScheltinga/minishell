@@ -1,38 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 19:46:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/03 15:10:31 by sschelti         ###   ########.fr       */
+/*   Created: 2023/07/06 13:06:23 by sschelti          #+#    #+#             */
+/*   Updated: 2023/07/06 13:26:32 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/parser.h"
 
-char	*ft_strdup(const char *s)
+void	free_func_cmd_table(t_cmd_table *cmd_table, t_token **head)
 {
-	char	*str;
-	int		i;
+	int	i;
+	int j;
 
-	i = ft_strlen(s);
-	str = malloc(i + 1);
-	if (str == NULL)
-		return (str);
 	i = 0;
-	while (s[i])
+	j = 0;
+	while (i != count_cmd(head))
 	{
-		str[i] = s[i];
+		while(cmd_table->cmd_arr[i].single_cmd[j])
+		{
+			free(cmd_table->cmd_arr[i].single_cmd[j]);
+			j++;
+		}
+		free(cmd_table->cmd_arr[i].single_cmd);
+		j = 0;
 		i++;
 	}
-	str[i] = '\0';
-	return (str);
+	free(cmd_table->cmd_arr);
+	free(cmd_table);
 }
-
-// int main()
-// {
-// 	const char	str[] = "hallo";
-// 	printf("%s", ft_strdup(str));
-// }

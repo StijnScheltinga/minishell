@@ -1,38 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   test.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 19:46:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/03 15:10:31 by sschelti         ###   ########.fr       */
+/*   Created: 2023/07/03 17:53:15 by sschelti          #+#    #+#             */
+/*   Updated: 2023/07/06 14:04:43 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef TEST_H
+# define TEST_H
 
-char	*ft_strdup(const char *s)
-{
-	char	*str;
-	int		i;
+# include "../inc/token.h"
+# include "../inc/parser.h"
+# include <stdio.h>
+# include <assert.h>
 
-	i = ft_strlen(s);
-	str = malloc(i + 1);
-	if (str == NULL)
-		return (str);
-	i = 0;
-	while (s[i])
-	{
-		str[i] = s[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
-}
+void	test_num_of_arguments(void);
+void 	print_tokenize_string(char *text, t_token **head);
+char 	*type_text(t_type type);
+void	print_cmd_table(t_token **head, t_cmd_table *cmd_table);
+void	print_double_array(char **command);
+void	assert_tests(void);
 
-// int main()
-// {
-// 	const char	str[] = "hallo";
-// 	printf("%s", ft_strdup(str));
-// }
+#endif

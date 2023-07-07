@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/06/30 14:41:51 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/04 15:45:51 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,35 +19,32 @@ bool	ft_iswhitespace(char a)
 	return (false);
 }
 
-t_token	*ft_lstnew(t_type type, char *text)
+int	count_cmd(t_token **head)
 {
-	t_token	*new;
+	t_token	*iterate;
+	int		num_of_cmd;
+	bool	next_cmd;
 
-	new = malloc(sizeof(t_token));
-	if (!new)
-		return (NULL);
-	new->type = type;
-	new->text = text;
-	new->next = NULL;
-	return (new);
-}
-
-void	ft_lstadd_back(t_token **head, t_token *new)
-{
-	t_token	*last;
-
-	if (!*head)
-		*head = new;
-	else
+	iterate = *head;
+	num_of_cmd = 0;
+	next_cmd = true;
+	while (iterate != NULL)
 	{
-		last = *head;
-		while (last->next != NULL)
-			last = last->next;
-		last->next = new;
+		if (iterate->type == WORD && next_cmd == true)
+		{
+			num_of_cmd++;
+			next_cmd = false;
+		}
+		else if (iterate->type == PIPE)
+			next_cmd = true;
+		else if (iterate->type == REDIRECT)
+			next_cmd = false;
+		iterate = iterate->next;
 	}
+	return (num_of_cmd);
 }
 
-void free_func(t_token **head)
+void free_func_token(t_token **head)
 {
 	t_token *temp;
 	t_token	*first;

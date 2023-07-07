@@ -1,11 +1,11 @@
-SOURCES		:=	main.c token.c token_utils.c
+SOURCES		:=	main.c token.c token_utils.c token_list.c parser.c cmd_table.c parser_utils.c
 BUILD		:=	build
-VPATH		:=	src/ src/input src/token
+VPATH		:=	src/ src/input src/token src/parser
 OBJECTS		:=	$(addprefix $(BUILD)/, $(SOURCES:.c=.o))
 NAME		:=	minishell
-FLAGS		:=	-fsanitize=address
+FLAGS		:=	
 CC			:=	gcc
-HEADER		:=	inc/main.h libft/libft.h inc/token.h
+HEADER		:=	inc/main.h libft/libft.h inc/token.h inc/parser.h
 LIBFT		:=	libft/libft.a
 LIB_DIR		:=	libft
 LIBS		:=	-lreadline
@@ -36,8 +36,9 @@ fclean:
 	$(MAKE) -C $(LIB_DIR) fclean
 	@printf "Fcleaned ✅\n"
 
-TEST_SRC 		:= tests/unit_tests.c src/token/token.c src/token/token_utils.c
-TEST_OBJECTS	:= unit_tests.o token.o token_utils.o
+TEST_SRC 		:= tests/unit_tests.c tests/lexer_unit_tests.c tests/parser_unit_tests.c src/token/token.c src/token/token_utils.c src/token/token_list.c \
+				   src/parser/parser.c src/parser/cmd_table.c src/parser/parser_utils.c src/parser/grammar.c
+TEST_OBJECTS	:= unit_tests.o lexer_unit_tests.o parser_unit_tests.o token.o token_utils.o token_list.o parser.o cmd_table.o parser_utils.o grammar.o
 
 test: $(BUILD) $(LIBFT) $(HEADER)
 	$(CC) -g $(FLAGS) -c $(TEST_SRC)

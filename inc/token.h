@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:42:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/06/30 13:00:22 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/04 15:46:03 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ void	tokenize_string(char *input_string, t_token **head);
 int		assign_token(char *str, t_token **head);
 void	create_token(t_type type, char *text, t_token **head);
 
+int		count_cmd(t_token **head);
 bool	ft_iswhitespace(char a);
 void	ft_lstadd_back(t_token **head, t_token *new);
 t_token	*ft_lstnew(t_type type, char *text);
-void 	free_func(t_token **head);
+void 	free_func_token(t_token **head);
 
 #endif
