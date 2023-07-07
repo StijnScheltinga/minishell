@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/07 13:26:37 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/07 15:15:44 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,40 +16,30 @@
 #include "../../inc/pipe_redirect.h"
 #include "../../inc/parser.h"
 
-char **env;
-int	pipe_count=3;
-int	cmd_count=4;
-
-char *cmds[][11] = {
-    {"find", ".", "-type", "f", "-exec", "ls", "-lS", "{}", "+", NULL},
-    {"head", "-n", "10", NULL},
-    {"grep", ".c", NULL},
-    {"wc", "-l", NULL},
-};
-
-
-void	execute_with_child(int (*fd)[2], int cmd_index)
+void	execute_with_child(t_cmd_table *cmd_table, int (*fd)[2], int cmd_index)
 {
+	int cmd_count = cmd_table->cmd_count;
 	if (cmd_index == 0)
-		redirect_first_cmd(fd);
+		redirect_first_cmd(fd, cmd_count - 1);
 	else if (cmd_index != cmd_count - 1)
-		redirect_middle_cmd(fd, cmd_index);
+		redirect_middle_cmd(fd, cmd_index, cmd_count - 1);
 	else
-		redirect_last_cmd(fd);
-	ft_execve(cmds[cmd_index], env);
+		redirect_last_cmd(fd, cmd_count - 1);
+	ft_execve(cmd_table->cmd_arr[cmd_index].single_cmd, cmd_table->envp);
 }
 
-void	execute_multiple_cmd()
+void	execute_multiple_cmd(t_cmd_table *cmd_table)
 {
-	int i = 0, status, (*fd)[2]; pid_t pid;
+	int i = 0, status, pipe_count, (*fd)[2]; pid_t pid;
+	pipe_count = cmd_table->cmd_count - 1;
 	fd = malloc(sizeof(int[2]) * pipe_count);
 	while (i < pipe_count)
 		pipe(fd[i++]);
 	i = 0;
-	while (i < cmd_count){
+	while (i < cmd_table->cmd_count){
 		pid = fork();
 		if (pid == 0){
-			execute_with_child(fd, i);
+			execute_with_child(cmd_table, fd, i);
 		}
 		i++;
 	}
@@ -59,25 +49,25 @@ void	execute_multiple_cmd()
 
 // check if its a builtin with no other commands
 
-void	execute_single_cmd()
+void	execute_single_cmd(t_cmd_table *cmd_table)
 {
 	int	i = 0, status;
 	pid_t pid;
 
-	if (is_builtin(cmds[0][0]) == true)
-		execute_builtin(cmds[0]);
+	if (is_builtin(cmd_table->cmd_arr[0].single_cmd[0]) == true)
+		execute_builtin(cmd_table->cmd_arr[0].single_cmd);
 	pid = fork();
 	if (pid == 0)
-		ft_execve(cmds[0], env);
+		ft_execve(cmd_table->cmd_arr[0].single_cmd, cmd_table->envp);
 	waitpid(0, &status, 0);
 }
 
-void	execute_commands(void)
+void	execute_commands(t_cmd_table *cmd_table)
 {
-	if (cmd_count == 1)
-		execute_single_cmd();
+	if (cmd_table->cmd_count == 1)
+		execute_single_cmd(cmd_table);
 	else
-		execute_multiple_cmd();
+		execute_multiple_cmd(cmd_table);
 }
 
 //restoring stdin and stdout after executing one or more command(s)
@@ -89,7 +79,7 @@ void	execute(t_cmd_table *cmd_table)
 
 	stdin_holder = dup(STDIN_FILENO);
 	stdout_holder = dup(STDOUT_FILENO);
-	execute_commands();
+	execute_commands(cmd_table);
 	dup2(stdin_holder, STDIN_FILENO);
 	dup2(stdout_holder, STDOUT_FILENO);
 }

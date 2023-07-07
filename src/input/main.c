@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:10:05 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/07 13:27:14 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/07 13:52:40 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,13 @@ int	main(int argc, char **argv, char **envp)
 
 	argc = 0;
 	argv = NULL;
-	envp = NULL;
 	token_head = NULL;
 	atexit(leaks);
 	while (1)
 	{
 		input_string = readline(NULL);
 		tokenize_string(input_string, &token_head);
-		cmd_table = parse_tokens(&token_head);
+		cmd_table = parse_tokens(&token_head, envp);
 		execute(cmd_table);
 		free(input_string);
 		free_func_cmd_table(cmd_table, &token_head);
