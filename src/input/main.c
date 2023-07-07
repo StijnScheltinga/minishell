@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:10:05 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/04 17:30:10 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/06 13:39:15 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	main(int argc, char **argv, char **envp)
 		tokenize_string(input_string, &token_head);
 		cmd_table = parse_tokens(&token_head);
 		free(input_string);
+		free_func_cmd_table(cmd_table, &token_head);
 		free_func_token(&token_head);
 	}
 	return (0);
