@@ -6,7 +6,6 @@ sources				= ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c \
 						ft_putnbr_fd.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_itoa.c ft_strlcat.c \
 						ft_strmapi.c ft_striteri.c ft_split.c ft_strjoin_with_slash.c
 
-
 objects				= $(sources:.c=.o)
 
 NAME				= libft.a

@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:52:58 by sschelti          #+#    #+#             */
-/*   Updated: 2023/06/22 17:57:44 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:06:38 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MAIN_H
 
 # include <stdio.h>
-# include <stdlib.h>
-# include "../libft/libft.h"
+# include <readline/readline.h>
+# include <readline/history.h>
 
 #endif
