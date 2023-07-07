@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.h                                          :+:      :+:    :+:   */
+/*   ms_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/23 15:07:18 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/06 19:10:14 by aolde-mo         ###   ########.fr       */
+/*   Created: 2023/06/27 15:48:39 by aolde-mo          #+#    #+#             */
+/*   Updated: 2023/06/27 18:15:26 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTE_H
-# define EXECUTE_H
+#include "../../inc/builtin.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdbool.h>
-#include <sys/types.h>
-#include <sys/wait.h>
+//does not return error code but prints the error
 
+void	ms_pwd(void)
+{
+	char	buffer[FILENAME_MAX];
 
-void	execute_with_child(int (*fd)[2], int cmd_index);
-void	execute_multiple_cmd();
-void	execute_single_cmd();
-void	execute_commands(void);
-void	execute(void);
-
-#endif
+	if (getcwd(buffer, FILENAME_MAX))
+		printf("%s\n", buffer);
+	else
+		perror("pwd");
+}

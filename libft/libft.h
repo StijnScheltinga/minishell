@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 17:05:25 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/03 13:26:40 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/03 13:49:16 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 char	**ft_split(char const *s, char c);
 
 //Minishell
-char	*ft_strjoin2(char const *s1, char const *s2)
+char	*ft_strjoin_with_slash(char const *s1, char const *s2);
 
 #endif
