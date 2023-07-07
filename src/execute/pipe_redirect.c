@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 18:45:11 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/06 20:07:08 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/07 15:16:20 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,12 @@
 //GETTING DUPLICATE SYMBOL ERROR IF I TRY TO IMPORT VARIABLES
 //FROM EXECUTE.H SO I REDEFINE WITH SLIGHTLY DIFFERENT NAME
 
-int	g_pipe_count = 3;
-
-void	close_all_pipes(int (*fd)[2], int pipes)
+void	close_all_pipes(int (*fd)[2], int pipe_count)
 {
 	int	i;
 
 	i = 0;
-	while (i < pipes)
+	while (i < pipe_count)
 	{
 		close(fd[i][READ]);
 		close(fd[i][WRITE]);
@@ -31,14 +29,14 @@ void	close_all_pipes(int (*fd)[2], int pipes)
 	}
 }
 
-void	redirect_first_cmd(int (*fd)[2])
+void	redirect_first_cmd(int (*fd)[2], int pipe_count)
 {
 	int	i;
 
 	i = 0;
 	dup2(fd[0][WRITE], STDOUT_FILENO);
 	close(fd[0][READ]);
-	while (i < g_pipe_count)
+	while (i < pipe_count)
 	{
 		close(fd[i][READ]);
 		close(fd[i][WRITE]);
@@ -46,14 +44,14 @@ void	redirect_first_cmd(int (*fd)[2])
 	}
 }
 
-void	redirect_middle_cmd(int (*fd)[2], int cmd_nmb)
+void	redirect_middle_cmd(int (*fd)[2], int cmd_index, int pipe_count)
 {
 	int	i;
 
 	i = 0;
-	while (i < g_pipe_count)
+	while (i < pipe_count)
 	{
-		if (i == cmd_nmb - 1)
+		if (i == cmd_index - 1)
 		{
 			dup2(fd[i][READ], STDIN_FILENO);
 			dup2(fd[i + 1][WRITE], STDOUT_FILENO);
@@ -70,12 +68,12 @@ void	redirect_middle_cmd(int (*fd)[2], int cmd_nmb)
 	}
 }
 
-void	redirect_last_cmd(int (*fd)[2])
+void	redirect_last_cmd(int (*fd)[2], int pipe_count)
 {
 	int	i;
 
 	i = 0;
-	while (i < g_pipe_count - 1)
+	while (i < pipe_count - 1)
 	{
 		close(fd[i][READ]);
 		close(fd[i][WRITE]);
