@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 18:45:11 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/07 15:16:20 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/08 23:42:48 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/pipe_redirect.h"
 #include "../../inc/execute.h"
-
-//GETTING DUPLICATE SYMBOL ERROR IF I TRY TO IMPORT VARIABLES
-//FROM EXECUTE.H SO I REDEFINE WITH SLIGHTLY DIFFERENT NAME
 
 void	close_all_pipes(int (*fd)[2], int pipe_count)
 {
@@ -33,7 +30,7 @@ void	redirect_first_cmd(int (*fd)[2], int pipe_count)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	dup2(fd[0][WRITE], STDOUT_FILENO);
 	close(fd[0][READ]);
 	while (i < pipe_count)
