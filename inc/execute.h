@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:07:18 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/07 13:57:39 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/10 15:38:05 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 void	execute_with_child(t_cmd_table *cmd_table, int (*fd)[2], int cmd_index);
 void	execute_multiple_cmd(t_cmd_table *cmd_table);
 void	execute_single_cmd(t_cmd_table *cmd_table);
-void	execute_commands(t_cmd_table *cmd_table);
 void	execute(t_cmd_table *cmd_table);
 
 #endif
