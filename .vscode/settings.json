@@ -1,7 +1,0 @@
-{
-	"files.associations": {
-		"token.h": "c",
-		"parser.h": "c",
-		"pipe_redirect.h": "c"
-	}
-}
