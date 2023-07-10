@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:29:55 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/06 19:17:41 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/10 13:56:51 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,15 @@ bool	is_builtin(char *arg)
 	return (false);
 }
 
-void	execute_builtin(char **arg)
+void	execute_builtin(t_cmd_table *cmd_table, int cmd_index)
 {
+	char **arg = cmd_table->cmd_arr[cmd_index].single_cmd;
 	if (ft_strncmp("echo", arg[0], ft_strlen(arg[0])) == 0)
 		ms_echo(arg[1]);
-	// if (ft_strncmp("cd", arg[0], ft_strlen(arg[0])) == 0)
-	// 	ms_cd(arg);
-	// if (ft_strncmp("pwd", arg[0], ft_strlen(arg[0])) == 0)
-	// 	ms_pwd(arg);
+	else if (ft_strncmp("cd", arg[0], ft_strlen(arg[0])) == 0)
+		ms_cd(arg[1], cmd_table->envp);
+	else if (ft_strncmp("pwd", arg[0], ft_strlen(arg[0])) == 0)
+		ms_pwd();
 	// if (ft_strncmp("export", arg[0], ft_strlen(arg[0])) == 0)
 	// 	ms_export(arg);
 	// if (ft_strncmp("unset", arg[0], ft_strlen(arg[0])) == 0)
@@ -49,6 +50,7 @@ void	execute_builtin(char **arg)
 	// 	ms_env(arg);
 	// if (ft_strncmp("exit", arg[0], ft_strlen(arg[0])) == 0)
 	// 	ms_exit(arg);
+	exit(0);
 }
 
 //ECHO: ARG[0] = "echo", ARG[1] = "-n hello";
