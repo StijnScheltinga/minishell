@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:48:01 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/06 19:16:33 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/07 15:24:25 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	ms_echo(const char *str)
 		write(STDIN_FILENO, &str[i++], 1);
 	if (n_option == false)
 		write(STDIN_FILENO, "\n", 1);
-	exit(EXIT_SUCCESS);
 }
 
 // int main(void)
