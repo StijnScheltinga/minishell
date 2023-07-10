@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:29:55 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/10 13:56:51 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/10 18:09:45 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,12 @@ void	execute_builtin(t_cmd_table *cmd_table, int cmd_index)
 	// 	ms_export(arg);
 	// if (ft_strncmp("unset", arg[0], ft_strlen(arg[0])) == 0)
 	// 	ms_unset(arg);
-	// if (ft_strncmp("env", arg[0], ft_strlen(arg[0])) == 0)
-	// 	ms_env(arg);
-	// if (ft_strncmp("exit", arg[0], ft_strlen(arg[0])) == 0)
-	// 	ms_exit(arg);
-	exit(0);
+	if (ft_strncmp("env", arg[0], ft_strlen(arg[0])) == 0)
+		ms_env(cmd_table->envp);
+	if (ft_strncmp("exit", arg[0], ft_strlen(arg[0])) == 0)
+		ms_exit(arg);
+	if (cmd_table->cmd_count > 1)
+		exit(0);
 }
 
 //ECHO: ARG[0] = "echo", ARG[1] = "-n hello";

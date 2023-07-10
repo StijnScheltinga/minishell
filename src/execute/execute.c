@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/10 14:20:07 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/10 17:29:32 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	execute_multiple_cmd(t_cmd_table *cmd_table)
 		}
 		i++;
 	}
+	waitpid(pid, &status, 0);
 	close_all_pipes(fd, pipe_count);
 }
 
@@ -60,22 +61,18 @@ void	execute_single_cmd(t_cmd_table *cmd_table)
 	int	i = 0, status;
 	pid_t pid;
 
-	pid = fork();
-	if (pid == 0){
-		if (is_builtin(cmd_table->cmd_arr[0].single_cmd[0]) == true)
-			execute_builtin(cmd_table, 0);
-		else
-			ft_execve(cmd_table->cmd_arr[0].single_cmd, cmd_table->envp);
+	if (is_builtin(cmd_table->cmd_arr[0].single_cmd[0]) == true){
+		execute_builtin(cmd_table, 0);
+		return ;
 	}
-	wait(NULL);
-}
-
-void	execute_commands(t_cmd_table *cmd_table)
-{
-	if (cmd_table->cmd_count == 1)
-		execute_single_cmd(cmd_table);
-	else
-		execute_multiple_cmd(cmd_table);
+	pid = fork();
+	if (pid == -1){
+		//ERROR
+	}
+	if (pid == 0){
+		ft_execve(cmd_table->cmd_arr[0].single_cmd, cmd_table->envp);
+	}
+	waitpid(pid, &status, 0);
 }
 
 //restoring stdin and stdout after executing one or more command(s)
@@ -87,7 +84,10 @@ void	execute(t_cmd_table *cmd_table)
 
 	stdin_holder = dup(STDIN_FILENO);
 	stdout_holder = dup(STDOUT_FILENO);
-	execute_commands(cmd_table);
+	if (cmd_table->cmd_count == 1)
+		execute_single_cmd(cmd_table);
+	else
+		execute_multiple_cmd(cmd_table);
 	dup2(stdin_holder, STDIN_FILENO);
 	dup2(stdout_holder, STDOUT_FILENO);
 }
