@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/10 17:29:32 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/11 18:07:30 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	execute_multiple_cmd(t_cmd_table *cmd_table)
 		}
 		i++;
 	}
-	waitpid(pid, &status, 0);
+	wait(NULL);
 	close_all_pipes(fd, pipe_count);
 }
 
