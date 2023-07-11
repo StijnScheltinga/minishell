@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:52:47 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/07 15:41:54 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/11 12:49:12 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	print_cmd_table(t_token **head, t_cmd_table *cmd_table)
 		print_double_array(cmd_table->cmd_arr[i].single_cmd);
 		i++;
 	}
+	printf("infile: %s\n", cmd_table->input_file);
+	printf("outfile: %s\n", cmd_table->output_file);
 }
 
 void	print_double_array(char **command)
@@ -56,17 +58,4 @@ void	print_double_array(char **command)
 		i++;
 	}
 	printf("\n");
-}
-
-void	test_grammar_error(void)
-{
-	t_token *head;
-
-	head = NULL;
-	tokenize_string("ls | cat -c | jo jo jo > outfile < infile", &head);
-	assert(grammar_error(&head) == 0);
-	free_func_token(&head);
-	tokenize_string("| ls | cat -c | jo jo jo > outfile < infile", &head);
-	assert(grammar_error(&head) == 1);
-	free_func_token(&head);
 }

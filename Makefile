@@ -1,5 +1,10 @@
-SOURCES		:=	main.c token.c token_utils.c token_list.c parser.c cmd_table.c parser_utils.c ms_cd.c ms_echo.c ms_env.c ms_exit.c ms_export.c ms_pwd.c ms_unset.c builtin.c execute.c \
-				execve.c pipe_redirect.c grammar.c grammar_error.c
+SOURCES		:=	main.c token.c token_utils.c \
+				token_list.c parser.c cmd_table.c \
+				parser_utils.c ms_cd.c ms_echo.c \
+				ms_env.c ms_exit.c ms_export.c \
+				ms_pwd.c ms_unset.c builtin.c \
+				execute.c execve.c pipe_redirect.c \
+				grammar.c grammar_error.c history.c
 BUILD		:=	build
 VPATH		:=	src/ src/input src/token src/parser src/builtins src/execute src/error
 OBJECTS		:=	$(addprefix $(BUILD)/, $(SOURCES:.c=.o))
@@ -38,8 +43,8 @@ fclean:
 	@printf "Fcleaned ✅\n"
 
 TEST_SRC 		:= tests/unit_tests.c tests/lexer_unit_tests.c tests/parser_unit_tests.c src/token/token.c src/token/token_utils.c src/token/token_list.c \
-				   src/parser/parser.c src/parser/cmd_table.c src/parser/parser_utils.c src/parser/grammar.c
-TEST_OBJECTS	:= unit_tests.o lexer_unit_tests.o parser_unit_tests.o token.o token_utils.o token_list.o parser.o cmd_table.o parser_utils.o grammar.o
+				   src/parser/parser.c src/parser/cmd_table.c src/parser/parser_utils.c src/parser/grammar.c src/error/grammar_error.c
+TEST_OBJECTS	:= unit_tests.o lexer_unit_tests.o parser_unit_tests.o token.o token_utils.o token_list.o parser.o cmd_table.o parser_utils.o grammar.o grammar_error.o
 
 test: $(BUILD) $(LIBFT) $(HEADER)
 	$(CC) -g $(FLAGS) -c $(TEST_SRC)
