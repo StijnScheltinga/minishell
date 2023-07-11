@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:36:53 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/06 15:53:10 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/11 13:59:27 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,6 @@ void	ft_execve(char **cmd, char **envp)
 		free(cmdpath);
 		i++;
 	}
+	// perror("cmd not found\n");
+	exit(1);
 }

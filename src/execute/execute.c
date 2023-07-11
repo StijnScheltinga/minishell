@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/07 15:15:44 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/11 18:07:30 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "../../inc/execve.h"
 #include "../../inc/pipe_redirect.h"
 #include "../../inc/parser.h"
+
 
 void	execute_with_child(t_cmd_table *cmd_table, int (*fd)[2], int cmd_index)
 {
@@ -25,7 +26,10 @@ void	execute_with_child(t_cmd_table *cmd_table, int (*fd)[2], int cmd_index)
 		redirect_middle_cmd(fd, cmd_index, cmd_count - 1);
 	else
 		redirect_last_cmd(fd, cmd_count - 1);
-	ft_execve(cmd_table->cmd_arr[cmd_index].single_cmd, cmd_table->envp);
+	if (is_builtin(cmd_table->cmd_arr[cmd_index].single_cmd[0]) == true)
+		execute_builtin(cmd_table, cmd_index);
+	else
+		ft_execve(cmd_table->cmd_arr[cmd_index].single_cmd, cmd_table->envp);
 }
 
 void	execute_multiple_cmd(t_cmd_table *cmd_table)
@@ -38,12 +42,15 @@ void	execute_multiple_cmd(t_cmd_table *cmd_table)
 	i = 0;
 	while (i < cmd_table->cmd_count){
 		pid = fork();
-		if (pid == 0){
+		if (pid == -1){
+			//ERROR
+		}
+		else if (pid == 0){
 			execute_with_child(cmd_table, fd, i);
 		}
 		i++;
 	}
-	waitpid(0, &status, 0);
+	wait(NULL);
 	close_all_pipes(fd, pipe_count);
 }
 
@@ -54,20 +61,18 @@ void	execute_single_cmd(t_cmd_table *cmd_table)
 	int	i = 0, status;
 	pid_t pid;
 
-	if (is_builtin(cmd_table->cmd_arr[0].single_cmd[0]) == true)
-		execute_builtin(cmd_table->cmd_arr[0].single_cmd);
+	if (is_builtin(cmd_table->cmd_arr[0].single_cmd[0]) == true){
+		execute_builtin(cmd_table, 0);
+		return ;
+	}
 	pid = fork();
-	if (pid == 0)
+	if (pid == -1){
+		//ERROR
+	}
+	if (pid == 0){
 		ft_execve(cmd_table->cmd_arr[0].single_cmd, cmd_table->envp);
-	waitpid(0, &status, 0);
-}
-
-void	execute_commands(t_cmd_table *cmd_table)
-{
-	if (cmd_table->cmd_count == 1)
-		execute_single_cmd(cmd_table);
-	else
-		execute_multiple_cmd(cmd_table);
+	}
+	waitpid(pid, &status, 0);
 }
 
 //restoring stdin and stdout after executing one or more command(s)
@@ -79,7 +84,10 @@ void	execute(t_cmd_table *cmd_table)
 
 	stdin_holder = dup(STDIN_FILENO);
 	stdout_holder = dup(STDOUT_FILENO);
-	execute_commands(cmd_table);
+	if (cmd_table->cmd_count == 1)
+		execute_single_cmd(cmd_table);
+	else
+		execute_multiple_cmd(cmd_table);
 	dup2(stdin_holder, STDIN_FILENO);
 	dup2(stdout_holder, STDOUT_FILENO);
 }
