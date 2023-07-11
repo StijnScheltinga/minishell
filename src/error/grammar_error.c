@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   grammar_error.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/20 13:52:58 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/11 14:30:08 by sschelti         ###   ########.fr       */
+/*   Created: 2023/07/07 16:05:47 by sschelti          #+#    #+#             */
+/*   Updated: 2023/07/07 17:05:04 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "../../inc/error.h"
 
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <stdlib.h>
-
-char *get_line(void);
-
-#endif
+void	syntax_error(char token)
+{
+	printf("syntax error near unexpected token: '%c'\n", token);
+	exit(258);
+}

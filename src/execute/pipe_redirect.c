@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 18:45:11 by aolde-mo          #+#    #+#             */
 /*   Updated: 2023/07/10 14:19:04 by aolde-mo         ###   ########.fr       */
