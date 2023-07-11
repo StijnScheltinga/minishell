@@ -38,8 +38,8 @@ fclean:
 	@printf "Fcleaned ✅\n"
 
 TEST_SRC 		:= tests/unit_tests.c tests/lexer_unit_tests.c tests/parser_unit_tests.c src/token/token.c src/token/token_utils.c src/token/token_list.c \
-				   src/parser/parser.c src/parser/cmd_table.c src/parser/parser_utils.c src/parser/grammar.c
-TEST_OBJECTS	:= unit_tests.o lexer_unit_tests.o parser_unit_tests.o token.o token_utils.o token_list.o parser.o cmd_table.o parser_utils.o grammar.o
+				   src/parser/parser.c src/parser/cmd_table.c src/parser/parser_utils.c src/parser/grammar.c src/error/grammar_error.c
+TEST_OBJECTS	:= unit_tests.o lexer_unit_tests.o parser_unit_tests.o token.o token_utils.o token_list.o parser.o cmd_table.o parser_utils.o grammar.o grammar_error.o
 
 test: $(BUILD) $(LIBFT) $(HEADER)
 	$(CC) -g $(FLAGS) -c $(TEST_SRC)

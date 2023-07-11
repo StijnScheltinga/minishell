@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_table.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:54:14 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/07 13:53:38 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/11 12:42:52 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ t_cmd_table	*init_cmd_table(t_token **head, char **envp)
 	cmd_table = malloc(sizeof(t_cmd_table));
 	cmd_table->cmd_count = count_cmd(head); 
 	cmd_table->envp = envp;
+	cmd_table->input_file = NULL;
+	cmd_table->output_file = NULL;
 	cmd_table->cmd_arr = malloc(count_cmd(head) * sizeof(t_command));
 	fill_cmd_arr(cmd_table, head);
+	io_files(cmd_table, head);
 	return(cmd_table);
 }
 
@@ -67,31 +70,20 @@ char	**single_command(t_token **head, int num_of_arguments, int i)
 	return (cmd);
 }
 
-int	num_of_arguments(t_token **head, int i)
+void		io_files(t_cmd_table *cmd_table, t_token **head)
 {
-	t_token *iterate;
-	int		num_of_arguments;
-	int		cmd_n;
+	t_token	*iterate;
 
 	iterate = *head;
-	num_of_arguments = 0;
-	cmd_n = 0;
 	while (iterate != NULL)
 	{
-		if (iterate->type == PIPE)
-			cmd_n++;
-		if (cmd_n == i)
+		if (iterate->type == REDIRECT)
 		{
-			if (iterate->type == PIPE)
-				iterate = iterate->next;
-			while (iterate != NULL && iterate->type == WORD)
-			{
-				num_of_arguments++;
-				iterate = iterate->next;
-			}
-			return (num_of_arguments);
+			if (!ft_strncmp("<", iterate->text, 1))
+				cmd_table->input_file = ft_strdup(iterate->next->text);
+			else if (!ft_strncmp(">", iterate->text, 1))
+				cmd_table->input_file = ft_strdup(iterate->next->text);
 		}
 		iterate = iterate->next;
 	}
-	return (0);
 }
