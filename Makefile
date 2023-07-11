@@ -1,12 +1,12 @@
 SOURCES		:=	main.c token.c token_utils.c token_list.c parser.c cmd_table.c parser_utils.c ms_cd.c ms_echo.c ms_env.c ms_exit.c ms_export.c ms_pwd.c ms_unset.c builtin.c execute.c \
-				execve.c pipe_redirect.c
+				execve.c pipe_redirect.c env_linkedlist.c
 BUILD		:=	build
-VPATH		:=	src/ src/input src/token src/parser src/builtins src/execute
+VPATH		:=	src/ src/input src/token src/parser src/builtins src/execute src/env
 OBJECTS		:=	$(addprefix $(BUILD)/, $(SOURCES:.c=.o))
 NAME		:=	minishell
 FLAGS		:=	
 CC			:=	gcc
-HEADER		:=	inc/main.h libft/libft.h inc/token.h inc/parser.h inc/builtin.h inc/execute.h inc/execve.h inc/pipe_redirect.h
+HEADER		:=	inc/main.h libft/libft.h inc/token.h inc/parser.h inc/builtin.h inc/execute.h inc/execve.h inc/pipe_redirect.h inc/env_linkedlist.h
 LIBFT		:=	libft/libft.a
 LIB_DIR		:=	libft
 LIBS		:=	-lreadline
