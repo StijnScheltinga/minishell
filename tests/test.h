@@ -6,7 +6,7 @@
 /*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:53:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/13 14:27:46 by stijn            ###   ########.fr       */
+/*   Updated: 2023/07/13 17:20:27 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ void	print_cmd_table(t_token **head, t_cmd_table *cmd_table);
 void	print_double_array(char **command);
 void	assert_tests(void);
 void	test_get_cmd_location(void);
+void    test_count_cmd(void);
 
 #endif

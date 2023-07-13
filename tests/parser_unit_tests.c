@@ -6,7 +6,7 @@
 /*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:52:47 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/13 14:30:16 by stijn            ###   ########.fr       */
+/*   Updated: 2023/07/13 16:13:36 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,10 @@ void	test_num_of_arguments(void)
 	assert(num_of_arguments(&head, 1) == 2);
 	assert(num_of_arguments(&head, 2) == 3);
 	free_func_token(&head);
-	tokenize_string("ls | cat -c | jo jo jo > outfile < infile", &head);
+	tokenize_string("< infile > oufile ls | > outfile cat -c | < infile jo jo jo > outfile < infile", &head);
 	assert(num_of_arguments(&head, 0) == 1);
 	assert(num_of_arguments(&head, 1) == 2);
 	assert(num_of_arguments(&head, 2) == 3);
-	free_func_token(&head);
-	tokenize_string("ls -la", &head);
-	assert(num_of_arguments(&head, 0) == 2);
 	free_func_token(&head);
 }
 

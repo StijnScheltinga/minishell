@@ -6,7 +6,7 @@
 /*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:54:14 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/13 14:16:40 by stijn            ###   ########.fr       */
+/*   Updated: 2023/07/13 16:08:13 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,13 @@ char	**single_command(t_token **head, int num_of_arguments, int i)
 	iterate = get_cmd_location(head, i);
 	j = 0;
 	cmd = malloc((num_of_arguments + 1) * sizeof(char *));
-	while (iterate != NULL && iterate->type == WORD)
+	while (iterate != NULL && iterate->type != PIPE)
 	{
-		cmd[j] = ft_strdup(iterate->text);
-		j++;
+		if (iterate->type == WORD)
+		{
+			cmd[j] = ft_strdup(iterate->text);
+			j++;
+		}
 		iterate = iterate->next;
 	}
 	cmd[j] = NULL;
