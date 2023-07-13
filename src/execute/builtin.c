@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:29:55 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/10 18:09:45 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/13 16:58:19 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ void	execute_builtin(t_cmd_table *cmd_table, int cmd_index)
 		ms_cd(arg[1], cmd_table->envp);
 	else if (ft_strncmp("pwd", arg[0], ft_strlen(arg[0])) == 0)
 		ms_pwd();
-	// if (ft_strncmp("export", arg[0], ft_strlen(arg[0])) == 0)
-	// 	ms_export(arg);
-	// if (ft_strncmp("unset", arg[0], ft_strlen(arg[0])) == 0)
-	// 	ms_unset(arg);
+	if (ft_strncmp("export", arg[0], ft_strlen(arg[0])) == 0)
+		ms_export(cmd_table, arg);
+	if (ft_strncmp("unset", arg[0], ft_strlen(arg[0])) == 0)
+		ms_unset(cmd_table, arg);
 	if (ft_strncmp("env", arg[0], ft_strlen(arg[0])) == 0)
-		ms_env(cmd_table->envp);
+		ms_env(cmd_table->env);
 	if (ft_strncmp("exit", arg[0], ft_strlen(arg[0])) == 0)
 		ms_exit(arg);
 	if (cmd_table->cmd_count > 1)
