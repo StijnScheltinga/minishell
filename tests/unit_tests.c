@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unit_tests.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:22:38 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/11 12:49:18 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/13 14:28:36 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,12 @@ int	main(void)
 	cmd_table = NULL;
 	text = "ls -la -l -w -c | cat -a | wc -l -w > outfile";
 	atexit(leaks);
-	tokenize_string(text, &head);
-	print_tokenize_string(text, &head);
-	cmd_table = parse_tokens(&head, NULL);
-	print_cmd_table(&head, cmd_table);
-	free_func_cmd_table(cmd_table, &head);
-	free_func_token(&head);
+	test_get_cmd_location();
+	test_num_of_arguments();
+	// tokenize_string(text, &head);
+	// print_tokenize_string(text, &head);
+	// cmd_table = parse_tokens(&head, NULL);
+	// print_cmd_table(&head, cmd_table);
+	// free_func_cmd_table(cmd_table, &head);
+	// free_func_token(&head);
 }
