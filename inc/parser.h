@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:51:46 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/11 12:34:20 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/13 16:09:16 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PARSER_H
 
 # include "token.h"
+# include "env.h"
 # include <stdio.h>
 
 typedef struct s_command {
@@ -27,6 +28,7 @@ typedef struct s_cmd_table {
 	char			*output_file;
 	unsigned int	cmd_count;
 	char			**envp;
+	t_env			*env;
 }	t_cmd_table;
 
 t_cmd_table	*parse_tokens(t_token **head, char **envp);
