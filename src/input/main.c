@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:10:05 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/11 14:14:48 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/13 11:26:39 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,11 @@ int	main(int argc, char **argv, char **envp)
 		input_string = get_line();
 		tokenize_string(input_string, &token_head);
 		cmd_table = parse_tokens(&token_head, envp);
-		execute(cmd_table);
-		free_func_cmd_table(cmd_table, &token_head);
+		if (cmd_table)
+		{
+			execute(cmd_table);
+			free_func_cmd_table(cmd_table, &token_head);
+		}
 		free_func_token(&token_head);
 	}
 	return (0);

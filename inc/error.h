@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 16:45:36 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/07 17:06:04 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/13 11:26:53 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include "parser.h"
 
-void	syntax_error(char token);
+int	syntax_error(char token);
 
 #endif
