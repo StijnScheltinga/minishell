@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 13:06:23 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/13 16:10:58 by stijn            ###   ########.fr       */
+/*   Updated: 2023/07/17 15:29:45 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	free_func_cmd_table(t_cmd_table *cmd_table, t_token **head)
 		i++;
 	}
 	free(cmd_table->cmd_arr);
-	free(cmd_table);
 }
 
 int	num_of_arguments(t_token **head, int i)

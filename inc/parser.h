@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:51:46 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/13 16:09:59 by stijn            ###   ########.fr       */
+/*   Updated: 2023/07/17 15:21:46 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ typedef struct s_cmd_table {
 	t_env			*env;
 }	t_cmd_table;
 
-t_cmd_table	*parse_tokens(t_token **head, char **envp);
-t_cmd_table	*init_cmd_table(t_token **head, char **envp);
+int			parse_tokens(t_cmd_table *cmd_table, t_token **head);
+void		init_cmd_table(t_cmd_table *cmd_table, t_token **head);
 void		fill_cmd_arr(t_cmd_table *cmd_table, t_token **head);
 char		**single_command(t_token **head, int num_of_arguments, int i);
 int			grammar_check(t_token **head);

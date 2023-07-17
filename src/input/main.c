@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:10:05 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/13 11:26:39 by stijn            ###   ########.fr       */
+/*   Updated: 2023/07/17 15:33:57 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,15 @@ int	main(int argc, char **argv, char **envp)
 	argc = 0;
 	argv = NULL;
 	token_head = NULL;
+	cmd_table = malloc(sizeof(t_cmd_table));
+	cmd_table->envp = envp;
+	cmd_table->env = env_to_linkedlist(envp);
 	atexit(leaks);
 	while (1)
 	{
 		input_string = get_line();
 		tokenize_string(input_string, &token_head);
-		cmd_table = parse_tokens(&token_head, envp);
-		if (cmd_table)
+		if (!parse_tokens(cmd_table, &token_head))
 		{
 			execute(cmd_table);
 			free_func_cmd_table(cmd_table, &token_head);
