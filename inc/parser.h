@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:51:46 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/13 16:09:16 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:09:49 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PARSER_H
 
 # include "token.h"
-# include "env.h"
+# include "env_init.h"
 # include <stdio.h>
 
 typedef struct s_command {

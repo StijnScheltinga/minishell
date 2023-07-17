@@ -6,14 +6,12 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 18:48:56 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/07 15:16:35 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/17 12:38:09 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPE_REDIRECT_H
 # define PIPE_REDIRECT_H
-
-# include <unistd.h>
 
 # define READ 0
 # define WRITE 1
