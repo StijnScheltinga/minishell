@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_echo.c                                          :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:48:01 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/07 15:24:25 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/17 11:26:03 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //code assumes possible -n option is given within the whole string
 //does not implement $variables and $?
 
-void	ms_echo(const char *str)
+void	echo(const char *str)
 {
 	size_t	i;
 	bool	n_option;
@@ -41,5 +41,5 @@ void	ms_echo(const char *str)
 
 // int main(void)
 // {
-// 	ms_echo(NULL, envp);
+// 	echo(NULL, envp);
 // }

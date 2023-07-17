@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/11 18:07:30 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:09:31 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void	execute(t_cmd_table *cmd_table)
 
 	stdin_holder = dup(STDIN_FILENO);
 	stdout_holder = dup(STDOUT_FILENO);
+	if (!cmd_table->env)
+		cmd_table->env = env_to_linkedlist(cmd_table->envp);
 	if (cmd_table->cmd_count == 1)
 		execute_single_cmd(cmd_table);
 	else

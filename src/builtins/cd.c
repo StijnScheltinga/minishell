@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_cd.c                                            :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:48:24 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/06/27 18:11:04 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/17 11:25:59 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*find_right_path(char *arg, char **envp)
 
 //does not return error code but prints the error
 
-void	ms_cd(char *arg, char **envp)
+void	cd(char *arg, char **envp)
 {
 	char	*path;
 
@@ -61,5 +61,5 @@ void	ms_cd(char *arg, char **envp)
 
 // int main(int argc, char **argv, char **envp)
 // {
-// 	ms_cd(NULL, envp);
+// 	cd(NULL, envp);
 // }

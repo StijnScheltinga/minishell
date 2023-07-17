@@ -14,6 +14,7 @@
 # define PARSER_H
 
 # include "token.h"
+# include "env_init.h"
 # include <stdio.h>
 
 typedef struct s_command {
@@ -27,6 +28,7 @@ typedef struct s_cmd_table {
 	t_command		*cmd_arr;
 	unsigned int	cmd_count;
 	char			**envp;
+	t_env			*env;
 }	t_cmd_table;
 
 t_cmd_table	*parse_tokens(t_token **head, char **envp);

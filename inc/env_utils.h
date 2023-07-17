@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_unset.c                                         :+:      :+:    :+:   */
+/*   env_utils.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/27 18:06:53 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/07 13:25:43 by sschelti         ###   ########.fr       */
+/*   Created: 2023/07/13 15:39:58 by aolde-mo          #+#    #+#             */
+/*   Updated: 2023/07/17 11:34:55 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/builtin.h"
+#ifndef ENV_UTILS_H
+# define ENV_UTILS_H
 
+void	env_lstadd_back(t_env *lst, t_env *new);
+t_env	*env_lstlast(t_env *lst);
+t_env	*env_lstnew(char *s);
 
-//uses envp from seperate int main -> no other envp yet
-
-//does not return error code but prints the error
-
-// void	ms_unset(envp);
-
-// int main(int argc, char **argv, char **envp)
-// {
-
-// }
+#endif

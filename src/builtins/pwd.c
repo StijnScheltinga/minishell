@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env.c                                           :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/27 18:03:09 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/06/27 18:06:43 by aolde-mo         ###   ########.fr       */
+/*   Created: 2023/06/27 15:48:39 by aolde-mo          #+#    #+#             */
+/*   Updated: 2023/07/17 11:26:24 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/builtin.h"
 
-void	ms_env(char **envp)
+//does not return error code but prints the error
+
+void	pwd(void)
 {
-	unsigned int	i;
+	char	buffer[FILENAME_MAX];
 
-	i = 0;
-	while (envp[i])
-		printf("%s\n", envp[i++]);
+	if (getcwd(buffer, FILENAME_MAX))
+		printf("%s\n", buffer);
+	else
+		perror("pwd");
 }
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	ms_env(envp);
-// }

@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 18:45:11 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/10 14:19:04 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/17 12:38:16 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/pipe_redirect.h"
 #include "../../inc/execute.h"
+
+#include <unistd.h>
 
 void	close_all_pipes(int (*fd)[2], int pipe_count)
 {

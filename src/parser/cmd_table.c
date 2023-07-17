@@ -19,6 +19,7 @@ t_cmd_table	*init_cmd_table(t_token **head, char **envp)
 	cmd_table = malloc(sizeof(t_cmd_table));
 	cmd_table->cmd_count = count_cmd(head); 
 	cmd_table->envp = envp;
+	cmd_table->env = NULL;
 	cmd_table->cmd_arr = malloc(count_cmd(head) * sizeof(t_command));
 	fill_cmd_arr(cmd_table, head);
 	return(cmd_table);
