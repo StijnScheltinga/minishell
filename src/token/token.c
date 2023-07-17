@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:38:34 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/03 15:10:12 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/13 16:01:19 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	tokenize_string(char *input_string, t_token **head)
 		if (i >= ft_strlen(input_string))
 			break;
 	}
+	create_io_file_tokens(head);
 }
 
 int	assign_token(char *str, t_token **head)
@@ -59,4 +60,19 @@ void	create_token(t_type type, char *text, t_token **head)
 	if (!new_token)	
 		exit(EXIT_FAILURE);
 	ft_lstadd_back(head, new_token);
+}
+
+void	create_io_file_tokens(t_token **head)
+{
+	t_token	*iterate;
+	bool	file;
+
+	iterate = *head;
+	file = false;
+	while (iterate != NULL)
+	{	
+		if (iterate->type == REDIRECT && iterate->next != NULL)
+			iterate->next->type = IO_FILE;
+		iterate = iterate->next;
+	}
 }

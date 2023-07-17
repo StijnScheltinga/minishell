@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_unit_tests.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 18:03:11 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/04 18:11:13 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/13 17:23:33 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char *type_text(t_type type)
 		return ("PIPE");
 	else if (type == REDIRECT)
 		return ("REDIRECT");
+	else if (type == IO_FILE)
+		return ("IO_FILE");
 	else
 		return ("WORD");
 }
@@ -34,4 +36,14 @@ void print_tokenize_string(char *text, t_token **head)
 		printf("%s, %s\n", iterate->text, type_text(iterate->type));
 		iterate = iterate->next;
 	}
+}
+
+void	test_count_cmd(void)
+{
+	t_token *head;
+
+	head = NULL;
+	tokenize_string("< infile ls -la | cat -a | wc -l -w > outfile", &head);
+	assert(count_cmd(&head) == 3);
+	free_func_token(&head);
 }
