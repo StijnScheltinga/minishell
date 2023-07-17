@@ -6,11 +6,11 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 15:39:26 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/13 16:52:59 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/17 11:44:22 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/env.h"
+#include "../../inc/env_init.h"
 #include "../../inc/env_utils.h"
 #include <stdlib.h>
 
@@ -36,7 +36,6 @@ t_env	*env_lstlast(t_env *lst)
 		lst = lst->next;
 	return (lst);
 }
-
 
 t_env	*env_lstnew(char *s)
 {
