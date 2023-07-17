@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/13 15:36:18 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/13 15:58:22 by aolde-mo         ###   ########.fr       */
+/*   Created: 2023/06/27 18:06:53 by aolde-mo          #+#    #+#             */
+/*   Updated: 2023/07/17 11:43:11 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#include "../../inc/builtin.h"
+#include "../../inc/env_init.h"
 
-typedef struct s_env{
-	char			*variable;
-	char			*value;
-	struct s_env	*next;
-}					t_env;
+static void	unset_cmd(t_env *env, char *arg)
+{
+	
+}
 
-char	*get_env_variable(char *s);
-char	*get_env_value(char *s);
-t_env	*env_to_linkedlist(char **envp);
+void	unset(t_cmd_table *cmd_table, char **cmd)
+{
+	int	i;
 
-#endif
+	i = 1;
+	if (!cmd[i])
+		return ;
+	while (cmd[i])
+		unset_cmd(cmd_table->env, cmd[i++]);
+}

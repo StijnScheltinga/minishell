@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 15:38:00 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/13 17:11:12 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/17 12:31:40 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/env.h"
+#include "../../inc/env_init.h"
 #include "../../inc/env_utils.h"
 #include "../../libft/libft.h"
 
 #include <stdlib.h>
 #include <stdio.h>
-
 
 char	*get_env_variable(char *s)
 {
@@ -40,13 +39,17 @@ char	*get_env_variable(char *s)
 	return (new);
 }
 
+// + 1 in return because the '=' is not the value
 char	*get_env_value(char *s)
 {
-	while (*s != '=' && *s)
-		s++;
-	if (!s)
+	int	i;
+
+	i = 0;
+	while (s[i] != '=' && s[i])
+		i++;
+	if (!s[i])
 		return (NULL);
-	return (s + 1);
+	return (s + i + 1);
 }
 
 t_env	*env_to_linkedlist(char **envp)
