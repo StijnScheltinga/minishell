@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/13 16:11:14 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:09:31 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "../../inc/execve.h"
 #include "../../inc/pipe_redirect.h"
 #include "../../inc/parser.h"
-#include "../../inc/env.h"
 
 
 void	execute_with_child(t_cmd_table *cmd_table, int (*fd)[2], int cmd_index)
@@ -85,7 +84,8 @@ void	execute(t_cmd_table *cmd_table)
 
 	stdin_holder = dup(STDIN_FILENO);
 	stdout_holder = dup(STDOUT_FILENO);
-	cmd_table->env = env_to_linkedlist(cmd_table->envp);
+	if (!cmd_table->env)
+		cmd_table->env = env_to_linkedlist(cmd_table->envp);
 	if (cmd_table->cmd_count == 1)
 		execute_single_cmd(cmd_table);
 	else

@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:50:14 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/17 12:03:13 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:12:18 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	create_export_variable(t_cmd_table *cmd_table, char *arg)
 	new = env_lstnew(arg);
 	export_error_check();
 	env_lstadd_back(cmd_table->env, new);
-	print_export(cmd_table);
+	// print_export(cmd_table);
 }
 
 
