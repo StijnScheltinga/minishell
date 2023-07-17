@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unit_tests.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:22:38 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/11 12:49:18 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/13 17:24:17 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	leaks(void)
 void	assert_tests(void)
 {
 	test_num_of_arguments();
+	test_get_cmd_location();
+	test_count_cmd();
 }
 
 int	main(void)
@@ -30,8 +32,9 @@ int	main(void)
 	
 	head = NULL;
 	cmd_table = NULL;
-	text = "ls -la -l -w -c | cat -a | wc -l -w > outfile";
+	text = "< infile ls -la > outfile | cat -a | wc -l -w > outfile";
 	atexit(leaks);
+	assert_tests();
 	tokenize_string(text, &head);
 	print_tokenize_string(text, &head);
 	cmd_table = parse_tokens(&head, NULL);
