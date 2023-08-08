@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:22:38 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/08 13:14:38 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/08 17:46:55 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	main(void)
 	
 	head = NULL;
 	cmd_table = malloc(sizeof(t_cmd_table));
-	text = "ls -la > outfile | cat ls";
+	text = "ls -la > outfile | < in1 cat ls > out1 > out2 < in2 > out3";
+	atexit(leaks);
 	assert_tests();
 	tokenize_string(text, &head);
 	print_tokenize_string(text, &head);
@@ -40,5 +41,4 @@ int	main(void)
 	print_cmd_table(&head, cmd_table);
 	free_func_cmd_table(cmd_table, &head);
 	free_func_token(&head);
-	atexit(leaks);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:38:34 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/13 16:01:19 by stijn            ###   ########.fr       */
+/*   Updated: 2023/08/08 16:07:12 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,12 @@ void	create_io_file_tokens(t_token **head)
 	while (iterate != NULL)
 	{	
 		if (iterate->type == REDIRECT && iterate->next != NULL)
-			iterate->next->type = IO_FILE;
+		{
+			if (!ft_strncmp(iterate->text, ">", 1) && iterate->next != NULL)
+				iterate->next->type = OUTFILE;
+			else if (!ft_strncmp(iterate->text, "<", 1) && iterate->next != NULL)
+				iterate->next->type = INFILE;
+		}
 		iterate = iterate->next;
 	}
 }

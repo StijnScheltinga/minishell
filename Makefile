@@ -1,6 +1,6 @@
 SOURCES		:=	main.c token.c token_utils.c \
 				token_list.c parser.c cmd_table.c \
-				parser_utils.c cd.c echo.c \
+				parser_utils.c io_redirection.c cd.c echo.c \
 				env.c exit.c export.c \
 				pwd.c unset.c builtin.c \
 				execute.c execve.c pipe_redirect.c \
@@ -10,7 +10,7 @@ BUILD		:=	build
 VPATH		:=	src/ src/input src/token src/parser src/builtins src/execute src/error src/env
 OBJECTS		:=	$(addprefix $(BUILD)/, $(SOURCES:.c=.o))
 NAME		:=	minishell
-FLAGS		:=	-fsanitize=address
+FLAGS		:=
 CC			:=	gcc
 HEADER		:=	inc/main.h libft/libft.h inc/token.h inc/parser.h inc/builtin.h inc/execute.h inc/execve.h inc/pipe_redirect.h inc/env_init.h inc/env_utils.h
 LIBFT		:=	libft/libft.a
@@ -44,8 +44,8 @@ fclean:
 	@printf "Fcleaned ✅\n"
 
 TEST_SRC 		:= tests/unit_tests.c tests/lexer_unit_tests.c tests/parser_unit_tests.c src/token/token.c src/token/token_utils.c src/token/token_list.c \
-				   src/parser/parser.c src/parser/cmd_table.c src/parser/parser_utils.c src/parser/grammar.c src/error/grammar_error.c
-TEST_OBJECTS	:= unit_tests.o lexer_unit_tests.o parser_unit_tests.o token.o token_utils.o token_list.o parser.o cmd_table.o parser_utils.o grammar.o grammar_error.o
+				   src/parser/parser.c src/parser/cmd_table.c src/parser/parser_utils.c src/parser/grammar.c src/error/grammar_error.c src/parser/io_redirection.c
+TEST_OBJECTS	:= unit_tests.o lexer_unit_tests.o parser_unit_tests.o token.o token_utils.o token_list.o parser.o cmd_table.o parser_utils.o grammar.o grammar_error.o io_redirection.o
 
 test: $(BUILD) $(LIBFT) $(HEADER)
 	$(CC) -g $(FLAGS) -c $(TEST_SRC)

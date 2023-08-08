@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:52:47 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/08 12:04:19 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/08 17:47:18 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,20 @@ void	print_cmd_table(t_token **head, t_cmd_table *cmd_table)
 	int			i;
 
 	i = 0;
-	printf("command table:\n");
+	printf("\ncommand table:\n");
 	while (i != count_cmd(head))
 	{
 		print_double_array(cmd_table->cmd_arr[i].single_cmd);
-		printf("input: %s " ,cmd_table->cmd_arr[i].input_file);
-		printf("output: %s\n" ,cmd_table->cmd_arr[i].output_file);
+		if (cmd_table->cmd_arr[i].input_files)
+		{
+			printf("input: ");
+			print_double_array(cmd_table->cmd_arr[i].input_files);
+		}
+		if (cmd_table->cmd_arr[i].output_files)
+		{
+			printf("output: ");
+			print_double_array(cmd_table->cmd_arr[i].output_files);
+		}
 		i++;
 	}
 }
@@ -54,6 +62,7 @@ void	print_double_array(char **command)
 		printf("%s, ", command[i]);
 		i++;
 	}
+	printf("%s\n", command[i]);
 }
 
 void	test_get_cmd_location(void)
