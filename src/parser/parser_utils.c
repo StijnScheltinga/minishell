@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 13:06:23 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/17 15:29:45 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/08 14:59:21 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ void	free_func_cmd_table(t_cmd_table *cmd_table, t_token **head)
 			j++;
 		}
 		free(cmd_table->cmd_arr[i].single_cmd);
-		free(cmd_table->cmd_arr[i].input_file);
-		free(cmd_table->cmd_arr[i].output_file);
+		if (cmd_table->cmd_arr[i].input_file)
+			free(cmd_table->cmd_arr[i].input_file);
+		if (cmd_table->cmd_arr[i].output_file)
+			free(cmd_table->cmd_arr[i].output_file);
 		j = 0;
 		i++;
 	}

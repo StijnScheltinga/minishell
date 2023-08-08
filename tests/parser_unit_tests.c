@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_unit_tests.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:52:47 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/13 16:13:36 by stijn            ###   ########.fr       */
+/*   Updated: 2023/08/08 12:04:19 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	print_cmd_table(t_token **head, t_cmd_table *cmd_table)
 	while (i != count_cmd(head))
 	{
 		print_double_array(cmd_table->cmd_arr[i].single_cmd);
+		printf("input: %s " ,cmd_table->cmd_arr[i].input_file);
+		printf("output: %s\n" ,cmd_table->cmd_arr[i].output_file);
 		i++;
 	}
 }
@@ -52,7 +54,6 @@ void	print_double_array(char **command)
 		printf("%s, ", command[i]);
 		i++;
 	}
-	printf("\n");
 }
 
 void	test_get_cmd_location(void)

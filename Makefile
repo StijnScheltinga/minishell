@@ -10,7 +10,7 @@ BUILD		:=	build
 VPATH		:=	src/ src/input src/token src/parser src/builtins src/execute src/error src/env
 OBJECTS		:=	$(addprefix $(BUILD)/, $(SOURCES:.c=.o))
 NAME		:=	minishell
-FLAGS		:=	
+FLAGS		:=	-fsanitize=address
 CC			:=	gcc
 HEADER		:=	inc/main.h libft/libft.h inc/token.h inc/parser.h inc/builtin.h inc/execute.h inc/execve.h inc/pipe_redirect.h inc/env_init.h inc/env_utils.h
 LIBFT		:=	libft/libft.a

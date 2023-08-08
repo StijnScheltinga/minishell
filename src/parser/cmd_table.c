@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:54:14 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/17 15:31:59 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/08 14:36:49 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,29 @@ void	fill_cmd_arr(t_cmd_table *cmd_table, t_token **head)
 		arg_n = num_of_arguments(head, i);
 		cmd_table->cmd_arr[i].num_of_arguments = arg_n;
 		cmd_table->cmd_arr[i].single_cmd = single_command(head, arg_n, i);
-		cmd_table->cmd_arr[i].input_file = NULL;
-		cmd_table->cmd_arr[i].output_file = NULL;
+		fill_io_files(&(cmd_table->cmd_arr[i]), head, i);
 		i++;
+	}
+}
+
+//Only redirect to last file in the command
+void	fill_io_files(t_command *single_cmd_info, t_token **head, int i)
+{
+	t_token	*iterate;
+	
+	iterate = get_cmd_location(head, i);
+	single_cmd_info->input_file = NULL;
+	single_cmd_info->output_file = NULL;
+	while (iterate != NULL && iterate->type != PIPE)
+	{
+		if (iterate->type == REDIRECT)
+		{
+			if (!ft_strncmp(">", iterate->text, 1))
+				single_cmd_info->output_file = ft_strdup(iterate->next->text);
+			else if (!ft_strncmp("<", iterate->text, 1))
+				single_cmd_info->input_file = ft_strdup(iterate->next->text);
+		}
+		iterate = iterate->next;		
 	}
 }
 
