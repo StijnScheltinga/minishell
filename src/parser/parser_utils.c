@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 13:06:23 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/10 12:31:59 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/10 16:12:22 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,6 @@ void	free_func_cmd_table(t_cmd_table *cmd_table, t_token **head)
 	i = 0;
 	while (i != count_cmd(head))
 	{
-		if (cmd_table->cmd_arr[i].input_files)
-			free_double_array(cmd_table->cmd_arr[i].input_files);
-		if (cmd_table->cmd_arr[i].output_files)
-			free_double_array(cmd_table->cmd_arr[i].output_files);
 		free_double_array(cmd_table->cmd_arr[i].single_cmd);
 		i++;
 	}

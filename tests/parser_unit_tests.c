@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:52:47 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/08 17:47:18 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/10 17:27:57 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,22 @@ void	print_cmd_table(t_token **head, t_cmd_table *cmd_table)
 	printf("\ncommand table:\n");
 	while (i != count_cmd(head))
 	{
+		printf("command: %d\n", i);
 		print_double_array(cmd_table->cmd_arr[i].single_cmd);
-		if (cmd_table->cmd_arr[i].input_files)
-		{
-			printf("input: ");
-			print_double_array(cmd_table->cmd_arr[i].input_files);
-		}
-		if (cmd_table->cmd_arr[i].output_files)
-		{
-			printf("output: ");
-			print_double_array(cmd_table->cmd_arr[i].output_files);
-		}
+		printf("total redirections: %d\n", cmd_table->cmd_arr[i].redirect_count);
+		print_redirect(cmd_table->cmd_arr[i].redirect_arr, cmd_table->cmd_arr[i].redirect_count);
+		i++;
+	}
+}
+
+void	print_redirect(t_redirect *redirect_arr, unsigned int redirect_count)
+{
+	int	i;
+
+	i = 0;
+	while (i < redirect_count)
+	{
+		printf("redirect: %d, file name: %s, type: %s\n", i, redirect_arr[i].file_name, type_text(redirect_arr[i].type));
 		i++;
 	}
 }

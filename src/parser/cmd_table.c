@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:54:14 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/08 16:27:22 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/10 17:16:46 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	fill_cmd_arr(t_cmd_table *cmd_table, t_token **head)
 		arg_n = num_of_arguments(head, i);
 		cmd_table->cmd_arr[i].num_of_arguments = arg_n;
 		cmd_table->cmd_arr[i].single_cmd = single_command(head, arg_n, i);
-		count_and_fill_io_files(&(cmd_table->cmd_arr[i]), head, i);
+		create_redirect_arr(&(cmd_table->cmd_arr[i]), head, i);
 		i++;
 	}
 }
