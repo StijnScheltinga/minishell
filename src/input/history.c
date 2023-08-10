@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:48:04 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/11 14:27:46 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:45:56 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ char *get_line(void)
 		input_string = NULL;
 	}
 	input_string = readline(NULL);
-	if (!input_string)
-		exit(1);
+	if (input_string[0] == '\0')
+		return(NULL);
 	add_history(input_string);
 	return (input_string);
 }

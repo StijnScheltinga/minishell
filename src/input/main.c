@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:10:05 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/17 15:33:57 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:51:10 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,12 @@ int	main(int argc, char **argv, char **envp)
 	cmd_table = malloc(sizeof(t_cmd_table));
 	cmd_table->envp = envp;
 	cmd_table->env = env_to_linkedlist(envp);
-	atexit(leaks);
+	// atexit(leaks);
 	while (1)
 	{
 		input_string = get_line();
+		if (!input_string)
+			continue ;
 		tokenize_string(input_string, &token_head);
 		if (!parse_tokens(cmd_table, &token_head))
 		{

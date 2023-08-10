@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_unit_tests.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 18:03:11 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/13 17:23:33 by stijn            ###   ########.fr       */
+/*   Updated: 2023/08/10 17:12:33 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,12 @@ char *type_text(t_type type)
 		return ("PIPE");
 	else if (type == REDIRECT)
 		return ("REDIRECT");
-	else if (type == IO_FILE)
-		return ("IO_FILE");
+	else if (type == INFILE)
+		return ("INFILE");
+	else if (type == OUTFILE)
+		return ("OUTFILE");
+	else if (type == APPEND)
+		return ("APPEND");
 	else
 		return ("WORD");
 }

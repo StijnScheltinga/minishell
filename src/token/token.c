@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:38:34 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/13 16:01:19 by stijn            ###   ########.fr       */
+/*   Updated: 2023/08/10 17:32:39 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	tokenize_string(char *input_string, t_token **head)
 	i = 0;
 	while (input_string[i])
 	{
-		if (input_string[i] && ft_iswhitespace(input_string[i]) == false)
+		if (input_string[i] && !ft_iswhitespace(input_string[i]))
 			i += assign_token(&input_string[i], head);
 		else
 			i++;
@@ -37,13 +37,11 @@ int	assign_token(char *str, t_token **head)
 	i = 0;
 	if (str[i] == '|')
 		create_token(PIPE, NULL, head);
-	else if (str[i] == '>')
-		create_token(REDIRECT, ft_strdup(">"), head);
-	else if (str[i] == '<')
-		create_token(REDIRECT, ft_strdup("<"), head);
+	else if (str[i] == '>' || str[i] == '<')
+		return (create_redirection_token(&str[i], head));
 	else
 	{
-		while (str[i] && ft_iswhitespace(str[i]) == false)
+		while (str[i] && !ft_iswhitespace(str[i]))
 			i++;
 		text = ft_substr(str, 0, i);
 		create_token(WORD, text, head);
@@ -72,7 +70,31 @@ void	create_io_file_tokens(t_token **head)
 	while (iterate != NULL)
 	{	
 		if (iterate->type == REDIRECT && iterate->next != NULL)
-			iterate->next->type = IO_FILE;
+		{
+			if (!ft_strncmp(iterate->text, ">>", 2) && iterate->next != NULL)
+				iterate->next->type = APPEND;
+			else if (!ft_strncmp(iterate->text, "<", 1) && iterate->next != NULL)
+				iterate->next->type = INFILE;
+			else if (!ft_strncmp(iterate->text, ">", 1) && iterate->next != NULL)
+				iterate->next->type = OUTFILE;
+		}
 		iterate = iterate->next;
 	}
+}
+
+int	create_redirection_token(char *str, t_token **head)
+{
+	char	*text;
+	int		i;
+
+	i = 0;
+	while (str[i] && !ft_iswhitespace(str[i]))
+	{
+		if ((str[i] != '>' && str[i] != '<') || i >= 2)
+			break ;
+		i++;
+	}
+	text = ft_substr(str, 0, i);
+	create_token(REDIRECT, text, head);
+	return (i);
 }

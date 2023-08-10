@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:42:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/13 15:57:59 by stijn            ###   ########.fr       */
+/*   Updated: 2023/08/10 16:28:31 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ typedef enum s_type {
 	WORD,
 	REDIRECT,
 	PIPE,
-	IO_FILE,
+	INFILE,
+	OUTFILE,
+	APPEND,
 }	t_type;
 
 typedef struct s_token {
@@ -36,6 +38,7 @@ void	tokenize_string(char *input_string, t_token **head);
 int		assign_token(char *str, t_token **head);
 void	create_token(t_type type, char *text, t_token **head);
 void	create_io_file_tokens(t_token **head);
+int		create_redirection_token(char *str, t_token **head);
 
 int		count_cmd(t_token **head);
 bool	ft_iswhitespace(char a);
