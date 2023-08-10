@@ -6,11 +6,14 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:48:24 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/17 11:25:59 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/18 11:54:45 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/builtin.h"
+
+#include <errno.h>
+#include <string.h>
 
 //not implementing error code
 

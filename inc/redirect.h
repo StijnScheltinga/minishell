@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   redirect.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/27 18:03:09 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/18 11:35:20 by aolde-mo         ###   ########.fr       */
+/*   Created: 2023/08/10 15:30:25 by aolde-mo          #+#    #+#             */
+/*   Updated: 2023/08/10 16:45:57 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/builtin.h"
+#ifndef REDIRECT_H
+# define REDIRECT_H
 
-void	env(t_env *head)
-{
-	while (head)
-	{
-		printf("%s=%s\n", head->variable, head->value);
-		head = head->next;
-	}
-}
+# include "parser.h"
 
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	env(envp);
-// }
+# define READ 0
+# define WRITE 1
+
+void	redirect_input(t_redirect *redirect);
+void	redirect_output(t_redirect *redirect);
+void	redirect_child(t_cmd_table *cmd_table, int (*fd)[2], int cmd_index);
+
+#endif

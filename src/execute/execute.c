@@ -3,29 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/17 15:24:23 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/10 17:44:34 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/execute.h"
 #include "../../inc/builtin.h"
 #include "../../inc/execve.h"
-#include "../../inc/pipe_redirect.h"
+#include "../../inc/pipes.h"
 #include "../../inc/parser.h"
+#include "../../inc/redirect.h"
 
+#include <fcntl.h>
 
 void	execute_with_child(t_cmd_table *cmd_table, int (*fd)[2], int cmd_index)
 {
-	int cmd_count = cmd_table->cmd_count;
-	if (cmd_index == 0)
-		redirect_first_cmd(fd, cmd_count - 1);
-	else if (cmd_index != cmd_count - 1)
-		redirect_middle_cmd(fd, cmd_index, cmd_count - 1);
-	else
-		redirect_last_cmd(fd, cmd_count - 1);
+	close_unused_pipes(cmd_table, fd, cmd_index);
+	redirect_child(cmd_table, fd, cmd_index);
 	if (is_builtin(cmd_table->cmd_arr[cmd_index].single_cmd[0]) == true)
 		execute_builtin(cmd_table, cmd_index);
 	else
@@ -40,12 +37,15 @@ void	execute_multiple_cmd(t_cmd_table *cmd_table)
 	while (i < pipe_count)
 		pipe(fd[i++]);
 	i = 0;
-	while (i < cmd_table->cmd_count){
+	while (i < cmd_table->cmd_count)
+	{
 		pid = fork();
-		if (pid == -1){
+		if (pid == -1)
+		{
 			//ERROR
 		}
-		else if (pid == 0){
+		else if (pid == 0)
+		{
 			execute_with_child(cmd_table, fd, i);
 		}
 		i++;

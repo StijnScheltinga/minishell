@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 15:38:00 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/17 12:31:40 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/07/18 11:41:35 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ char	*get_env_variable(char *s)
 	while (s[len] != '=' && s[len])
 		len++;
 	if (!s[len])
-		return (s);
+		return (ft_strdup(s));
+	new = malloc(sizeof(char) * len + 1);
 	i = 0;
-	new = malloc(sizeof(char) * len + 2);
-	while (i < len + 1)
+	while (i < len)
 	{
 		new[i] = s[i];
 		i++;
@@ -39,7 +39,7 @@ char	*get_env_variable(char *s)
 	return (new);
 }
 
-// + 1 in return because the '=' is not the value
+// + 1 in return because '=' is not part of the value
 char	*get_env_value(char *s)
 {
 	int	i;
@@ -49,7 +49,7 @@ char	*get_env_value(char *s)
 		i++;
 	if (!s[i])
 		return (NULL);
-	return (s + i + 1);
+	return (ft_strdup(s + i + 1));
 }
 
 t_env	*env_to_linkedlist(char **envp)
