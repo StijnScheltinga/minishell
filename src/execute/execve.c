@@ -6,14 +6,36 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:36:53 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/11 13:59:27 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/08 15:39:50 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/execve.h"
 #include "../../libft/libft.h"
 
-char	*get_path(char **envp)
+#include <errno.h>
+#include <stdio.h>
+#include <string.h>
+
+char	*get_right_path(char **paths, char **cmd)
+{
+	int		i;
+	char	*ret;
+
+	i = 0;
+	ret = NULL;
+	while (paths[i])
+	{
+		ret = ft_strjoin_with_slash(paths[i], cmd[0]);
+		if (access(ret, X_OK | F_OK) == 0)
+			return (ret);
+		free(ret);
+		i++;
+	}
+	return (cmd[0]);
+}
+
+char	*get_paths(char **envp)
 {
 	int		i;
 	char	*ret;
@@ -31,17 +53,9 @@ char	*get_path(char **envp)
 
 void	ft_execve(char **cmd, char **envp)
 {
-	char *path = get_path(envp);
+	char *path = get_paths(envp);
 	char **paths = ft_split(path + 5, ':');
-	char *cmdpath = NULL;
-	int i = 0;
-	while (paths[i])
-	{
-		cmdpath = ft_strjoin_with_slash(paths[i], cmd[0]);
-		execve(cmdpath, cmd, envp);
-		free(cmdpath);
-		i++;
-	}
-	// perror("cmd not found\n");
-	exit(1);
+	char *cmdpath = get_right_path(paths, cmd);
+	execve(cmdpath, cmd, envp);
+	free(cmdpath);
 }
