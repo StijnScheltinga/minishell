@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:22:38 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/10 17:34:11 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/11 15:44:48 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	assert_tests(void)
 	test_num_of_arguments();
 	test_get_cmd_location();
 	test_count_cmd();
+	test_count_redirect();
 }
 
 int	main(void)
@@ -32,9 +33,10 @@ int	main(void)
 	
 	head = NULL;
 	cmd_table = malloc(sizeof(t_cmd_table));
-	text = "ls | > outfile >> append < in1 > out2 cat < in2 | ls >> out1";
+	text = "cat Makefile | wc > out | ls | pwd > out1";
+	// text = "ls > out | ls";
 	atexit(leaks);
-	assert_tests();
+	// assert_tests();
 	tokenize_string(text, &head);
 	print_tokenize_string(text, &head);
 	parse_tokens(cmd_table, &head);

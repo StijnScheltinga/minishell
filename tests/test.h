@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:53:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/10 17:15:02 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:07:27 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ void	assert_tests(void);
 void	test_get_cmd_location(void);
 void    test_count_cmd(void);
 void	print_redirect(t_redirect *redirect_arr, unsigned int redirect_count);
+void	test_count_redirect(void);
 
 #endif
