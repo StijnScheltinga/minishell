@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/10 17:44:34 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/11 16:21:51 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@ void	execute_with_child(t_cmd_table *cmd_table, int (*fd)[2], int cmd_index)
 
 void	execute_multiple_cmd(t_cmd_table *cmd_table)
 {
-	int i = 0, status, pipe_count, (*fd)[2]; pid_t pid;
-	pipe_count = cmd_table->cmd_count - 1;
-	fd = malloc(sizeof(int[2]) * pipe_count);
-	while (i < pipe_count)
+	int		i;
+	int		(*fd)[2];
+	pid_t	pid;
+
+	i = 0;
+	fd = malloc(sizeof(int[2]) * cmd_table->cmd_count - 1);
+	while (i < cmd_table->cmd_count - 1)
 		pipe(fd[i++]);
 	i = 0;
 	while (i < cmd_table->cmd_count)
@@ -51,25 +54,31 @@ void	execute_multiple_cmd(t_cmd_table *cmd_table)
 		i++;
 	}
 	wait(NULL);
-	close_all_pipes(fd, pipe_count);
+	close_all_pipes(fd, cmd_table->cmd_count - 1);
 }
 
 // check if its a builtin with no other commands
 
 void	execute_single_cmd(t_cmd_table *cmd_table)
 {
-	int	i = 0, status;
-	pid_t pid;
+	int		i;
+	int		status;
+	pid_t	pid;
 
-	if (is_builtin(cmd_table->cmd_arr[0].single_cmd[0]) == true){
+	i = 0;
+	if (is_builtin(cmd_table->cmd_arr[0].single_cmd[0]) == true)
+	{
 		execute_builtin(cmd_table, 0);
 		return ;
 	}
 	pid = fork();
-	if (pid == -1){
+	if (pid == -1)
+	{
 		//ERROR
 	}
-	if (pid == 0){
+	if (pid == 0)
+	{
+		redirect_single_child(cmd_table);
 		ft_execve(cmd_table->cmd_arr[0].single_cmd, cmd_table->envp);
 	}
 	waitpid(pid, &status, 0);
@@ -79,8 +88,8 @@ void	execute_single_cmd(t_cmd_table *cmd_table)
 
 void	execute(t_cmd_table *cmd_table)
 {
-	int stdin_holder;
-	int stdout_holder;
+	int	stdin_holder;
+	int	stdout_holder;
 
 	stdin_holder = dup(STDIN_FILENO);
 	stdout_holder = dup(STDOUT_FILENO);
