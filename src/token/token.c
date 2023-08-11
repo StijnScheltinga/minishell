@@ -6,13 +6,14 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:38:34 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/10 17:32:39 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/11 16:20:41 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/token.h"
+#include "../../inc/parser.h"
 
-void	tokenize_string(char *input_string, t_token **head)
+int	tokenize_string(char *input_string, t_token **head)
 {
 	int		i;
 
@@ -26,7 +27,10 @@ void	tokenize_string(char *input_string, t_token **head)
 		if (i >= ft_strlen(input_string))
 			break;
 	}
+	if (grammar_check(head))
+		return (1);
 	create_io_file_tokens(head);
+	return (0);
 }
 
 int	assign_token(char *str, t_token **head)
@@ -36,7 +40,7 @@ int	assign_token(char *str, t_token **head)
 
 	i = 0;
 	if (str[i] == '|')
-		create_token(PIPE, NULL, head);
+		create_token(PIPE, ft_strdup("|"), head);
 	else if (str[i] == '>' || str[i] == '<')
 		return (create_redirection_token(&str[i], head));
 	else
@@ -63,10 +67,8 @@ void	create_token(t_type type, char *text, t_token **head)
 void	create_io_file_tokens(t_token **head)
 {
 	t_token	*iterate;
-	bool	file;
 
 	iterate = *head;
-	file = false;
 	while (iterate != NULL)
 	{	
 		if (iterate->type == REDIRECT && iterate->next != NULL)

@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:52:47 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/10 17:27:57 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/11 15:28:45 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,14 @@ void	test_get_cmd_location(void)
 	t_token	*iterate;
 
 	head = NULL;
-	tokenize_string("cat | wc -w | sws swa", &head);
-	iterate = get_cmd_location(&head, 1);
-	assert(ft_strncmp(iterate->text, "wc", 2) == 0);
-	iterate = get_cmd_location(&head, 0);
-	assert(ft_strncmp(iterate->text, "cat", 3) == 0);
-	iterate = get_cmd_location(&head, 2);
-	assert(ft_strncmp(iterate->text, "sws", 3) == 0);
-	free_func_token(&head);
+	// tokenize_string("< infile > outfile cat | < infile wc -w | sws swa > outfile", &head);
+	// iterate = get_cmd_location(&head, 1);
+	// assert(ft_strncmp(iterate->text, "wc", 2) == 0);
+	// iterate = get_cmd_location(&head, 0);
+	// assert(ft_strncmp(iterate->text, "cat", 3) == 0);
+	// iterate = get_cmd_location(&head, 2);
+	// assert(ft_strncmp(iterate->text, "sws", 3) == 0);
+	// free_func_token(&head);
 	tokenize_string("< infile > outfile cat | < infile wc -w | sws swa > outfile", &head);
 	iterate = get_cmd_location(&head, 1);
 	assert(ft_strncmp(iterate->text, "<", 1) == 0);
@@ -91,5 +91,26 @@ void	test_get_cmd_location(void)
 	assert(ft_strncmp(iterate->text, "<", 1) == 0);
 	iterate = get_cmd_location(&head, 2);
 	assert(ft_strncmp(iterate->text, "sws", 3) == 0);
+	free_func_token(&head);
+	tokenize_string("cat Makefile | wc > out | ls | pwd > out2", &head);
+	iterate = get_cmd_location(&head, 2);
+	assert(ft_strncmp(iterate->text, "ls", 2) == 0);
+	free_func_token(&head);
+}
+
+void	test_count_redirect(void)
+{
+	t_token	*head;
+	t_token	*iterate;
+
+	tokenize_string("cat Makefile | wc | ls | pwd > out2", &head);
+	iterate = get_cmd_location(&head, 0);
+	assert(count_redirect(iterate) == 0);
+	iterate = get_cmd_location(&head, 1);
+	assert(count_redirect(iterate) == 0);
+	iterate = get_cmd_location(&head, 2);
+	assert(count_redirect(iterate) == 0);
+	iterate = get_cmd_location(&head, 3);
+	assert(count_redirect(iterate) == 1);
 	free_func_token(&head);
 }
