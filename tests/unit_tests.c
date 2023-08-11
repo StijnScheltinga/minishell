@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:22:38 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/11 15:44:48 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/11 16:17:28 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(void)
 	
 	head = NULL;
 	cmd_table = malloc(sizeof(t_cmd_table));
-	text = "cat Makefile | wc > out | ls | pwd > out1";
+	text = "ls > > out1";
 	// text = "ls > out | ls";
 	atexit(leaks);
 	// assert_tests();

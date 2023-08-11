@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:51:46 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/11 14:05:05 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/11 16:00:24 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ int			parse_tokens(t_cmd_table *cmd_table, t_token **head);
 void		init_cmd_table(t_cmd_table *cmd_table, t_token **head);
 void		fill_cmd_arr(t_cmd_table *cmd_table, t_token **head);
 char		**single_command(t_token **head, int num_of_arguments, int i);
+
 int			grammar_check(t_token **head);
-int			pipe_check(t_token **head);
+int			double_metachar_check(t_token **head);
 
 void		create_redirect_arr(t_command *single_cmd_info, t_token **head, int i);
 int			count_redirect(t_token *start);

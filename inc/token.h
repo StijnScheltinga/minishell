@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:42:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/10 16:28:31 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/11 16:15:46 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_token {
 	t_token	*next;
 }	t_token;
 
-void	tokenize_string(char *input_string, t_token **head);
+int		tokenize_string(char *input_string, t_token **head);
 int		assign_token(char *str, t_token **head);
 void	create_token(t_type type, char *text, t_token **head);
 void	create_io_file_tokens(t_token **head);

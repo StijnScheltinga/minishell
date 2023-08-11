@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   grammar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 13:42:21 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/13 11:24:58 by stijn            ###   ########.fr       */
+/*   Updated: 2023/08/11 16:07:40 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,23 @@
 
 int	grammar_check(t_token **head)
 {
-	if (pipe_check(head))
+	if (double_metachar_check(head))
 		return (1);
 	return (0);
 }
 
-int	pipe_check(t_token **head)
+int	double_metachar_check(t_token **head)
 {
 	t_token	*iterate;
 
 	iterate = *head;
 	if (iterate->type == PIPE)
-		return (syntax_error('|'));
+		return (syntax_error(iterate->text));
 	while (iterate != NULL)
 	{
-		if (iterate->type == PIPE && iterate->next->type == PIPE)
-			return (syntax_error('|'));
+		if ((iterate->type == PIPE || iterate->type == REDIRECT) 
+			&& (iterate->next->type == PIPE || iterate->next->type == REDIRECT))
+			return (syntax_error(iterate->next->text));
 		iterate = iterate->next;
 	}
 	return (0);
