@@ -44,9 +44,9 @@ void	redirect_child(t_cmd_table *cmd_table, int (*fd)[2], int cmd_index)
 	if (redirect_arr)
 	{
 		if (redirect_arr->type == INFILE)
-			redirect_arr_input(redirect_arr);
+			redirect_input(redirect_arr);
 		if (redirect_arr->type == OUTFILE || redirect_arr->type == APPEND)
-			redirect_arr_output(redirect_arr);
+			redirect_output(redirect_arr);
 		if (redirect_arr->type != INFILE)
 			dup2(fd[cmd_index - 1][READ], STDIN_FILENO);
 		if (redirect_arr->type != OUTFILE && redirect_arr->type != APPEND)

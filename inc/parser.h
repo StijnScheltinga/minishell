@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:51:46 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/10 17:17:55 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/11 13:45:59 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int			count_redirect(t_token *iterate);
 void		fill_redirect_arr(t_redirect *redirect_arr, t_token *iterate);
 
 void		free_func_cmd_table(t_cmd_table *cmd_table, t_token **head);
+void		free_redirect_array(t_redirect *redirect_arr, unsigned int redirect_count);
 void		free_double_array(char	**double_array);
 int			num_of_arguments(t_token **head, int i);
 t_token		*get_cmd_location(t_token **head, int i);
