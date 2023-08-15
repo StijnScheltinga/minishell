@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 18:03:11 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/10 17:12:33 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/15 17:40:10 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ void print_tokenize_string(char *text, t_token **head)
 	}
 }
 
-void	test_count_cmd(void)
-{
-	t_token *head;
+// void	test_count_cmd(void)
+// {
+// 	t_token *head;
 
-	head = NULL;
-	tokenize_string("< infile ls -la | cat -a | wc -l -w > outfile", &head);
-	assert(count_cmd(&head) == 3);
-	free_func_token(&head);
-}
+// 	head = NULL;
+// 	tokenize_string("< infile ls -la | cat -a | wc -l -w > outfile", &head);
+// 	assert(count_cmd(&head) == 3);
+// 	free_func_token(&head);
+// }

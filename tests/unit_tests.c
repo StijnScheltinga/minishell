@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:22:38 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/11 16:17:28 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/15 17:39:26 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ void	leaks(void)
 	system("leaks -s test");
 }
 
-void	assert_tests(void)
-{
-	test_num_of_arguments();
-	test_get_cmd_location();
-	test_count_cmd();
-	test_count_redirect();
-}
+// void	assert_tests(void)
+// {
+// 	test_num_of_arguments();
+// 	test_get_cmd_location();
+// 	test_count_cmd();
+// 	test_count_redirect();
+// }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	t_token 	*head;
 	t_cmd_table	*cmd_table;
@@ -33,11 +33,12 @@ int	main(void)
 	
 	head = NULL;
 	cmd_table = malloc(sizeof(t_cmd_table));
-	text = "ls > > out1";
+	cmd_table->env = env_to_linkedlist(envp);
+	text = "cat \'\' | pwd > out2";
 	// text = "ls > out | ls";
 	atexit(leaks);
 	// assert_tests();
-	tokenize_string(text, &head);
+	tokenize_string(text, &head, &cmd_table->env);
 	print_tokenize_string(text, &head);
 	parse_tokens(cmd_table, &head);
 	print_cmd_table(&head, cmd_table);

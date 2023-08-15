@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:53:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/11 14:07:27 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/15 17:40:42 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../inc/token.h"
 # include "../inc/parser.h"
+# include "../inc/env_init.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <stddef.h>

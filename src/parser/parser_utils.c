@@ -6,13 +6,12 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 13:06:23 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/11 13:47:29 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/15 13:07:47 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parser.h"
 
-//freeing double array input and output file needs to be implemented
 void	free_func_cmd_table(t_cmd_table *cmd_table, t_token **head)
 {
 	int	i;
@@ -21,7 +20,8 @@ void	free_func_cmd_table(t_cmd_table *cmd_table, t_token **head)
 	while (i != count_cmd(head))
 	{
 		free_double_array(cmd_table->cmd_arr[i].single_cmd);
-		free_redirect_array(cmd_table->cmd_arr[i].redirect_arr, cmd_table->cmd_arr[i].redirect_count);
+		if (cmd_table->cmd_arr[i].redirect_arr)
+			free_redirect_array(cmd_table->cmd_arr[i].redirect_arr, cmd_table->cmd_arr[i].redirect_count);
 		i++;
 	}
 	free(cmd_table->cmd_arr);
