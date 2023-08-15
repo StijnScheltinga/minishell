@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:38:34 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/11 16:20:41 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/15 14:45:16 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,15 @@ int	assign_token(char *str, t_token **head)
 	int		i;
 
 	i = 0;
-	if (str[i] == '|')
+	if (*str == '|')
 		create_token(PIPE, ft_strdup("|"), head);
-	else if (str[i] == '>' || str[i] == '<')
-		return (create_redirection_token(&str[i], head));
+	else if (*str == '>' || *str == '<')
+		return (create_redirection_token(str, head));
+	else if (*str == '"' || *str == '\'')
+		return (handle_quotes(str, head));
 	else
 	{
-		while (str[i] && !ft_iswhitespace(str[i]))
+		while (str[i] && !ft_iswhitespace(str[i]) && !ismetachar(str[i]))
 			i++;
 		text = ft_substr(str, 0, i);
 		create_token(WORD, text, head);

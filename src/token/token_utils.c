@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/10 17:17:29 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/15 12:35:04 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 bool	ft_iswhitespace(char a)
 {
 	if (a == ' ' || a == '\t' || a == '\n')
+		return (true);
+	return (false);
+}
+
+bool	ismetachar(char a)
+{
+	if (a == '|' || a == '<' || a == '>')
 		return (true);
 	return (false);
 }

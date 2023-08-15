@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:52:47 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/11 15:28:45 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/15 14:32:52 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	print_cmd_table(t_token **head, t_cmd_table *cmd_table)
 		printf("command: %d\n", i);
 		print_double_array(cmd_table->cmd_arr[i].single_cmd);
 		printf("total redirections: %d\n", cmd_table->cmd_arr[i].redirect_count);
-		print_redirect(cmd_table->cmd_arr[i].redirect_arr, cmd_table->cmd_arr[i].redirect_count);
+		if (cmd_table->cmd_arr[i].redirect_arr)
+			print_redirect(cmd_table->cmd_arr[i].redirect_arr, cmd_table->cmd_arr[i].redirect_count);
 		i++;
 	}
 }
