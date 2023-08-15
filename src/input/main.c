@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:10:05 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/11 16:19:14 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/15 16:02:02 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
 		input_string = get_line();
 		if (!input_string)
 			continue ;
-		if (!tokenize_string(input_string, &token_head))
+		if (!tokenize_string(input_string, &token_head, &cmd_table->env))
 		{
 			parse_tokens(cmd_table, &token_head);
 			execute(cmd_table);

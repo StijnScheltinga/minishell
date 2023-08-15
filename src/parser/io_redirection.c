@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:45:23 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/11 14:04:44 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/15 18:05:24 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	create_redirect_arr(t_command *single_cmd_info, t_token **head, int i)
 		fill_redirect_arr(single_cmd_info->redirect_arr, start);
 	}
 	else
+	{
 		single_cmd_info->redirect_arr = NULL;
+		single_cmd_info->redirect_count = 0;
+	}
 }
 
 int	count_redirect(t_token *start)
