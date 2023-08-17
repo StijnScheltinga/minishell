@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin_with_slash.c                            :+:      :+:    :+:   */
+/*   ft_strjoin_with_char.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 13:48:13 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/03 13:51:21 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/17 11:39:34 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin_with_slash(char const *s1, char const *s2)
+char	*ft_strjoin_with_char(char const *s1, char const *s2, char c)
 {
 	int		i;
 	int		j;
@@ -27,7 +27,7 @@ char	*ft_strjoin_with_slash(char const *s1, char const *s2)
 		return (NULL);
 	while (s1[i++])
 		new_str[i - 1] = s1[i - 1];
-	new_str[i - 1] = '/';
+	new_str[i - 1] = c;
 	while (s2[j++])
 		new_str[i++] = s2[j - 1];
 	new_str[i] = '\0';
