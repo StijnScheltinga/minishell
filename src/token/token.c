@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:38:34 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/15 16:10:20 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/17 17:45:12 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	assign_token(char *str, t_token **head, t_env **env_list)
 	else if (*str == '>' || *str == '<')
 		return (create_redirection_token(str, head));
 	else if (*str == '"' || *str == '\'')
-		return (handle_quotes(str, head));
+		return (handle_quotes(str, head, env_list));
 	else if (*str == '$')
 		return (expand_env_var(str, head, env_list));
 	else

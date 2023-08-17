@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   expansions.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/06 17:06:09 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/17 17:15:20 by sschelti         ###   ########.fr       */
+/*   Created: 2023/08/17 13:18:14 by sschelti          #+#    #+#             */
+/*   Updated: 2023/08/17 17:44:10 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef EXPANSION_H
+# define EXPANSION_H
 
-size_t	ft_strlen(const char *str)
-{
-	int	i;
+# include "token.h"
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
+typedef struct s_token	t_token;
+
+int		expand_env_var(char *str, t_token **head, t_env **env_list);
+char	*expand_var_quotes(char *text, t_env **env_list);
+char	*find_var_val(char *text, t_env **env_list);
+int		find_var_length(char *text, t_env **env_list);
+
+#endif

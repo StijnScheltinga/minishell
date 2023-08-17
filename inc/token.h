@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:42:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/15 18:03:32 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/17 17:44:41 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../libft/libft.h"
 # include "env_init.h"
+# include "expansions.h"
 # include <stdbool.h>
 # include <stdlib.h>
 
@@ -40,8 +41,7 @@ int		assign_token(char *str, t_token **head, t_env **env_list);
 void	create_token(t_type type, char *text, t_token **head);
 void	create_io_file_tokens(t_token **head);
 int		create_redirection_token(char *str, t_token **head);
-int		handle_quotes(char *str, t_token **head);
-int		expand_env_var(char *str, t_token **head, t_env **env_list);
+int		handle_quotes(char *str, t_token **head, t_env **env_list);
 
 int		count_cmd(t_token **head);
 bool	ft_iswhitespace(char a);
