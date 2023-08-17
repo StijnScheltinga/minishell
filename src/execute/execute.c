@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/11 16:21:51 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/15 18:29:11 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	execute_with_child(t_cmd_table *cmd_table, int (*fd)[2], int cmd_index)
 	if (is_builtin(cmd_table->cmd_arr[cmd_index].single_cmd[0]) == true)
 		execute_builtin(cmd_table, cmd_index);
 	else
-		ft_execve(cmd_table->cmd_arr[cmd_index].single_cmd, cmd_table->envp);
+		ft_execve(cmd_table->cmd_arr[cmd_index].single_cmd, &cmd_table->env);
 }
 
 void	execute_multiple_cmd(t_cmd_table *cmd_table)
@@ -79,7 +79,7 @@ void	execute_single_cmd(t_cmd_table *cmd_table)
 	if (pid == 0)
 	{
 		redirect_single_child(cmd_table);
-		ft_execve(cmd_table->cmd_arr[0].single_cmd, cmd_table->envp);
+		ft_execve(cmd_table->cmd_arr[0].single_cmd, &cmd_table->env);
 	}
 	waitpid(pid, &status, 0);
 }
