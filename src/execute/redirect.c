@@ -67,8 +67,7 @@ int	redirect_output(t_redirect *redirect_arr, int redirect_count)
 	return (0);
 }
 
-
-void	redirect_child(t_cmd_table *cmd_table, int (*fd)[2], int cmd_index)
+void	redirect_child(t_cmd_table *cmd_table, int fd[2], int rd, int cmd_index)
 {
 	t_redirect *redirect_arr;
 	int			redirect_count;
@@ -78,16 +77,16 @@ void	redirect_child(t_cmd_table *cmd_table, int (*fd)[2], int cmd_index)
 	if (redirect_count != 0)
 	{
 		if (redirect_input(redirect_arr, redirect_count) && cmd_index != 0)
-			dup2(fd[cmd_index - 1][READ], STDIN_FILENO);
+			dup2(rd, STDIN_FILENO);
 		if (redirect_output(redirect_arr, redirect_count) && cmd_index != cmd_table->cmd_count -1)
-			dup2(fd[cmd_index][WRITE], STDOUT_FILENO);
+			dup2(fd[WRITE], STDOUT_FILENO);
 	}
 	else
 	{
 		if (cmd_index != 0)
-			dup2(fd[cmd_index - 1][READ], STDIN_FILENO);
-		if (cmd_index != cmd_table->cmd_count -1)
-			dup2(fd[cmd_index][WRITE], STDOUT_FILENO);
+			dup2(rd, STDIN_FILENO);
+		if (cmd_index != cmd_table->cmd_count - 1)
+			dup2(fd[WRITE], STDOUT_FILENO);
 	}
 }
 

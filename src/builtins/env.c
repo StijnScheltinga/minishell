@@ -6,18 +6,21 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:03:09 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/18 11:35:20 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/17 15:26:58 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/builtin.h"
 
-void	env(t_env *head)
+void	env(t_env **head)
 {
-	while (head)
+	t_env	*env;
+
+	env = *head;
+	while (env)
 	{
-		printf("%s=%s\n", head->variable, head->value);
-		head = head->next;
+		printf("%s=%s\n", env->variable, env->value);
+		env = env->next;
 	}
 }
 

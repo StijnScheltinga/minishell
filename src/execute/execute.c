@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/15 18:29:11 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:10:46 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@
 
 #include <fcntl.h>
 
-void	execute_with_child(t_cmd_table *cmd_table, int (*fd)[2], int cmd_index)
+void	execute_with_child2(t_cmd_table *cmd_table, int fd[2], int rd, int cmd_index)
 {
-	close_unused_pipes(cmd_table, fd, cmd_index);
-	redirect_child(cmd_table, fd, cmd_index);
+	redirect_child(cmd_table, fd, rd, cmd_index);
 	if (is_builtin(cmd_table->cmd_arr[cmd_index].single_cmd[0]) == true)
 		execute_builtin(cmd_table, cmd_index);
 	else
@@ -31,30 +30,25 @@ void	execute_with_child(t_cmd_table *cmd_table, int (*fd)[2], int cmd_index)
 
 void	execute_multiple_cmd(t_cmd_table *cmd_table)
 {
-	int		i;
-	int		(*fd)[2];
+	int		i, status;
+	int		fd[2];
+	int		rd;
 	pid_t	pid;
 
 	i = 0;
-	fd = malloc(sizeof(int[2]) * cmd_table->cmd_count - 1);
-	while (i < cmd_table->cmd_count - 1)
-		pipe(fd[i++]);
-	i = 0;
+	rd = STDIN_FILENO;
 	while (i < cmd_table->cmd_count)
 	{
+		pipe(fd);
 		pid = fork();
-		if (pid == -1)
-		{
-			//ERROR
-		}
-		else if (pid == 0)
-		{
-			execute_with_child(cmd_table, fd, i);
-		}
+		if (pid == 0)
+			execute_with_child2(cmd_table, fd, rd, i);
+		wait(NULL);
+		rd = dup(fd[0]);
+		close(fd[0]);
+		close(fd[1]);
 		i++;
 	}
-	wait(NULL);
-	close_all_pipes(fd, cmd_table->cmd_count - 1);
 }
 
 // check if its a builtin with no other commands
