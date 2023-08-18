@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:29:55 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/17 11:29:21 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/17 15:33:37 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,22 @@ bool	is_builtin(char *arg)
 
 void	execute_builtin(t_cmd_table *cmd_table, int cmd_index)
 {
-	char **arg = cmd_table->cmd_arr[cmd_index].single_cmd;
+	char **arg;
+
+	arg = cmd_table->cmd_arr[cmd_index].single_cmd;
 	if (ft_strncmp("echo", arg[0], ft_strlen(arg[0])) == 0)
-		echo(arg[1]);
+		echo(arg);
 	else if (ft_strncmp("cd", arg[0], ft_strlen(arg[0])) == 0)
 		cd(arg[1], cmd_table->envp);
 	else if (ft_strncmp("pwd", arg[0], ft_strlen(arg[0])) == 0)
 		pwd();
-	if (ft_strncmp("export", arg[0], ft_strlen(arg[0])) == 0)
+	else if (ft_strncmp("export", arg[0], ft_strlen(arg[0])) == 0)
 		export(cmd_table, arg);
-	if (ft_strncmp("unset", arg[0], ft_strlen(arg[0])) == 0)
+	else if (ft_strncmp("unset", arg[0], ft_strlen(arg[0])) == 0)
 		unset(cmd_table, arg);
-	if (ft_strncmp("env", arg[0], ft_strlen(arg[0])) == 0)
-		env(cmd_table->env);
-	if (ft_strncmp("exit", arg[0], ft_strlen(arg[0])) == 0)
+	else if (ft_strncmp("env", arg[0], ft_strlen(arg[0])) == 0)
+		env(&cmd_table->env);
+	else if (ft_strncmp("exit", arg[0], ft_strlen(arg[0])) == 0)
 		ms_exit(arg);
 	if (cmd_table->cmd_count > 1)
 		exit(0);
