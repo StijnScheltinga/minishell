@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:07:18 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/09 12:07:19 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/18 12:10:24 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <sys/wait.h>
 #include "parser.h"
 
-void	execute_with_child(t_cmd_table *cmd_table, int (*fd)[2], int cmd_index);
+void	execute_with_child(t_cmd_table *cmd_table, int fd[2], int rd, int cmd_index);
 void	execute_multiple_cmd(t_cmd_table *cmd_table);
 void	execute_single_cmd(t_cmd_table *cmd_table);
 void	execute(t_cmd_table *cmd_table);
