@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 11:54:07 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/15 16:24:17 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/18 12:45:35 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../inc/error.h"
 
 //return amount of char within quote
-int	handle_quotes(char *str, t_token **head)
+int	handle_quotes(char *str, t_token **head, t_env **env_list)
 {
 	int		i;
 	char	*text;
@@ -23,6 +23,8 @@ int	handle_quotes(char *str, t_token **head)
 	while (str[i] && str[i] != str[0])
 		i++;
 	text = ft_substr(str, 1, i - 1);
+	if (str[0] == '"')
+		text = expand_var_quotes(text, env_list);
 	create_token(WORD, text, head);
 	return (i + 1);
 }
@@ -61,31 +63,5 @@ int	create_redirection_token(char *str, t_token **head)
 	}
 	text = ft_substr(str, 0, i);
 	create_token(REDIRECT, text, head);
-	return (i);
-}
-
-int		expand_env_var(char *str, t_token **head, t_env **env_list)
-{
-	t_env	*iterate;
-	char	*var_name;
-	int		i;
-
-	iterate = *env_list;
-	i = 1;
-	while (str[i] && !ft_iswhitespace(str[i]))
-		i++;
-	var_name = ft_substr(str, 1, i);
-	while (iterate != NULL)
-	{
-		if (!ft_strncmp(iterate->variable, var_name, ft_strlen(var_name)))
-		{
-			create_token(WORD, iterate->value, head);
-			break ;
-		}
-		iterate = iterate->next;
-	}
-	if (!iterate)
-		create_token(WORD, "", head);
-	free (var_name);
 	return (i);
 }
