@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:17:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/17 18:22:22 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/18 12:44:40 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,48 @@ int	expand_env_var(char *str, t_token **head, t_env **env_list)
 //if env variable is found expand to value, else delete variable from string
 char	*expand_var_quotes(char *text, t_env **env_list)
 {
-	find_var_length(text, env_list);
-	return (NULL);
+	char	*exp_str;
+	int		len;
+	int		i;
+	int		j;
+
+	len = find_var_length(text, env_list);
+	exp_str = malloc(sizeof(char) * len + 1);
+	i = 0;
+	j = 0;
+	while (text[i])
+	{
+		if (text[i] == '$')
+		{
+			j += fill_env_var(&text[i], &exp_str[j], env_list);
+			while (text[i] && !ft_iswhitespace(text[i]))
+				i++;
+			continue;
+		}
+		exp_str[j] = text[i];
+		j++;
+		i++;
+	}
+	exp_str[j] = '\0';
+	free(text);
+	return (exp_str);
+}
+
+int	fill_env_var(char *text, char *exp_str, t_env **env_list)
+{
+	char	*var_val;
+	int		i;
+
+	var_val = find_var_val(text, env_list);
+	i = 0;
+	if (!var_val)
+		return (0);
+	while (var_val[i])
+	{
+		exp_str[i] = var_val[i];
+		i++;
+	}
+	return (i);
 }
 
 char	*find_var_val(char *text, t_env **env_list)
@@ -89,6 +129,5 @@ int	find_var_length(char *text, t_env **env_list)
 		i++;
 		len++;
 	}
-	dprintf(1, "string len expanded: %d\n", len);
 	return (len);
 }
