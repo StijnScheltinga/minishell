@@ -3,7 +3,7 @@ SOURCES		:=	main.c token.c token_utils.c \
 				parser_utils.c io_redirection.c cd.c echo.c \
 				env.c exit.c export.c \
 				pwd.c unset.c builtin.c \
-				execute.c execve.c pipes.c \
+				execute.c execve.c \
 				grammar.c grammar_error.c history.c \
 				env_init.c env_utils.c redirect.c \
 				create_token.c expansions.c execve_error.c
@@ -13,7 +13,7 @@ OBJECTS		:=	$(addprefix $(BUILD)/, $(SOURCES:.c=.o))
 NAME		:=	minishell
 FLAGS		:=	-fsanitize=address
 CC			:=	gcc
-HEADER		:=	inc/main.h libft/libft.h inc/token.h inc/parser.h inc/builtin.h inc/execute.h inc/execve.h inc/pipes.h inc/redirect.h inc/env_init.h inc/env_utils.h inc/expansions.h
+HEADER		:=	inc/main.h libft/libft.h inc/token.h inc/parser.h inc/builtin.h inc/execute.h inc/execve.h inc/redirect.h inc/env_init.h inc/env_utils.h inc/expansions.h
 LIBFT		:=	libft/libft.a
 LIB_DIR		:=	libft
 LIBS		:=	-lreadline

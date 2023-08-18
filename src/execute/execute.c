@@ -6,14 +6,13 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/18 12:46:44 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/18 15:02:33 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/execute.h"
 #include "../../inc/builtin.h"
 #include "../../inc/execve.h"
-#include "../../inc/pipes.h"
 #include "../../inc/parser.h"
 #include "../../inc/redirect.h"
 
@@ -48,7 +47,8 @@ void	execute_multiple_cmd(t_cmd_table *cmd_table)
 			execute_with_child(cmd_table, fd, read, i);
 		waitpid(pid, &status, 0);
 		read = dup(fd[0]);
-		close_pipes(fd);
+		close(fd[0]);
+		close(fd[1]);
 		i++;
 	}
 }
