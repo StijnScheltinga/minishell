@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/21 13:25:09 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/21 13:30:19 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,19 @@
 
 #include <fcntl.h>
 
-void	execute_with_child(t_cmd_table *cmd_table, int fd[2], int rd, int cmd_index)
+void	execute_with_child(t_cmd_table *cmd_table, int fd[2], int rd, int cmd_i)
 {
-	redirect_child(cmd_table, fd, rd, cmd_index);
-	if (is_builtin(cmd_table->cmd_arr[cmd_index].single_cmd[0]) == true)
-		execute_builtin(cmd_table, cmd_index);
+	redirect_child(cmd_table, fd, rd, cmd_i);
+	if (is_builtin(cmd_table->cmd_arr[cmd_i].single_cmd[0]) == true)
+		execute_builtin(cmd_table, cmd_i);
 	else
-		ft_execve(cmd_table->cmd_arr[cmd_index].single_cmd, &cmd_table->env);
+		ft_execve(cmd_table->cmd_arr[cmd_i].single_cmd, &cmd_table->env);
 }
 
 void	execute_multiple_cmd(t_cmd_table *cmd_table)
 {
-	int		i, status;
+	int		i;
+	int		status;
 	int		fd[2];
 	int		read;
 	pid_t	pid;

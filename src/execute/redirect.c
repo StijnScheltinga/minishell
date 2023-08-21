@@ -40,49 +40,52 @@ int	redirect_input(t_redirect *redirect_arr, int redirect_count)
 	return (0);
 }
 
-int	redirect_output(t_redirect *red_arr, int red_count)
+int	redirect_output(t_redirect *red, int red_count)
 {
-	int	fd;
-	int	i;
-	int	out_i;
+	int		fd;
+	int		i;
+	int		out_i;
+	char	*file;
 
 	i = 0;
 	out_i = -1;
 	while (i < red_count)
 	{
-		if (red_arr[i].type == OUTFILE || red_arr[i].type == APPEND)
+		if (red[i].type == OUTFILE || red[i].type == APPEND)
 		{
 			out_i = i;
-			open(red_arr[i].file_name, O_WRONLY | O_CREAT, 0644);
+			open(red[i].file_name, O_WRONLY | O_CREAT, 0644);
 		}
 		i++;
 	}
 	if (out_i == -1)
 		return (1);
-	if (red_arr[out_i].type == OUTFILE)
-		fd = open(red_arr[out_i].file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (red[out_i].type == OUTFILE)
+		fd = open(red[out_i].file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
-		fd = open(red_arr[out_i].file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		fd = open(red[out_i].file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	dup2(fd, STDOUT_FILENO);
 	return (0);
 }
 
-void	redirect_child(t_cmd_table *cmd_table, int fd[2], int rd, int cmd_index)
+void	redirect_child(t_cmd_table *cmd_table, int fd[2], int rd, int cmd_i)
 {
-	t_redirect *redirect_arr;
+	t_redirect	*redirect_arr;
 	int			redirect_count;
+	int			last_command_index;
 
-	redirect_arr = cmd_table->cmd_arr[cmd_index].redirect_arr;
-	redirect_count = cmd_table->cmd_arr[cmd_index].redirect_count;
+	redirect_arr = cmd_table->cmd_arr[cmd_i].redirect_arr;
+	redirect_count = cmd_table->cmd_arr[cmd_i].redirect_count;
+	last_command_index = cmd_i != cmd_table->cmd_count - 1;
 	if (redirect_input(redirect_arr, redirect_count))
 		dup2(rd, STDIN_FILENO);
-	if (redirect_output(redirect_arr, redirect_count) && cmd_index != cmd_table->cmd_count -1)
+	if (redirect_output(redirect_arr, redirect_count) && last_command_index)
 		dup2(fd[WRITE], STDOUT_FILENO);
 }
 
 void	redirect_single_child(t_cmd_table *cmd_table)
 {
-	t_redirect *redirect_arr;
+	t_redirect	*redirect_arr;
 	int			redirect_count;
 
 	redirect_arr = cmd_table->cmd_arr[0].redirect_arr;

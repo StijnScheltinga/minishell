@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:50:14 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/18 13:42:33 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/21 14:13:18 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ static void	create_export_variable(t_cmd_table *cmd_table, char *arg)
 		env_lstadd_back(cmd_table->env, new);
 	}
 }
-
 
 void	export(t_cmd_table *cmd_table, char **cmd)
 {
