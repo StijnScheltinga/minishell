@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:48:04 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/17 16:45:56 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/24 19:22:37 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ char *get_line(void)
 		free(input_string);
 		input_string = NULL;
 	}
-	input_string = readline(NULL);
+	input_string = readline("ms: ");
+	if (!input_string)
+		return (NULL);
 	if (input_string[0] == '\0')
 		return(NULL);
 	add_history(input_string);
