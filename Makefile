@@ -6,27 +6,28 @@ SOURCES		:=	main.c token.c token_utils.c \
 				execute.c execve.c \
 				grammar.c grammar_error.c history.c \
 				env_init.c env_utils.c redirect.c \
-				create_token.c expansions.c execve_error.c
+				create_token.c expansions.c execve_error.c \
+				signals.c
 BUILD		:=	build
-VPATH		:=	src/ src/input src/token src/parser src/builtins src/execute src/error src/env src/expander
+VPATH		:=	src/ src/input src/token src/parser src/builtins src/execute src/error src/env src/expander src/signals
 OBJECTS		:=	$(addprefix $(BUILD)/, $(SOURCES:.c=.o))
 NAME		:=	minishell
-FLAGS		:=	-fsanitize=address
-CC			:=	gcc
-HEADER		:=	inc/main.h libft/libft.h inc/token.h inc/parser.h inc/builtin.h inc/execute.h inc/execve.h inc/redirect.h inc/env_init.h inc/env_utils.h inc/expansions.h
+FLAGS		:=	-fsanitize=address -I$(shell brew --prefix readline)/include
+CC			:=	gcc 
+HEADER		:=	inc/main.h libft/libft.h inc/token.h inc/parser.h inc/builtin.h inc/execute.h inc/execve.h inc/redirect.h inc/env_init.h inc/env_utils.h inc/expansions.h inc/signals.h
 LIBFT		:=	libft/libft.a
 LIB_DIR		:=	libft
-LIBS		:=	-lreadline
+LIBS		:=	-lreadline -L$(shell brew --prefix readline)/lib
 
 all: $(NAME)
 
 $(NAME): $(OBJECTS) $(LIBFT)
 	@printf "Compiling $(NAME)\n"
-	$(CC) $(FLAGS) -o $(NAME) $(OBJECTS) $(LIBFT) $(LIBS)
+	@$(CC) $(FLAGS) -o $(NAME) $(OBJECTS) $(LIBFT) $(LIBS)
 
 $(BUILD)/%.o: %.c $(HEADER) | $(BUILD)
 	@printf "Compiling $<\n"
-	$(CC) -g $(FLAGS) -c $< -o $@
+	@$(CC) -g $(FLAGS) -c $< -o $@
 
 $(BUILD):
 	@mkdir -p $(BUILD)
@@ -35,12 +36,12 @@ $(LIBFT):
 	make -C $(LIB_DIR)
 
 clean:
-	rm -rf $(OBJECTS) $(BUILD)
+	@rm -rf $(OBJECTS) $(BUILD)
 	$(MAKE) -C $(LIB_DIR) clean
 	@printf "Cleaned ✅\n"
 
 fclean:
-	rm -rf $(OBJECTS) $(NAME) $(BUILD) test
+	@rm -rf $(OBJECTS) $(NAME) $(BUILD) test
 	$(MAKE) -C $(LIB_DIR) fclean
 	@printf "Fcleaned ✅\n"
 
