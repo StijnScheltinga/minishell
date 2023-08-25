@@ -7,7 +7,7 @@ SOURCES		:=	main.c token.c token_utils.c \
 				grammar.c grammar_error.c history.c \
 				env_init.c env_utils.c redirect.c \
 				create_token.c expansions.c execve_error.c \
-				signals.c
+				signals.c export_error.c
 BUILD		:=	build
 VPATH		:=	src/ src/input src/token src/parser src/builtins src/execute src/error src/env src/expander src/signals
 OBJECTS		:=	$(addprefix $(BUILD)/, $(SOURCES:.c=.o))

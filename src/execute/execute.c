@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/21 13:30:19 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/25 17:16:59 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "../../inc/execve.h"
 #include "../../inc/parser.h"
 #include "../../inc/redirect.h"
+#include "../../inc/signals.h"
 
 #include <fcntl.h>
 
@@ -47,7 +48,8 @@ void	execute_multiple_cmd(t_cmd_table *cmd_table)
 		if (pid == 0)
 			execute_with_child(cmd_table, fd, read, i);
 		waitpid(pid, &status, 0);
-		read = dup(fd[0]);
+		cmd_table->latest_exit_code = WEXITSTATUS(status);
+		read = dup(fd[0]); 
 		close(fd[0]);
 		close(fd[1]);
 		i++;
@@ -73,6 +75,7 @@ void	execute_single_cmd(t_cmd_table *cmd_table)
 	if (pid == 0)
 		ft_execve(cmd_table->cmd_arr[0].single_cmd, &cmd_table->env);
 	waitpid(pid, &status, 0);
+	cmd_table->latest_exit_code = WEXITSTATUS(status);
 }
 
 //restoring stdin and stdout after executing one or more command(s)

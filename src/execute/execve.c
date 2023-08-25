@@ -6,13 +6,14 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:36:53 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/21 13:26:16 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/25 17:33:56 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/execve.h"
 #include "../../inc/env_utils.h"
 #include "../../inc/error.h"
+#include "../../inc/signals.h"
 #include "../../libft/libft.h"
 
 #include <errno.h>
@@ -77,6 +78,7 @@ void	ft_execve(char **cmd, t_env **env_head)
 	path = get_paths(envp);
 	paths = ft_split(path + 5, ':');
 	cmdpath = get_right_path(paths, cmd);
+	sign_child();
 	execve(cmdpath, cmd, envp);
 	free(cmdpath);
 	free_envp(envp);
