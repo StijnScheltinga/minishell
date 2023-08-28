@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_table.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:54:14 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/10 17:16:46 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/25 17:05:04 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	init_cmd_table(t_cmd_table *cmd_table, t_token **head)
 {
 	cmd_table->cmd_count = count_cmd(head); 
+	cmd_table->latest_exit_code = 0;
 	cmd_table->cmd_arr = malloc(count_cmd(head) * sizeof(t_command));
 	fill_cmd_arr(cmd_table, head);
 }

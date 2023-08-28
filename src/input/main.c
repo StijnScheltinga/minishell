@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:10:05 by sschelti          #+#    #+#             */
 /*   Updated: 2023/08/18 15:43:09 by sschelti         ###   ########.fr       */
@@ -14,6 +14,9 @@
 #include "../../inc/token.h"
 #include "../../inc/parser.h"
 #include "../../inc/execute.h"
+#include "../../inc/signals.h"
+
+int g_signumber;
 
 void	leaks(void)
 {
@@ -30,11 +33,11 @@ int	main(int argc, char **argv, char **envp)
 	argv = NULL;
 	token_head = NULL;
 	cmd_table = malloc(sizeof(t_cmd_table));
-	cmd_table->envp = envp;
 	cmd_table->env = env_to_linkedlist(envp);
-	// atexit(leaks);
 	while (1)
 	{
+		g_signumber = 0;
+		sign_init();
 		input_string = get_line();
 		if (!input_string)
 			continue ;

@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipes.h                                            :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/06 18:48:56 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/18 12:32:56 by aolde-mo         ###   ########.fr       */
+/*   Created: 2023/08/22 12:05:39 by aolde-mo          #+#    #+#             */
+/*   Updated: 2023/08/25 19:04:03 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPES_H
-# define PIPES_H
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
-# include "parser.h"
+# include <stdbool.h>
 
-# define READ 0
-# define WRITE 1
-
-void	close_pipes(int fd[2]);
+bool	sig_check(void);
+void	sign_interrupt(int signum);
+void	sign_init(void);
+void	sign_child(void);
+void	ctrl_d();
 
 #endif

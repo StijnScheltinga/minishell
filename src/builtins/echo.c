@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:48:01 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/17 17:30:53 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/21 14:43:53 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	echo(char **arg)
 	if (n_option(arg[1]) == false)
 		write(STDOUT_FILENO, "\n", 1);
 }
-
 
 // int main(void)
 // {

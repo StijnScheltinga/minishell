@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 15:39:26 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/15 18:28:11 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/21 17:05:18 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	env_lstadd_back(t_env *lst, t_env *new)
 	tmp = env_lstlast(lst);
 	tmp->next = new;
 }
-
 
 t_env	*env_lstlast(t_env *lst)
 {
@@ -60,18 +59,19 @@ static int	lst_size(t_env **env_head)
 	env = *env_head;
 	while (env)
 	{
+		if (env->value)
+			size++;
 		env = env->next;
-		size++;
 	}
 	return (size);
 }
 
 char	**linked_list_to_double_array(t_env **env_head)
 {
-	char **ret;
-	t_env *env;
-	int i;
-	int size;
+	char	**ret;
+	t_env	*env;
+	int		i;
+	int		size;
 
 	size = lst_size(env_head);
 	ret = malloc(sizeof(char *) * (size + 1));
@@ -81,9 +81,12 @@ char	**linked_list_to_double_array(t_env **env_head)
 	env = *env_head;
 	while (i < size)
 	{
-		ret[i] = ft_strjoin_with_char(env->variable, env->value, '=');
+		if (env->value)
+		{
+			ret[i] = ft_strjoin_with_char(env->variable, env->value, '=');
+			i++;
+		}
 		env = env->next;
-		i++;
 	}
 	ret[i] = NULL;
 	return (ret);

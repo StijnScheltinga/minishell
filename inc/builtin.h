@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:14:55 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/17 15:26:33 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/24 19:10:00 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	is_builtin(char *arg);
 void	execute_builtin(t_cmd_table *cmd_table, int cmd_index);
 
 void	echo(char **arg);
-void	cd(char *arg, char **envp);
+void	cd(char *arg, t_env **env_head);
 void	env(t_env **head);
 void	ms_exit(char **arg);
 void	export(t_cmd_table *cmd_table, char **cmd);

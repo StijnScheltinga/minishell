@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:50:14 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/07/18 13:42:33 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/25 18:57:32 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,7 @@
 #include "../../inc/parser.h"
 #include "../../inc/env_utils.h"
 #include "../../inc/env_init.h"
-
-static void	export_error_check(void)
-{
-	//NEED TO MAKE
-}
+#include "../../inc/error.h"
 
 static void	print_export(t_cmd_table *cmd_table)
 {
@@ -78,7 +74,6 @@ static void	create_export_variable(t_cmd_table *cmd_table, char *arg)
 {
 	t_env	*new;
 
-	export_error_check();
 	if (export_var_exist(cmd_table, get_env_variable(arg)))
 		replace_var_value(cmd_table, arg);
 	else
@@ -88,17 +83,28 @@ static void	create_export_variable(t_cmd_table *cmd_table, char *arg)
 	}
 }
 
-
 void	export(t_cmd_table *cmd_table, char **cmd)
 {
 	int	i;
 
 	i = 1;
 	if (!cmd[i])
-		print_export(cmd_table);
-	else
 	{
-		while (cmd[i])
-			create_export_variable(cmd_table, cmd[i++]);
+		print_export(cmd_table);
+		return ;
+	}
+	while (cmd[i])
+	{
+		if (export_error_check(cmd[i]))
+		{
+			cmd_table->latest_exit_code = 1;
+			i++;
+		}
+		else
+		{
+			create_export_variable(cmd_table, cmd[i]);
+			cmd_table->latest_exit_code = 0;
+			i++;
+		}
 	}
 }

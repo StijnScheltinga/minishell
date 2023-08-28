@@ -12,6 +12,8 @@
         "error.h": "c",
         "errno.h": "c",
         "execute.h": "c",
-        "pipes.h": "c"
+        "pipes.h": "c",
+        "main.h": "c",
+        "token.h": "c"
     }
 }
