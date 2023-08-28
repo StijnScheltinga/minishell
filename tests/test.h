@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:53:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/15 17:40:42 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/18 15:14:43 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <assert.h>
 
 void	test_num_of_arguments(void);
-void 	print_tokenize_string(char *text, t_token **head);
+void 	print_tokenize_string(t_token **head);
 char 	*type_text(t_type type);
 void	print_cmd_table(t_token **head, t_cmd_table *cmd_table);
 void	print_double_array(char **command);

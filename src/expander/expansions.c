@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:17:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/18 12:44:40 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/18 16:17:59 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@ int	expand_env_var(char *str, t_token **head, t_env **env_list)
 
 	iterate = *env_list;
 	i = 1;
-	while (str[i] && !ft_iswhitespace(str[i]))
+	while (str[i] && !ft_iswhitespace(str[i]) && str[i] != '$')
 		i++;
-	var_name = ft_substr(str, 1, i);
+	var_name = ft_substr(str, 1, i - 1);
 	while (iterate != NULL)
 	{
 		if (!ft_strncmp(iterate->variable, var_name, ft_strlen(var_name)))
 		{
-			create_token(WORD, iterate->value, head);
+			create_token(WORD, ft_strdup(iterate->value), head);
 			break ;
 		}
 		iterate = iterate->next;
 	}
 	if (!iterate)
-		create_token(WORD, "", head);
+		create_token(WORD, ft_strdup(""), head);
 	free (var_name);
 	return (i);
 }
@@ -56,8 +56,8 @@ char	*expand_var_quotes(char *text, t_env **env_list)
 	{
 		if (text[i] == '$')
 		{
-			j += fill_env_var(&text[i], &exp_str[j], env_list);
-			while (text[i] && !ft_iswhitespace(text[i]))
+			j += fill_env_var(&text[i++], &exp_str[j], env_list);
+			while (text[i] && !ft_iswhitespace(text[i]) && text[i] != '$')
 				i++;
 			continue;
 		}
@@ -95,7 +95,7 @@ char	*find_var_val(char *text, t_env **env_list)
 
 	iterate = *env_list;
 	i = 1;
-	while (text[i] && !ft_iswhitespace(text[i]))
+	while (text[i] && !ft_iswhitespace(text[i]) && text[i] != '$')
 		i++;
 	var_name = ft_substr(text, 1, i - 1);
 	while (iterate != NULL)
@@ -122,7 +122,8 @@ int	find_var_length(char *text, t_env **env_list)
 			var_value = find_var_val(&text[i], env_list);
 			if (var_value)
 				len += ft_strlen(var_value);
-			while (text[i] && !ft_iswhitespace(text[i]))
+			i++;
+			while (text[i] && !ft_iswhitespace(text[i]) && text[i] != '$')
 				i++;
 			continue;
 		}
