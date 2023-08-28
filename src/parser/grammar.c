@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 13:42:21 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/11 16:07:40 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/28 16:21:11 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int	double_metachar_check(t_token **head)
 		return (syntax_error(iterate->text));
 	while (iterate != NULL)
 	{
-		if ((iterate->type == PIPE || iterate->type == REDIRECT) 
+		if ((iterate->type == PIPE || iterate->type == REDIRECT)
+			&& iterate->next == NULL)
+			return (syntax_error("newline"));
+		else if ((iterate->type == PIPE || iterate->type == REDIRECT) 
 			&& (iterate->next->type == PIPE || iterate->next->type == REDIRECT))
 			return (syntax_error(iterate->next->text));
 		iterate = iterate->next;

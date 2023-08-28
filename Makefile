@@ -1,5 +1,5 @@
 SOURCES		:=	main.c token.c token_utils.c \
-				token_list.c parser.c cmd_table.c \
+				token_list.c cmd_table.c \
 				parser_utils.c io_redirection.c cd.c echo.c \
 				env.c exit.c export.c \
 				pwd.c unset.c builtin.c \

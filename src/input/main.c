@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:10:05 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/18 15:43:09 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/28 14:56:36 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		if (!tokenize_string(input_string, &token_head, &cmd_table->env))
 		{
-			parse_tokens(cmd_table, &token_head);
+			init_cmd_table(cmd_table, &token_head);
 			execute(cmd_table);
 			free_func_cmd_table(cmd_table, &token_head);
 		}
