@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:42:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/17 17:44:41 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/28 16:41:10 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef enum s_type {
 	INFILE,
 	OUTFILE,
 	APPEND,
+	DELIMITER,
 }	t_type;
 
 typedef struct s_token {

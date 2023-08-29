@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:17:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/18 16:17:59 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/28 15:00:52 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	expand_env_var(char *str, t_token **head, t_env **env_list)
 	var_name = ft_substr(str, 1, i - 1);
 	while (iterate != NULL)
 	{
-		if (!ft_strncmp(iterate->variable, var_name, ft_strlen(var_name)))
+		if (!ft_strncmp(iterate->variable, var_name, ft_strlen(var_name)) && iterate->value)
 		{
 			create_token(WORD, ft_strdup(iterate->value), head);
 			break ;

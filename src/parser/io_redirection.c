@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:45:23 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/15 18:05:24 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/29 14:09:38 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int	count_redirect(t_token *start)
 	redirect_count = 0;
 	while (iterate != NULL && iterate->type != PIPE)
 	{
-		if (iterate->type == INFILE || iterate->type == OUTFILE || iterate->type == APPEND)
+		if (iterate->type == INFILE || iterate->type == OUTFILE 
+			|| iterate->type == APPEND || iterate->type == DELIMITER)
 			redirect_count++;
 		iterate = iterate->next;
 	}
@@ -56,7 +57,8 @@ void	fill_redirect_arr(t_redirect *redirect_arr, t_token *iterate)
 	redirect_i = 0;
 	while (iterate != NULL && iterate->type != PIPE)
 	{
-		if (iterate->type == INFILE || iterate->type == OUTFILE || iterate->type == APPEND)
+		if (iterate->type == INFILE || iterate->type == OUTFILE 
+			|| iterate->type == APPEND || iterate->type == DELIMITER)
 		{
 			redirect_arr[redirect_i].type = iterate->type;
 			redirect_arr[redirect_i].file_name = ft_strdup(iterate->text);

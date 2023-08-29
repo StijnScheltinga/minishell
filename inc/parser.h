@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:51:46 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/25 16:56:22 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/28 14:56:24 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ typedef struct s_cmd_table {
 	t_env			*env;
 }	t_cmd_table;
 
-int			parse_tokens(t_cmd_table *cmd_table, t_token **head);
 void		init_cmd_table(t_cmd_table *cmd_table, t_token **head);
 void		fill_cmd_arr(t_cmd_table *cmd_table, t_token **head);
 char		**single_command(t_token **head, int num_of_arguments, int i);
