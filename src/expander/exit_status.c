@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansions.h                                       :+:      :+:    :+:   */
+/*   exit_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/17 13:18:14 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/29 16:42:02 by sschelti         ###   ########.fr       */
+/*   Created: 2023/08/29 15:38:27 by sschelti          #+#    #+#             */
+/*   Updated: 2023/08/29 15:51:15 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPANSION_H
-# define EXPANSION_H
+#include "../../inc/expansions.h"
+#include "../../inc/token.h"
 
-# include "token.h"
-
-typedef struct s_token	t_token;
-
-int		expand_env_var(char *str, t_token **head, t_env **env_list);
-char	*expand_var_quotes(char *text, t_env **env_list);
-char	*find_var_val(char *text, t_env **env_list);
-int		find_var_length(char *text, t_env **env_list);
-int		fill_env_var(char *text, char *exp_str, t_env **env_list);
-
-#endif
+void	expand_exit_status(char *str)
+{
+	if (*(str + 1) == '?')
+		
+}
