@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 11:54:07 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/28 16:41:05 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/29 14:43:19 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,20 @@ int	handle_quotes(char *str, t_token **head, t_env **env_list)
 {
 	int		i;
 	char	*text;
+	int		last_quote_pos;
 
 	i = 1;
-	while (str[i] && str[i] != str[0])
+	last_quote_pos = 0;
+	while (str[i] && str[i] != '|')
+	{
+		if (str[i] == str[0])
+			last_quote_pos = i;
 		i++;
-	text = ft_substr(str, 1, i - 1);
+	}
+	text = ft_substr(str, 1, last_quote_pos - 1);
 	if (str[0] == '"')
 		text = expand_var_quotes(text, env_list);
+	printf("token: %s\n", text);
 	create_token(WORD, text, head);
 	return (i + 1);
 }
