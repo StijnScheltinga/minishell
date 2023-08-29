@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:36:53 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/25 17:33:56 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/29 15:39:58 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	ft_execve(char **cmd, t_env **env_head)
 	char	**paths;
 	char	*cmdpath;
 
+	if (!cmd[0])
+		exit(0);
 	envp = linked_list_to_double_array(env_head);
 	path = get_paths(envp);
 	paths = ft_split(path + 5, ':');

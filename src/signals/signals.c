@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 12:04:47 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/25 19:03:52 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/28 15:04:17 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <unistd.h>
 #include <signal.h>
 
-extern int g_signumber;
+extern int	g_signumber;
 
 bool	sig_check(void)
 {

@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:29:55 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/24 19:06:14 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/29 15:38:00 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 bool	is_builtin(char *arg)
 {
+	if (!arg)
+		return (false);
 	if (ft_strncmp("echo", arg, ft_strlen(arg) + 1) == 0)
 		return (true);
 	if (ft_strncmp("cd", arg, ft_strlen(arg) + 1) == 0)
