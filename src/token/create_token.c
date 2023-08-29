@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 11:54:07 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/18 12:45:35 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/28 16:41:05 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	create_io_file_tokens(t_token **head)
 		{
 			if (!ft_strncmp(iterate->text, ">>", 2) && iterate->next != NULL)
 				iterate->next->type = APPEND;
+			else if (!ft_strncmp(iterate->text, "<<", 2) && iterate->next != NULL)
+				iterate->next->type = DELIMITER;	
 			else if (!ft_strncmp(iterate->text, "<", 1) && iterate->next != NULL)
 				iterate->next->type = INFILE;
 			else if (!ft_strncmp(iterate->text, ">", 1) && iterate->next != NULL)
