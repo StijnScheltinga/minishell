@@ -1,19 +1,20 @@
 {
     "files.associations": {
-        "fcntl.h": "c",
-        "redirect.h": "c",
-        "execve.h": "c",
-        "env_utils.h": "c",
-        "builtin.h": "c",
-        "env_init.h": "c",
-        "stdbool.h": "c",
-        "libft.h": "c",
-        "parser.h": "c",
-        "error.h": "c",
-        "errno.h": "c",
-        "execute.h": "c",
-        "pipes.h": "c",
-        "main.h": "c",
-        "token.h": "c"
-    }
+		"fcntl.h": "c",
+		"redirect.h": "c",
+		"execve.h": "c",
+		"env_utils.h": "c",
+		"builtin.h": "c",
+		"env_init.h": "c",
+		"stdbool.h": "c",
+		"libft.h": "c",
+		"parser.h": "c",
+		"error.h": "c",
+		"errno.h": "c",
+		"execute.h": "c",
+		"pipes.h": "c",
+		"main.h": "c",
+		"token.h": "c",
+		"expansions.h": "c"
+	}
 }
