@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:18:14 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/29 16:42:02 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/29 18:09:55 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ char	*expand_var_quotes(char *text, t_env **env_list);
 char	*find_var_val(char *text, t_env **env_list);
 int		find_var_length(char *text, t_env **env_list);
 int		fill_env_var(char *text, char *exp_str, t_env **env_list);
+int		expand_exit_status(char *str, t_token **head);
 
 #endif
