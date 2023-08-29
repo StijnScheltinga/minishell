@@ -14,6 +14,22 @@
 #include "../../inc/parser.h"
 
 #include <fcntl.h>
+#include <errno.h>
+#include <unistd.h>
+
+static void	redirect_error(char *file)
+{
+	if (errno == ENOENT)
+	{
+		ft_putstr_fd(file, STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+	}
+	if (errno == EACCES)
+	{
+		ft_putstr_fd(file, STDERR_FILENO);
+		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
+	}
+}
 
 int	redirect_input(t_redirect *redirect_arr, int redirect_count)
 {
@@ -28,7 +44,11 @@ int	redirect_input(t_redirect *redirect_arr, int redirect_count)
 		if (redirect_arr[i].type == INFILE)
 		{
 			last_input = i;
-			open(redirect_arr[i].file_name, O_RDONLY);
+			if (open(redirect_arr[i].file_name, O_RDONLY) == -1)
+			{
+				redirect_error(redirect_arr[i].file_name);
+				return (2);
+			}
 		}
 		i++;
 	}
@@ -68,30 +88,38 @@ int	redirect_output(t_redirect *red, int red_count)
 	return (0);
 }
 
-void	redirect_child(t_cmd_table *cmd_table, int fd[2], int rd, int cmd_i)
+int	redirect_child(t_cmd_table *cmd_table, int fd[2], int rd, int cmd_i)
 {
 	t_redirect	*redirect_arr;
 	int			redirect_count;
 	int			last_command_index;
+	int			ret;
 
 	redirect_arr = cmd_table->cmd_arr[cmd_i].redirect_arr;
 	redirect_count = cmd_table->cmd_arr[cmd_i].redirect_count;
 	last_command_index = cmd_i != cmd_table->cmd_count - 1;
-	if (redirect_input(redirect_arr, redirect_count))
+	ret = redirect_input(redirect_arr, redirect_count);
+	if (ret == 2)
+		return (1);
+	else if (ret == 1)
 		dup2(rd, STDIN_FILENO);
 	if (redirect_output(redirect_arr, redirect_count) && last_command_index)
 		dup2(fd[WRITE], STDOUT_FILENO);
+	return (0);
 }
 
-void	redirect_single_child(t_cmd_table *cmd_table)
+int	redirect_single_child(t_cmd_table *cmd_table)
 {
 	t_redirect	*redirect_arr;
 	int			redirect_count;
+	int			ret;
 
 	redirect_arr = cmd_table->cmd_arr[0].redirect_arr;
 	redirect_count = cmd_table->cmd_arr[0].redirect_count;
 	if (!redirect_count)
-		return ;
-	redirect_input(redirect_arr, redirect_count);
+		return (0);
+	if (redirect_input(redirect_arr, redirect_count) == 2)
+		return (1);
 	redirect_output(redirect_arr, redirect_count);
+	return (0);
 }
