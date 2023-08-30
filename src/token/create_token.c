@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 11:54:07 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/30 11:33:48 by stijn            ###   ########.fr       */
+/*   Updated: 2023/08/30 15:06:39 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../../inc/expansions.h"
 
 //return amount of char within quote
-int	handle_quotes(char *str, t_token **head, t_env **env_list)
+int	handle_quotes(char *str, t_token **head, t_cmd_table *cmd_table)
 {
 	int		i;
 	char	*text;
@@ -31,7 +31,7 @@ int	handle_quotes(char *str, t_token **head, t_env **env_list)
 	}
 	text = ft_substr(str, 1, last_quote_pos - 1);
 	if (str[0] == '"')
-		text = expand_var_quotes(text, env_list);
+		text = expand_var_quotes(text, cmd_table);
 	create_token(WORD, text, head);
 	return (i + 1);
 }
@@ -72,5 +72,18 @@ int	create_redirection_token(char *str, t_token **head)
 	}
 	text = ft_substr(str, 0, i);
 	create_token(REDIRECT, text, head);
+	return (i);
+}
+
+int	create_word_token(char *str, t_token **head)
+{
+	char	*text;
+	int		i;
+
+	i = 0;
+	while (str[i] && !ft_iswhitespace(str[i]) && !ismetachar(str[i]))
+		i++;
+	text = ft_substr(str, 0, i);
+	create_token(WORD, text, head);
 	return (i);
 }
