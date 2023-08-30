@@ -7,14 +7,14 @@ SOURCES		:=	main.c token.c token_utils.c \
 				grammar.c grammar_error.c history.c \
 				env_init.c env_utils.c redirect.c \
 				create_token.c expansions.c execve_error.c \
-				signals.c export_error.c exit_status.c
+				signals.c export_error.c exit_status.c delimiter.c
 BUILD		:=	build
 VPATH		:=	src/ src/input src/token src/parser src/builtins src/execute src/error src/env src/expander src/signals
 OBJECTS		:=	$(addprefix $(BUILD)/, $(SOURCES:.c=.o))
 NAME		:=	minishell
 FLAGS		:=	-fsanitize=address -I$(shell brew --prefix readline)/include
 CC			:=	gcc 
-HEADER		:=	inc/main.h libft/libft.h inc/token.h inc/parser.h inc/builtin.h inc/execute.h inc/execve.h inc/redirect.h inc/env_init.h inc/env_utils.h inc/expansions.h inc/signals.h
+HEADER		:=	inc/main.h libft/libft.h inc/token.h inc/parser.h inc/builtin.h inc/execute.h inc/execve.h inc/redirect.h inc/env_init.h inc/env_utils.h inc/expansions.h inc/signals.h inc/delimiter.h
 LIBFT		:=	libft/libft.a
 LIB_DIR		:=	libft
 LIBS		:=	-lreadline -L$(shell brew --prefix readline)/lib
