@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   create_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 11:54:07 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/29 16:47:22 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/30 11:33:48 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/token.h"
 #include "../../inc/error.h"
+#include "../../inc/expansions.h"
 
 //return amount of char within quote
 int	handle_quotes(char *str, t_token **head, t_env **env_list)
