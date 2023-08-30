@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/30 15:26:13 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/30 23:17:10 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 
 void	execute_with_child(t_cmd_table *cmd_table, int fd[2], int rd, int cmd_i)
 {
-	close(fd[READ]);
 	sign_child();
+	close(fd[READ]);
 	if (redirect_child(cmd_table, fd, rd, cmd_i))
 		exit(1);
 	if (!cmd_table->cmd_arr[cmd_i].single_cmd[0])
@@ -96,6 +96,7 @@ void	execute(t_cmd_table *cmd_table)
 
 	stdin = dup(STDIN_FILENO);
 	stdout = dup(STDOUT_FILENO);
+	sign_ignore();
 	if (cmd_table->cmd_count == 1)
 		execute_single_cmd(cmd_table);
 	else

@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.h                                          :+:      :+:    :+:   */
+/*   signals_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/22 12:05:39 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/30 23:36:58 by alex             ###   ########.fr       */
+/*   Created: 2023/08/30 23:33:22 by alex              #+#    #+#             */
+/*   Updated: 2023/08/30 23:41:14 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNALS_H
-# define SIGNALS_H
+#include "../../inc/main.h"
+#include "../../inc/signals.h"
 
-//SIG EXEC-
-void	sign_interrupt(int signum);
-void	sign_interrupt_delimiter(int signum);
-void	ctrl_d(void);
+#include <unistd.h>
+#include <stdlib.h>
 
-//SIG INIT
-void	sign_child(void);
-void	sign_delimiter(void);
-void	sign_init(void);
-void	sign_ignore(void);
+void	sign_interrupt(int signum)
+{
+	write(STDERR_FILENO, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+}
 
-#endif
+void	sign_interrupt_delimiter(int signum)
+{
+	close(STDOUT_FILENO);
+	write(STDERR_FILENO, "\n", 1);
+	exit(0);
+}
+
+void	ctrl_d(void)
+{
+	write(STDERR_FILENO, "exit\n", 5);
+	exit(0);
+}

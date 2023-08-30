@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:10:05 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/30 11:38:46 by stijn            ###   ########.fr       */
+/*   Updated: 2023/08/31 00:09:54 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 #include "../../inc/parser.h"
 #include "../../inc/execute.h"
 #include "../../inc/signals.h"
-
-int g_signumber;
 
 void	leaks(void)
 {
@@ -37,7 +35,6 @@ int	main(int argc, char **argv, char **envp)
 	cmd_table->latest_exit_code = 0;
 	while (1)
 	{
-		g_signumber = 0;
 		sign_init();
 		input_string = get_line();
 		if (!input_string)
