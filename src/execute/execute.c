@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/30 14:24:53 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/30 15:26:13 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@
 
 void	execute_with_child(t_cmd_table *cmd_table, int fd[2], int rd, int cmd_i)
 {
+	close(fd[READ]);
 	sign_child();
 	if (redirect_child(cmd_table, fd, rd, cmd_i))
 		exit(1);
 	if (!cmd_table->cmd_arr[cmd_i].single_cmd[0])
-		return ;
+		exit(1);
 	if (is_builtin(cmd_table->cmd_arr[cmd_i].single_cmd[0]) == true)
 		execute_builtin(cmd_table, cmd_i);
 	else

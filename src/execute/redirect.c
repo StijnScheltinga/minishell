@@ -32,20 +32,19 @@ static void	redirect_error(char *file)
 	}
 }
 
-int	redirect_input(t_redirect *redirect_arr, int redirect_count)
+int	 redirect_input(int rd, t_redirect *redirect_arr, int redirect_count)
 {
-	int	fd;
-	int	i;
-	int	last_input;
+	int		in_file;
+	int		i;
 
+	in_file = 0;
 	i = 0;
-	last_input = -1;
 	while (i < redirect_count)
 	{
 		if (redirect_arr[i].type == INFILE)
 		{
-			last_input = i;
-			if (open(redirect_arr[i].file_name, O_RDONLY) == -1)
+			in_file = open(redirect_arr[i].file_name, O_RDONLY);
+			if (in_file == -1)
 			{
 				redirect_error(redirect_arr[i].file_name);
 				return (1);
@@ -53,38 +52,57 @@ int	redirect_input(t_redirect *redirect_arr, int redirect_count)
 		}
 		i++;
 	}
-	if (check_if_del_is_input(redirect_arr, redirect_count))
-		return (0);
-	fd = open(redirect_arr[last_input].file_name, O_RDONLY);
-	dup2(fd, STDIN_FILENO);
+	if (in_file != 0 && !check_if_del_is_input(redirect_arr, redirect_count))
+		dup2(in_file, STDIN_FILENO);
+	else if (!check_if_del_is_input(redirect_arr, redirect_count))
+		dup2(rd, STDIN_FILENO);
 	return (0);
 }
 
-int	redirect_output(t_redirect *red, int red_count)
+int	redirect_output(int fd[2], t_redirect *red, int red_count, int is_last_cmd)
 {
-	int		fd;
+	int		out_file;
 	int		i;
-	int		out_i;
 	char	*file;
 
+	out_file = 0;
 	i = 0;
-	out_i = -1;
 	while (i < red_count)
 	{
-		if (red[i].type == OUTFILE || red[i].type == APPEND)
-		{
-			out_i = i;
-			open(red[i].file_name, O_WRONLY | O_CREAT, 0644);
-		}
+		if (red[i].type == OUTFILE)
+			out_file = open(red[i].file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		else if (red[i].type == APPEND)
+			out_file = open(red[i].file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		i++;
 	}
-	if (out_i == -1)
-		return (1);
-	if (red[out_i].type == OUTFILE)
-		fd = open(red[out_i].file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else
-		fd = open(red[out_i].file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	dup2(fd, STDOUT_FILENO);
+	if (out_file == 0 && !is_last_cmd)
+	{
+		dup2(fd[WRITE], STDOUT_FILENO);
+		return (0);
+	}
+	else if (out_file > 0)
+		dup2(out_file, STDOUT_FILENO);
+	close(fd[WRITE]);
+	return (0);
+}
+
+int	redirect_output_single_cmd(t_redirect *red, int red_count)
+{
+	int		out_file;
+	int		i;
+
+	out_file = 0;
+	i = 0;
+	while (i < red_count)
+	{
+		if (red[i].type == OUTFILE)
+			out_file = open(red[i].file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		else if (red[i].type == APPEND)
+			out_file = open(red[i].file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		i++;
+	}
+	if (out_file > 0)
+		dup2(out_file, STDOUT_FILENO);
 	return (0);
 }
 
@@ -92,20 +110,18 @@ int	redirect_child(t_cmd_table *cmd_table, int fd[2], int rd, int cmd_i)
 {
 	t_redirect	*redirect_arr;
 	int			redirect_count;
-	int			last_command_index;
-	int			fd_delim;
+	int			is_last_cmd;
+	int			fd_delimiter;
 
 
 	redirect_arr = cmd_table->cmd_arr[cmd_i].redirect_arr;
 	redirect_count = cmd_table->cmd_arr[cmd_i].redirect_count;
-	last_command_index = cmd_i != cmd_table->cmd_count - 1;
-	fd_delim = delimiter(redirect_arr, redirect_count);
-	if (fd_delim > 0)
-		dup2(fd_delim, STDIN_FILENO);
-	else if (redirect_input(redirect_arr, redirect_count))
-		dup2(rd, STDIN_FILENO);
-	if (redirect_output(redirect_arr, redirect_count) && last_command_index)
-		dup2(fd[WRITE], STDOUT_FILENO);
+	is_last_cmd = cmd_i == cmd_table->cmd_count - 1;
+	fd_delimiter = delimiter(redirect_arr, redirect_count);
+	if (fd_delimiter > 0)
+		dup2(fd_delimiter, STDIN_FILENO);
+	redirect_input(rd, redirect_arr, redirect_count);
+	redirect_output(fd, redirect_arr, redirect_count, is_last_cmd);
 	return (0);
 }
 
@@ -122,8 +138,9 @@ int	redirect_single_child(t_cmd_table *cmd_table)
 	fd = delimiter(redirect_arr, redirect_count);
 	if (fd > 0)
 		dup2(fd, STDIN_FILENO);
-	if (redirect_input(redirect_arr, redirect_count))
-		return (1);
-	redirect_output(redirect_arr, redirect_count);
+	if (redirect_input(STDIN_FILENO, redirect_arr, redirect_count))
+		exit(1);
+	if (redirect_output_single_cmd(redirect_arr, redirect_count))
+		exit(1);
 	return (0);
 }
