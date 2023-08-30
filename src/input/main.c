@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:10:05 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/28 14:56:36 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/30 11:38:46 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	main(int argc, char **argv, char **envp)
 	token_head = NULL;
 	cmd_table = malloc(sizeof(t_cmd_table));
 	cmd_table->env = env_to_linkedlist(envp);
+	cmd_table->latest_exit_code = 0;
 	while (1)
 	{
 		g_signumber = 0;
@@ -41,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 		input_string = get_line();
 		if (!input_string)
 			continue ;
-		if (!tokenize_string(input_string, &token_head, &cmd_table->env))
+		if (!tokenize_string(input_string, &token_head, cmd_table))
 		{
 			init_cmd_table(cmd_table, &token_head);
 			execute(cmd_table);
