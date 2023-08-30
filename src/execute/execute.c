@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/29 15:30:09 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/30 14:24:53 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 void	execute_with_child(t_cmd_table *cmd_table, int fd[2], int rd, int cmd_i)
 {
+	sign_child();
 	if (redirect_child(cmd_table, fd, rd, cmd_i))
 		exit(1);
 	if (!cmd_table->cmd_arr[cmd_i].single_cmd[0])
@@ -66,11 +67,6 @@ void	execute_single_cmd(t_cmd_table *cmd_table)
 	int		status;
 	pid_t	pid;
 
-	if (redirect_single_child(cmd_table))
-	{
-		cmd_table->latest_exit_code = 1;
-		return ;
-	}
 	if (is_builtin(cmd_table->cmd_arr[0].single_cmd[0]) == true)
 	{
 		execute_builtin(cmd_table, 0);
@@ -80,7 +76,12 @@ void	execute_single_cmd(t_cmd_table *cmd_table)
 	if (pid == -1)
 		exit(EXIT_FAILURE);
 	if (pid == 0)
+	{
+		sign_child();
+		if (redirect_single_child(cmd_table))
+			exit(1);
 		ft_execve(cmd_table->cmd_arr[0].single_cmd, &cmd_table->env);
+	}
 	waitpid(pid, &status, 0);
 	cmd_table->latest_exit_code = WEXITSTATUS(status);
 }

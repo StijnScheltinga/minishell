@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 12:04:47 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/28 15:04:17 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/29 18:23:45 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ void	sign_child(void)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
+}
+
+void	sign_delim(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	ctrl_d(void)
