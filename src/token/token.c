@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:38:34 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/30 11:35:32 by stijn            ###   ########.fr       */
+/*   Updated: 2023/08/30 15:05:49 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,37 +36,17 @@ int	tokenize_string(char *input_string, t_token **head, t_cmd_table *cmd_table)
 
 int	assign_token(char *str, t_token **head, t_cmd_table *cmd_table)
 {
-	char	*text;
-	int		i;
-
-	i = 0;
 	if (*str == '|')
 		create_token(PIPE, ft_strdup("|"), head);
 	else if (*str == '>' || *str == '<')
 		return (create_redirection_token(str, head));
 	else if (*str == '"' || *str == '\'')
-		return (handle_quotes(str, head, &cmd_table->env));
+		return (handle_quotes(str, head, cmd_table));
 	else if (*str == '$' && *(str + 1) == '?')
 		return (expand_exit_status(str, head, cmd_table));
 	else if (*str == '$')
 		return (expand_env_var(str, head, &cmd_table->env));
 	else
-	{
-		while (str[i] && !ft_iswhitespace(str[i]) && !ismetachar(str[i]))
-			i++;
-		text = ft_substr(str, 0, i);
-		create_token(WORD, text, head);
-		return (i);
-	}
+		return (create_word_token(str, head));
 	return (1);
-}
-
-void	create_token(t_type type, char *text, t_token **head)
-{
-	t_token	*new_token;
-
-	new_token = ft_lstnew(type, text);
-	if (!new_token)	
-		exit(EXIT_FAILURE);
-	ft_lstadd_back(head, new_token);
 }
