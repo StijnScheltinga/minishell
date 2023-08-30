@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:17:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/28 15:00:52 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/29 17:46:42 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ int	expand_env_var(char *str, t_token **head, t_env **env_list)
 	while (str[i] && !ft_iswhitespace(str[i]) && str[i] != '$')
 		i++;
 	var_name = ft_substr(str, 1, i - 1);
-	while (iterate != NULL)
+	if (!var_name[0])
+		create_token(WORD, ft_strdup("$"), head);
+	while (iterate != NULL && var_name[0])
 	{
 		if (!ft_strncmp(iterate->variable, var_name, ft_strlen(var_name)) && iterate->value)
 		{
@@ -54,7 +56,7 @@ char	*expand_var_quotes(char *text, t_env **env_list)
 	j = 0;
 	while (text[i])
 	{
-		if (text[i] == '$')
+		if (text[i] == '$' && !ft_iswhitespace(text[i + 1]) && text[i + 1])
 		{
 			j += fill_env_var(&text[i++], &exp_str[j], env_list);
 			while (text[i] && !ft_iswhitespace(text[i]) && text[i] != '$')
@@ -117,7 +119,7 @@ int	find_var_length(char *text, t_env **env_list)
 	len = 0;
 	while (text[i])
 	{
-		if (text[i] == '$')
+		if (text[i] == '$' && !ft_iswhitespace(text[i + 1]) && text[i + 1])
 		{
 			var_value = find_var_val(&text[i], env_list);
 			if (var_value)
