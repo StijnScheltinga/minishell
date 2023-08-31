@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delimiter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:59:18 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/29 20:53:07 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/30 23:31:12 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ static void	exec_delim(char *eof, int del_count, int fd[2], bool is_input)
 	while (1)
 	{
 		input_string = readline("> ");
+		if (!input_string)
+			exit(130);
 		if (!ft_strncmp(input_string, eof, ft_strlen(eof) + 1))
 			break ;
 		if (del_count == 0 && is_input == true)
@@ -91,9 +93,9 @@ int	delimiter(t_redirect *redirect_arr, int redirect_count)
 	if (del_count == 0)
 		return (0);
 	is_input = check_if_del_is_input(redirect_arr, redirect_count);
-	sign_delim();
 	pipe(fd);
 	i = 0;
+	sign_delimiter();
 	while (del_count > 0)
 	{
 		if (redirect_arr[i].type == DELIMITER)

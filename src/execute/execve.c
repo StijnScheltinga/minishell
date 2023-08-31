@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:36:53 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/29 15:39:58 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/30 22:56:42 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	ft_execve(char **cmd, t_env **env_head)
 	path = get_paths(envp);
 	paths = ft_split(path + 5, ':');
 	cmdpath = get_right_path(paths, cmd);
-	sign_child();
 	execve(cmdpath, cmd, envp);
 	free(cmdpath);
 	free_envp(envp);
