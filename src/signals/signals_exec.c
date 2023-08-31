@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 23:33:22 by alex              #+#    #+#             */
-/*   Updated: 2023/08/30 23:41:14 by alex             ###   ########.fr       */
+/*   Updated: 2023/08/31 14:17:29 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	sign_interrupt_delimiter(int signum)
 {
 	close(STDOUT_FILENO);
 	write(STDERR_FILENO, "\n", 1);
-	exit(0);
+	exit(1);
 }
 
 void	ctrl_d(void)

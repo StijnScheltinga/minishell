@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 12:04:47 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/31 00:08:24 by alex             ###   ########.fr       */
+/*   Updated: 2023/08/31 14:45:39 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 void	sign_child(void)
 {
 	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	sign_delimiter(void)
