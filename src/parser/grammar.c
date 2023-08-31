@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 13:42:21 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/28 16:21:11 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/31 17:23:31 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	double_metachar_check(t_token **head)
 	t_token	*iterate;
 
 	iterate = *head;
-	if (iterate->type == PIPE)
+	if (iterate && iterate->type == PIPE)
 		return (syntax_error(iterate->text));
 	while (iterate != NULL)
 	{
