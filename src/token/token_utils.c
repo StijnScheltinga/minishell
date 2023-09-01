@@ -6,24 +6,24 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/30 14:51:04 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/08/31 17:26:21 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/token.h"
 
-bool	ft_iswhitespace(char a)
+int	ft_iswhitespace(char a)
 {
 	if (a == ' ' || a == '\t' || a == '\n')
-		return (true);
-	return (false);
+		return (1);
+	return (0);
 }
 
-bool	ismetachar(char a)
+int	ismetachar(char a)
 {
 	if (a == '|' || a == '<' || a == '>' || a == '$')
-		return (true);
-	return (false);
+		return (1);
+	return (0);
 }
 
 int	count_cmd(t_token **head)
