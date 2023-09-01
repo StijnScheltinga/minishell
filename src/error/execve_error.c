@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:27:04 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/29 15:41:01 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/08/31 18:09:43 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	execve_error(char *cmd)
 {
-	if (errno == ENOENT)
+	if (errno == ENOENT || !cmd[0])
 	{
 		ft_putstr_fd(cmd, STDERR_FILENO);
 		if (ft_strchr(cmd, '/'))

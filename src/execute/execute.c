@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/30 23:17:10 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/01 14:48:14 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	execute_single_cmd(t_cmd_table *cmd_table)
 	int		status;
 	pid_t	pid;
 
+	redirect_single_child(cmd_table);
 	if (is_builtin(cmd_table->cmd_arr[0].single_cmd[0]) == true)
 	{
 		execute_builtin(cmd_table, 0);
@@ -79,8 +80,6 @@ void	execute_single_cmd(t_cmd_table *cmd_table)
 	if (pid == 0)
 	{
 		sign_child();
-		if (redirect_single_child(cmd_table))
-			exit(1);
 		ft_execve(cmd_table->cmd_arr[0].single_cmd, &cmd_table->env);
 	}
 	waitpid(pid, &status, 0);
