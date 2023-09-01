@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 14:39:10 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/31 19:16:05 by stijn            ###   ########.fr       */
+/*   Updated: 2023/09/01 16:52:33 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,9 @@ char    *find_var_val(char *var, t_cmd_table *cmd_table)
 {
     t_env   *iterate;
     char    *var_name;
-    int     i;
 
     iterate = cmd_table->env;
-    i = 1;
-    while (var[i] && !ft_iswhitespace(var[i]) && var[i] != '$')
-        i++;
-    var_name = ft_substr(var, 1, (i - 1));
+	get_var_name(var, &var_name);
     if (!ft_strncmp(var_name, "?", 1))
         return (ft_itoa(cmd_table->latest_exit_code));
     while (iterate != NULL)
