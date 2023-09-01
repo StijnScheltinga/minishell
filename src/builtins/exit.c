@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:11:48 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/01 13:25:30 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/01 15:16:27 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,11 @@ void	ms_exit(char **arg)
 {
 	long long	exit_code;
 
+	if (!arg[1])
+	{
+		ft_putstr_fd("exit\n", STDERR_FILENO);
+		exit(0);
+	}
 	if (!arg[1][0])
 		exit_error(arg[1], NUMERIC);
 	exit_code = ll_atoi(arg[1]);
