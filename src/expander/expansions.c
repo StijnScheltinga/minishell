@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:17:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/01 16:55:59 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/01 17:17:46 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	expand_env_var(char *str, t_token **head, t_env **env_list)
 	int		i;
 
 	iterate = *env_list;
-	i = get_var_name(str, &var_name);
+	i = get_var_name(str, &var_name);	
 	if (!var_name[0])
 		create_token(WORD, ft_strdup("$"), head);
 	while (iterate != NULL && var_name[0])
