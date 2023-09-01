@@ -117,7 +117,7 @@ int	redirect_child(t_cmd_table *cmd_table, int fd[2], int rd, int cmd_i)
 	redirect_arr = cmd_table->cmd_arr[cmd_i].redirect_arr;
 	redirect_count = cmd_table->cmd_arr[cmd_i].redirect_count;
 	is_last_cmd = cmd_i == cmd_table->cmd_count - 1;
-	fd_delimiter = delimiter(redirect_arr, redirect_count);
+	fd_delimiter = delimiter(redirect_arr, redirect_count, cmd_table);
 	if (fd_delimiter > 0)
 		dup2(fd_delimiter, STDIN_FILENO);
 	redirect_input(rd, redirect_arr, redirect_count);
@@ -135,7 +135,7 @@ int	redirect_single_child(t_cmd_table *cmd_table)
 	redirect_count = cmd_table->cmd_arr[0].redirect_count;
 	if (!redirect_count)
 		return (0);
-	fd = delimiter(redirect_arr, redirect_count);
+	fd = delimiter(redirect_arr, redirect_count, cmd_table);
 	if (fd > 0)
 		dup2(fd, STDIN_FILENO);
 	if (redirect_input(STDIN_FILENO, redirect_arr, redirect_count))
