@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delimiter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:59:18 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/30 23:31:12 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/01 13:08:52 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../../inc/redirect.h"
 #include "../../inc/signals.h"
 #include "../../inc/token.h"
+#include "../../inc/expansions.h"
 
 #include <readline/readline.h>
 #include <stdbool.h>
@@ -49,7 +50,7 @@ bool	check_if_del_is_input(t_redirect *redirect_arr, int redirect_count)
 	return (false);
 }
 
-static void	exec_delim(char *eof, int del_count, int fd[2], bool is_input)
+static void	exec_delim(char *eof, int del_count, int fd[2], bool is_input, t_cmd_table *cmd_table)
 {
 	char	*input_string;
 
@@ -63,6 +64,7 @@ static void	exec_delim(char *eof, int del_count, int fd[2], bool is_input)
 			break ;
 		if (del_count == 0 && is_input == true)
 		{
+			input_string = expand_var_quotes(input_string, cmd_table);
 			ft_putstr_fd(input_string, fd[1]);
 			ft_putstr_fd("\n", fd[1]);
 		}
@@ -81,7 +83,7 @@ static int	dup_and_close(int fd[2])
 	return (rd);
 }
 
-int	delimiter(t_redirect *redirect_arr, int redirect_count)
+int	delimiter(t_redirect *redirect_arr, int redirect_count, t_cmd_table *cmd_table)
 {
 	int		i;
 	int		rd;
@@ -101,7 +103,7 @@ int	delimiter(t_redirect *redirect_arr, int redirect_count)
 		if (redirect_arr[i].type == DELIMITER)
 		{
 			del_count--;
-			exec_delim(redirect_arr[i].file_name, del_count, fd, is_input);
+			exec_delim(redirect_arr[i].file_name, del_count, fd, is_input, cmd_table);
 		}
 		i++;
 	}
