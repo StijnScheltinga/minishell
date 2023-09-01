@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:48:24 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/24 19:15:32 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/01 15:00:12 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 #include "../../inc/env_init.h"
 
 #include <errno.h>
+#include <unistd.h>
 #include <string.h>
 
 //not implementing error code
 
-static char	*get_home(t_env **env_head)
+static char	*get_home(t_env **env_head, t_cmd_table *cmd_table)
 {
 	size_t	i;
 	char	*ret;
@@ -34,7 +35,10 @@ static char	*get_home(t_env **env_head)
 		iter = iter->next;
 	}
 	if (!iter)
-		printf("cd: HOME not set\n");
+	{
+		write(STDERR_FILENO, "cd: HOME not set\n", 17);
+		cmd_table->latest_exit_code = 1;
+	}
 	else if (iter->variable)
 		ret = iter->value;
 	return (ret);
@@ -42,13 +46,13 @@ static char	*get_home(t_env **env_head)
 
 //uses envp from seperate int main -> no other envp yet
 
-static char	*find_right_path(char *arg, t_env **env_head)
+static char	*find_right_path(char *arg, t_env **env_head, t_cmd_table *cmd_tab)
 {
 	char	*path;
 
 	path = NULL;
 	if (arg == NULL || ft_strncmp(arg, "~", sizeof(arg)) == 0)
-		path = get_home(env_head);
+		path = get_home(env_head, cmd_tab);
 	else
 		path = arg;
 	return (path);
@@ -56,11 +60,11 @@ static char	*find_right_path(char *arg, t_env **env_head)
 
 //does not return error code but prints the error
 
-void	cd(char *arg, t_env **env_head)
+void	cd(char *arg, t_env **env_head, t_cmd_table *cmd_table)
 {
 	char	*path;
 
-	path = find_right_path(arg, env_head);
+	path = find_right_path(arg, env_head, cmd_table);
 	if (!path)
 		return ;
 	if (chdir(path))
