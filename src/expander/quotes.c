@@ -6,12 +6,13 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 14:39:10 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/04 14:31:30 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/04 16:40:57 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/expansions.h"
 #include "../../inc/token.h"
+#include "../../inc/error.h"
 
 //if env variable is found expand to value, else delete variable from string
 char    *expand_var_quotes(char *text, t_cmd_table *cmd_table)
@@ -21,6 +22,8 @@ char    *expand_var_quotes(char *text, t_cmd_table *cmd_table)
     int     start_sub;
 
     expanded_string = malloc(1 * sizeof(char));
+	if (!expanded_string)
+		malloc_error(cmd_table);
     i = 0;
     start_sub = 0;
 	expanded_string[0] = '\0';
@@ -48,7 +51,6 @@ int join_env_var(char *var_name, char **expanded_string, t_cmd_table *cmd_table)
     int     var_name_len;
 
     var_name_len = find_var_val(var_name, &var_value, cmd_table);
-	printf("%d, %s\n", var_name_len, var_value);
     if (var_value)
         *expanded_string = ft_strjoin_free(*expanded_string, var_value);
     return(var_name_len); 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:48:04 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/25 19:03:33 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/04 16:17:33 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char *get_line(void)
 		free(input_string);
 		input_string = NULL;
 	}
-	input_string = readline("ms: ");
+	input_string = readline("Minishell: ");
 	if (!input_string)
 		ctrl_d();
 	if (input_string[0] == '\0')

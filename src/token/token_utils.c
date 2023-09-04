@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/04 11:32:28 by stijn            ###   ########.fr       */
+/*   Updated: 2023/09/04 17:14:09 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/token.h"
+#include "../../inc/error.h"
 
 int	ft_iswhitespace(char a)
 {
@@ -58,10 +59,12 @@ void free_func_token(t_token **head)
 	}
 }
 
-void	create_token(t_type type, char *text, t_token **head)
+void	create_token(t_type type, char *text, t_cmd_table *cmd_table, t_token **head)
 {
 	t_token	*new_token;
 
+	if (!text)
+		malloc_error(cmd_table);
 	new_token = ft_lstnew(type, text);
 	if (!new_token)	
 		exit(EXIT_FAILURE);

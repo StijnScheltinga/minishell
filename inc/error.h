@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 16:45:36 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/25 18:44:19 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/04 17:08:31 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 # include "parser.h"
 
 int 	export_error_check(char *arg);
-int		syntax_error(char *token);
+int		syntax_error(char *token, t_cmd_table *cmd_table);
 void	execve_error(char *cmd);
+void	malloc_error(t_cmd_table *cmd_table);
 
 #endif

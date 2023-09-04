@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:42:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/31 17:21:05 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/04 16:34:00 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@ typedef enum s_type {
 }	t_type;
 
 typedef struct s_token {
-	t_type	type;
-	char	*text;
-	t_token	*next;
+	t_type		type;
+	char		*text;
+	t_token		*next;
 }	t_token;
 
 int		tokenize_string(char *input_string, t_token **head, t_cmd_table *cmd_table);
 int		assign_token(char *str, t_token **head, t_cmd_table *cmd_table);
-void	create_token(t_type type, char *text, t_token **head);
+void	create_token(t_type type, char *text, t_cmd_table *cmd_table, t_token **head);
 void	create_io_file_tokens(t_token **head);
-int		create_redirection_token(char *str, t_token **head);
-int		create_word_token(char *str, t_token **head);
+int		create_redirection_token(char *str, t_token **head, t_cmd_table *cmd_table);
+int		create_word_token(char *str, t_token **head, t_cmd_table *cmd_table);
 int		handle_quotes(char *str, t_token **head, t_cmd_table *cmd_table);
 
 int		count_cmd(t_token **head);

@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 13:06:23 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/15 13:07:47 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/04 17:34:21 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ void	free_func_cmd_table(t_cmd_table *cmd_table, t_token **head)
 	int	i;
 
 	i = 0;
-	while (i != count_cmd(head))
+	while (i != cmd_table->cmd_count)
 	{
-		free_double_array(cmd_table->cmd_arr[i].single_cmd);
+		if (cmd_table->cmd_arr)
+			free_double_array(cmd_table->cmd_arr[i].single_cmd);
 		if (cmd_table->cmd_arr[i].redirect_arr)
 			free_redirect_array(cmd_table->cmd_arr[i].redirect_arr, cmd_table->cmd_arr[i].redirect_count);
 		i++;
