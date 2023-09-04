@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:38:34 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/30 15:05:49 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/04 13:12:08 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	assign_token(char *str, t_token **head, t_cmd_table *cmd_table)
 	else if (*str == '$' && *(str + 1) == '?')
 		return (expand_exit_status(str, head, cmd_table));
 	else if (*str == '$')
-		return (expand_env_var(str, head, &cmd_table->env));
+		return (expand_env_var(str, head, cmd_table));
 	else
 		return (create_word_token(str, head));
 	return (1);
