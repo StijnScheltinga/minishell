@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:10:05 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/04 17:32:56 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/04 19:22:22 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,7 @@ int	main(int argc, char **argv, char **envp)
 	argc = 0;
 	argv = NULL;
 	token_head = NULL;
-	cmd_table = malloc(sizeof(t_cmd_table));
-	cmd_table->env = env_to_linkedlist(envp);
-	cmd_table->latest_exit_code = 0;
-	cmd_table->cmd_count = 0;
-	cmd_table->token_head = &token_head;
-	cmd_table->cmd_arr = NULL;
+	cmd_table = init_cmd_table(&token_head, envp);
 	while (1)
 	{
 		sign_init();
@@ -44,9 +39,9 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		if (!tokenize_string(input_string, &token_head, cmd_table))
 		{
-			init_cmd_table(cmd_table, &token_head);
+			fill_cmd_table(cmd_table, &token_head);
 			execute(cmd_table);
-			free_func_cmd_table(cmd_table, &token_head);
+			free_func_cmd_table(cmd_table);
 		}
 		free_func_token(&token_head);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/04 17:14:09 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/04 18:38:28 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,6 @@ void	create_token(t_type type, char *text, t_cmd_table *cmd_table, t_token **hea
 		malloc_error(cmd_table);
 	new_token = ft_lstnew(type, text);
 	if (!new_token)	
-		exit(EXIT_FAILURE);
+		malloc_error(cmd_table);
 	ft_lstadd_back(head, new_token);
 }

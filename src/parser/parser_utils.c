@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 13:06:23 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/04 17:34:21 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/04 19:24:32 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parser.h"
 
-void	free_func_cmd_table(t_cmd_table *cmd_table, t_token **head)
+void	free_func_cmd_table(t_cmd_table *cmd_table)
 {
 	int	i;
 
@@ -20,11 +20,14 @@ void	free_func_cmd_table(t_cmd_table *cmd_table, t_token **head)
 	while (i != cmd_table->cmd_count)
 	{
 		if (cmd_table->cmd_arr)
+		{
 			free_double_array(cmd_table->cmd_arr[i].single_cmd);
-		if (cmd_table->cmd_arr[i].redirect_arr)
-			free_redirect_array(cmd_table->cmd_arr[i].redirect_arr, cmd_table->cmd_arr[i].redirect_count);
+			if (cmd_table->cmd_arr[i].redirect_arr)
+				free_redirect_array(cmd_table->cmd_arr[i].redirect_arr, cmd_table->cmd_arr[i].redirect_count);
+		}
 		i++;
 	}
+	// env free function
 	free(cmd_table->cmd_arr);
 }
 

@@ -3,21 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_table.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:54:14 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/04 18:09:56 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/04 19:17:12 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parser.h"
 #include "../../inc/error.h"
 
-void	init_cmd_table(t_cmd_table *cmd_table, t_token **head)
+t_cmd_table	*init_cmd_table(t_token **head, char **envp)
 {
-	cmd_table->cmd_count = count_cmd(head); 
+	t_cmd_table	*cmd_table;
+	
+	cmd_table = malloc(sizeof(t_cmd_table));
+	if (!cmd_table)
+		exit(EXIT_FAILURE);
+	//needs malloc checks and cleanup function
+	cmd_table->env = env_to_linkedlist(envp);
 	cmd_table->latest_exit_code = 0;
-	cmd_table->cmd_arr = malloc(count_cmd(head) * sizeof(t_command));
+	cmd_table->cmd_count = 0;
+	cmd_table->token_head = &head;
+	cmd_table->cmd_arr = NULL;
+}
+
+void	fill_cmd_table(t_cmd_table *cmd_table, t_token **head)
+{
+	int	cmd_n;
+	
+	cmd_n = count_cmd(head);
+	cmd_table->cmd_count = cmd_n; 
+	cmd_table->cmd_arr = malloc(cmd_n * sizeof(t_command));
 	if (!cmd_table->cmd_arr)
 		malloc_error(cmd_table);
 	fill_cmd_arr(cmd_table, head);
