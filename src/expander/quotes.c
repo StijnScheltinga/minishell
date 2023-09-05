@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 14:39:10 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/04 16:40:57 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/05 11:42:16 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char    *expand_var_quotes(char *text, t_cmd_table *cmd_table)
 
     expanded_string = malloc(1 * sizeof(char));
 	if (!expanded_string)
-		malloc_error(cmd_table);
+		malloc_error(text, cmd_table);
     i = 0;
     start_sub = 0;
 	expanded_string[0] = '\0';

@@ -6,7 +6,7 @@
 /*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 13:06:23 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/04 19:24:32 by stijn            ###   ########.fr       */
+/*   Updated: 2023/09/05 11:32:27 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	free_func_cmd_table(t_cmd_table *cmd_table)
 		}
 		i++;
 	}
-	// env free function
+	// env free function free(cmd_table->env)
 	free(cmd_table->cmd_arr);
 }
 

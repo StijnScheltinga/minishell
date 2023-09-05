@@ -6,7 +6,7 @@
 /*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:54:14 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/04 19:17:12 by stijn            ###   ########.fr       */
+/*   Updated: 2023/09/05 11:45:31 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_cmd_table	*init_cmd_table(t_token **head, char **envp)
 	cmd_table = malloc(sizeof(t_cmd_table));
 	if (!cmd_table)
 		exit(EXIT_FAILURE);
-	//needs malloc checks and cleanup function
+	//env list needs malloc checks and cleanup function
 	cmd_table->env = env_to_linkedlist(envp);
 	cmd_table->latest_exit_code = 0;
 	cmd_table->cmd_count = 0;
@@ -36,7 +36,7 @@ void	fill_cmd_table(t_cmd_table *cmd_table, t_token **head)
 	cmd_table->cmd_count = cmd_n; 
 	cmd_table->cmd_arr = malloc(cmd_n * sizeof(t_command));
 	if (!cmd_table->cmd_arr)
-		malloc_error(cmd_table);
+		malloc_error(NULL, cmd_table);
 	fill_cmd_arr(cmd_table, head);
 }
 

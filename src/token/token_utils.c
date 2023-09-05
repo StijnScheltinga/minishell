@@ -6,7 +6,7 @@
 /*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/04 18:38:28 by stijn            ###   ########.fr       */
+/*   Updated: 2023/09/05 11:47:07 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void	create_token(t_type type, char *text, t_cmd_table *cmd_table, t_token **hea
 	t_token	*new_token;
 
 	if (!text)
-		malloc_error(cmd_table);
+		malloc_error(NULL, cmd_table);
 	new_token = ft_lstnew(type, text);
 	if (!new_token)	
-		malloc_error(cmd_table);
+		malloc_error(text, cmd_table);
 	ft_lstadd_back(head, new_token);
 }
