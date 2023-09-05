@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 13:06:23 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/05 11:32:27 by stijn            ###   ########.fr       */
+/*   Updated: 2023/09/05 16:51:51 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,16 @@ void	free_func_cmd_table(t_cmd_table *cmd_table)
 	int	i;
 
 	i = 0;
-	while (i != cmd_table->cmd_count)
+	while (i != cmd_table->cmd_count && cmd_table->cmd_arr)
 	{
-		if (cmd_table->cmd_arr)
-		{
-			free_double_array(cmd_table->cmd_arr[i].single_cmd);
-			if (cmd_table->cmd_arr[i].redirect_arr)
-				free_redirect_array(cmd_table->cmd_arr[i].redirect_arr, cmd_table->cmd_arr[i].redirect_count);
-		}
+		free_double_array(cmd_table->cmd_arr[i].single_cmd);
+		if (cmd_table->cmd_arr[i].redirect_arr)
+			free_redirect_array(cmd_table->cmd_arr[i].redirect_arr, cmd_table->cmd_arr[i].redirect_count);
 		i++;
 	}
 	// env free function free(cmd_table->env)
 	free(cmd_table->cmd_arr);
+	cmd_table->cmd_arr = NULL;
 }
 
 void	free_redirect_array(t_redirect *redirect_arr, unsigned int redirect_count)

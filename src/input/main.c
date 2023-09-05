@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:10:05 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/04 19:22:22 by stijn            ###   ########.fr       */
+/*   Updated: 2023/09/05 13:15:57 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	main(int argc, char **argv, char **envp)
 		input_string = get_line();
 		if (!input_string)
 			continue ;
+		cmd_table->input_string = input_string;
 		if (!tokenize_string(input_string, &token_head, cmd_table))
 		{
 			fill_cmd_table(cmd_table, &token_head);

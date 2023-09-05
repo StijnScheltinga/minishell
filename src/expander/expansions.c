@@ -6,20 +6,23 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:17:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/04 17:02:27 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/05 15:26:10 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/expansions.h"
 #include "../../inc/token.h"
+#include "../../inc/error.h"
 #include <stdio.h>
 
 int	expand_env_var(char *str, t_token **head, t_cmd_table *cmd_table)
 {
 	char	*var_value;
+	char	*var_name;
 	int		len_var_name;
-
-	len_var_name = find_var_val(str, &var_value, cmd_table);
+	
+	len_var_name = get_var_name(str, &var_name, cmd_table);
+	var_value = find_var_value(var_name, cmd_table);
 	if (!var_value)
 		create_token(WORD, ft_strdup(""), cmd_table, head);
 	else
@@ -34,40 +37,47 @@ int	expand_exit_status(char *str, t_token **head, t_cmd_table *cmd_table)
 	return (2);
 }
 
-int	get_var_name(char *str, char **var_name)
+int	get_var_name(char *str, char **var_name, t_cmd_table *cmd_table)
 {
 	int		i;
 
 	i = 1;
-    while (str[i] && !ft_iswhitespace(str[i]) && str[i] != '$')
+    while (str[i] && !ft_iswhitespace(str[i]) && str[i] != '$' && str[i - 1] != '?')
         i++;
     *var_name = ft_substr(str, 1, (i - 1));
+	if (!(*var_name))
+		malloc_error(NULL, cmd_table);
 	return (i);
 }
 
 //if value of variable is found it returns it else it returns NULL
-int	find_var_val(char *var, char **var_val, t_cmd_table *cmd_table)
+char	*find_var_value(char *var_name, t_cmd_table *cmd_table)
 {
     t_env   *iterate;
-    char    *var_name;
+	char	*var_val;
 	int		var_name_len;
 
-	*var_val = NULL;
     iterate = cmd_table->env;
-	var_name_len = get_var_name(var, &var_name);
 	if (!var_name[0])
-		*var_val = ft_strdup("$");
+		var_val = ft_strdup("$");
     else if (!ft_strncmp(var_name, "?", 1))
-        *var_val = ft_itoa(cmd_table->latest_exit_code);
+        var_val = ft_itoa(cmd_table->latest_exit_code);
 	else
 	{
 		while (iterate != NULL)
 		{
 			if (!ft_strncmp(iterate->variable, var_name, ft_strlen(var_name) + 1))
-				*var_val = ft_strdup(iterate->value);
+			{
+				var_val = ft_strdup(iterate->value);
+				break ;
+			}
 			iterate = iterate->next;
-		}
+		}	
 	}
+	if (!var_val)
+		malloc_error(var_name, cmd_table);
+	if (!iterate)
+		var_val = NULL;
 	free (var_name);
-    return(var_name_len);
+	return (var_val);
 }

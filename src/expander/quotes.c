@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 14:39:10 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/05 11:42:16 by stijn            ###   ########.fr       */
+/*   Updated: 2023/09/05 15:23:35 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,14 @@ char    *expand_var_quotes(char *text, t_cmd_table *cmd_table)
     return (expanded_string);
 }
 
-int join_env_var(char *var_name, char **expanded_string, t_cmd_table *cmd_table)
+int join_env_var(char *str, char **expanded_string, t_cmd_table *cmd_table)
 {
     char    *var_value;
+	char	*var_name;
     int     var_name_len;
 
-    var_name_len = find_var_val(var_name, &var_value, cmd_table);
+	var_name_len = get_var_name(str, &var_name, cmd_table);
+    var_value = find_var_value(var_name, cmd_table);
     if (var_value)
         *expanded_string = ft_strjoin_free(*expanded_string, var_value);
     return(var_name_len); 

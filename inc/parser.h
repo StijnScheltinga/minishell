@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:51:46 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/04 19:12:32 by stijn            ###   ########.fr       */
+/*   Updated: 2023/09/05 13:13:24 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_cmd_table {
 	t_command		*cmd_arr;
 	unsigned int	cmd_count;
 	int				latest_exit_code;
+	char			*input_string;
 	t_token			**token_head;
 	t_env			*env;
 }	t_cmd_table;
