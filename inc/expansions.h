@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:18:14 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/05 15:17:30 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/06 14:22:01 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ int		expand_exit_status(char *str, t_token **head, t_cmd_table *cmd_table);
 int 	join_env_var(char *str, char **expanded_string, t_cmd_table *cmd_table);
 char	*find_var_value(char *var_name, t_cmd_table *cmd_table);
 int		get_var_name(char *str, char **var_name, t_cmd_table *cmd_table);
+char    *add_char(char *expanded_string, char *text, int i, t_cmd_table *cmd_table);
 
 #endif

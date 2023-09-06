@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 11:54:07 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/05 13:19:37 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/06 14:22:01 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	handle_quotes(char *str, t_token **head, t_cmd_table *cmd_table)
 	}
 	text = ft_substr(str, 1, last_quote_pos - 1);
 	if (!text)
-		malloc_error(NULL, cmd_table);
+		malloc_error(NULL, NULL, cmd_table);
 	if (str[0] == '"')
 		text = expand_var_quotes(text, cmd_table);
 	create_token(WORD, text, cmd_table, head);
@@ -89,7 +89,7 @@ int	create_word_token(char *str, t_token **head, t_cmd_table *cmd_table)
 		i++;
 	text = ft_substr(str, 0, i);
 	if (!text)
-		malloc_error(str, cmd_table);
+		malloc_error(NULL, NULL, cmd_table);
 	create_token(WORD, text, cmd_table, head);
 	return (i);
 }

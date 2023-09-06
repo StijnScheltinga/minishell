@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 16:45:36 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/05 11:41:55 by stijn            ###   ########.fr       */
+/*   Updated: 2023/09/06 14:22:01 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@
 int 	export_error_check(char *arg);
 int		syntax_error(char *token, t_cmd_table *cmd_table);
 void	execve_error(char *cmd);
-void	malloc_error(void *ptr, t_cmd_table *cmd_table);
+void	malloc_error(void *ptr, void *ptr2, t_cmd_table *cmd_table);
 
 #endif
