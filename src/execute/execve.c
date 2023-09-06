@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:36:53 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/01 14:44:37 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/05 12:46:46 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ char	*get_paths(char **envp)
 	char	*ret;
 
 	i = 0;
+	ret = NULL;
 	while (envp[i])
 	{
 		ret = ft_strnstr(envp[i], "PATH=", 5);
@@ -67,6 +68,13 @@ static void	free_envp(char **envp)
 	free(envp);
 }
 
+static void	path_not_found(char *cmd)
+{
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+	exit(127);
+}
+
 void	ft_execve(char **cmd, t_env **env_head)
 {
 	char	**envp;
@@ -78,6 +86,8 @@ void	ft_execve(char **cmd, t_env **env_head)
 		exit(0);
 	envp = linked_list_to_double_array(env_head);
 	path = get_paths(envp);
+	if (!path)
+		path_not_found(cmd[0]);
 	paths = ft_split(path + 5, ':');
 	cmdpath = get_right_path(paths, cmd);
 	execve(cmdpath, cmd, envp);

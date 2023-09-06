@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:48:24 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/01 15:00:12 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/04 17:23:39 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 //not implementing error code
 
-static char	*get_home(t_env **env_head, t_cmd_table *cmd_table)
+char	*get_home(t_env **env_head, t_cmd_table *cmd_table)
 {
 	size_t	i;
 	char	*ret;
@@ -51,8 +51,10 @@ static char	*find_right_path(char *arg, t_env **env_head, t_cmd_table *cmd_tab)
 	char	*path;
 
 	path = NULL;
-	if (arg == NULL || ft_strncmp(arg, "~", sizeof(arg)) == 0)
+	if (arg == NULL)
 		path = get_home(env_head, cmd_tab);
+	else if (ft_strncmp(arg, "~", sizeof(arg)) == 0)
+		path = cmd_tab->home;
 	else
 		path = arg;
 	return (path);

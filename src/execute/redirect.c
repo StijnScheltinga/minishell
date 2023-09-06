@@ -13,6 +13,7 @@
 #include "../../inc/redirect.h"
 #include "../../inc/parser.h"
 #include "../../inc/delimiter.h"
+#include "../../inc/pipes.h"
 
 #include <fcntl.h>
 #include <errno.h>
@@ -32,7 +33,7 @@ static void	redirect_error(char *file)
 	}
 }
 
-int	 redirect_input(int rd, t_redirect *redirect_arr, int redirect_count)
+int	 redirect_input(t_redirect *redirect_arr, int redirect_count)
 {
 	int		in_file;
 	int		i;
@@ -54,12 +55,10 @@ int	 redirect_input(int rd, t_redirect *redirect_arr, int redirect_count)
 	}
 	if (in_file != 0 && !check_if_del_is_input(redirect_arr, redirect_count))
 		dup2(in_file, STDIN_FILENO);
-	else if (!check_if_del_is_input(redirect_arr, redirect_count))
-		dup2(rd, STDIN_FILENO);
 	return (0);
 }
 
-int	redirect_output(int fd[2], t_redirect *red, int red_count, int is_last_cmd)
+int	redirect_output(int (*fd)[2], t_redirect *red, int red_count, int is_last_cmd)
 {
 	int		out_file;
 	int		i;
@@ -77,12 +76,11 @@ int	redirect_output(int fd[2], t_redirect *red, int red_count, int is_last_cmd)
 	}
 	if (out_file == 0 && !is_last_cmd)
 	{
-		dup2(fd[WRITE], STDOUT_FILENO);
+		dup2(out_file, STDOUT_FILENO);
 		return (0);
 	}
 	else if (out_file > 0)
 		dup2(out_file, STDOUT_FILENO);
-	close(fd[WRITE]);
 	return (0);
 }
 
@@ -106,22 +104,30 @@ int	redirect_output_single_cmd(t_redirect *red, int red_count)
 	return (0);
 }
 
-int	redirect_child(t_cmd_table *cmd_table, int fd[2], int rd, int cmd_i)
+int	redirect_child(t_cmd_table *cmd_table, int (*fd)[2], int cmd_i)
 {
 	t_redirect	*redirect_arr;
 	int			redirect_count;
 	int			is_last_cmd;
 	int			fd_delimiter;
 
-
 	redirect_arr = cmd_table->cmd_arr[cmd_i].redirect_arr;
 	redirect_count = cmd_table->cmd_arr[cmd_i].redirect_count;
+	if (cmd_i == 0)
+		redirect_first_cmd(fd, cmd_table->cmd_count - 1);
+	else if (cmd_i != cmd_table->cmd_count - 1)
+		redirect_middle_cmd(fd, cmd_i, cmd_table->cmd_count - 1);
+	else
+		redirect_last_cmd(fd, cmd_table->cmd_count - 1);
 	is_last_cmd = cmd_i == cmd_table->cmd_count - 1;
-	fd_delimiter = delimiter(redirect_arr, redirect_count, cmd_table);
-	if (fd_delimiter > 0)
-		dup2(fd_delimiter, STDIN_FILENO);
-	redirect_input(rd, redirect_arr, redirect_count);
-	redirect_output(fd, redirect_arr, redirect_count, is_last_cmd);
+	// fd_delimiter = delimiter(redirect_arr, redirect_count, cmd_table);
+	// if (fd_delimiter > 0)
+	// 	dup2(fd_delimiter, STDIN_FILENO);
+	// if (redirect_count > 0)
+	// {
+	// 	redirect_input(redirect_arr, redirect_count);
+	// 	redirect_output(fd, redirect_arr, redirect_count, is_last_cmd);
+	// }
 	return (0);
 }
 
@@ -138,7 +144,7 @@ int	redirect_single_child(t_cmd_table *cmd_table)
 	fd = delimiter(redirect_arr, redirect_count, cmd_table);
 	if (fd > 0)
 		dup2(fd, STDIN_FILENO);
-	if (redirect_input(STDIN_FILENO, redirect_arr, redirect_count))
+	if (redirect_input(redirect_arr, redirect_count))
 		exit(1);
 	if (redirect_output_single_cmd(redirect_arr, redirect_count))
 		exit(1);

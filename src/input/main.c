@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:10:05 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/31 00:09:54 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/04 17:27:19 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "../../inc/parser.h"
 #include "../../inc/execute.h"
 #include "../../inc/signals.h"
+#include "../../inc/builtin.h"
 
 void	leaks(void)
 {
@@ -33,6 +34,7 @@ int	main(int argc, char **argv, char **envp)
 	cmd_table = malloc(sizeof(t_cmd_table));
 	cmd_table->env = env_to_linkedlist(envp);
 	cmd_table->latest_exit_code = 0;
+	cmd_table->home = get_home_cmd_table(&cmd_table->env, cmd_table);
 	while (1)
 	{
 		sign_init();

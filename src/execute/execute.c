@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/01 14:48:14 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/05 18:07:09 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
 #include "../../inc/parser.h"
 #include "../../inc/redirect.h"
 #include "../../inc/signals.h"
+#include "../../inc/pipes.h"
 
 #include <fcntl.h>
 
-void	execute_with_child(t_cmd_table *cmd_table, int fd[2], int rd, int cmd_i)
+void	execute_with_child(t_cmd_table *cmd_table, int (*fd)[2], int cmd_i)
 {
 	sign_child();
-	close(fd[READ]);
-	if (redirect_child(cmd_table, fd, rd, cmd_i))
+	if (redirect_child(cmd_table, fd, cmd_i))
 		exit(1);
 	if (!cmd_table->cmd_arr[cmd_i].single_cmd[0])
 		exit(1);
@@ -37,28 +37,28 @@ void	execute_multiple_cmd(t_cmd_table *cmd_table)
 {
 	int		i;
 	int		status;
-	int		fd[2];
-	int		read;
+	int		(*fd)[2];
 	pid_t	pid;
+	pid_t	*pids[cmd_table->cmd_count];
 
 	i = 0;
-	read = STDIN_FILENO;
+	fd = malloc(sizeof(int[2]) * (cmd_table->cmd_count - 1));
+	for (size_t j = 0; j < cmd_table->cmd_count - 1; j++)
+		pipe(fd[j]);
 	while (i < cmd_table->cmd_count)
 	{
-		if (pipe(fd) == -1)
-			exit(EXIT_FAILURE);
 		pid = fork();
 		if (pid < 0)
 			exit(EXIT_FAILURE);
 		if (pid == 0)
-			execute_with_child(cmd_table, fd, read, i);
-		waitpid(pid, &status, 0);
-		cmd_table->latest_exit_code = WEXITSTATUS(status);
-		read = dup(fd[0]); 
-		close(fd[0]);
-		close(fd[1]);
+			execute_with_child(cmd_table, fd, i);
+		pids[i] = pid;
 		i++;
 	}
+	close_all_pipes(fd, cmd_table->cmd_count - 1);
+	for (size_t i = 0; i < cmd_table->cmd_count; i++)
+		waitpid(pids[i], &status, 0);
+	cmd_table->latest_exit_code = WEXITSTATUS(status);
 }
 
 // check if its a builtin with no other commands
