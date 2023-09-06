@@ -30,7 +30,7 @@ void	execute_with_child(t_cmd_table *cmd_table, int (*fd)[2], int cmd_i)
 	if (is_builtin(cmd_table->cmd_arr[cmd_i].single_cmd[0]) == true)
 		execute_builtin(cmd_table, cmd_i);
 	else
-		ft_execve(cmd_table->cmd_arr[cmd_i].single_cmd, &cmd_table->env);
+		ft_execve(cmd_table->cmd_arr[cmd_i].single_cmd, &cmd_table->env, fd);
 }
 
 void	execute_multiple_cmd(t_cmd_table *cmd_table)
@@ -39,7 +39,7 @@ void	execute_multiple_cmd(t_cmd_table *cmd_table)
 	int		status;
 	int		(*fd)[2];
 	pid_t	pid;
-	pid_t	*pids[cmd_table->cmd_count];
+	pid_t	*pids = malloc(sizeof(pid_t) * cmd_table->cmd_count);
 
 	i = 0;
 	fd = malloc(sizeof(int[2]) * (cmd_table->cmd_count - 1));
@@ -57,7 +57,8 @@ void	execute_multiple_cmd(t_cmd_table *cmd_table)
 	}
 	close_all_pipes(fd, cmd_table->cmd_count - 1);
 	for (size_t i = 0; i < cmd_table->cmd_count; i++)
-		waitpid(pids[i], &status, 0);
+		waitpid((pid_t)pids[i], &status, 0);
+	free_pipes_and_pids(fd, pids, cmd_table->cmd_count);
 	cmd_table->latest_exit_code = WEXITSTATUS(status);
 }
 
@@ -80,7 +81,7 @@ void	execute_single_cmd(t_cmd_table *cmd_table)
 	if (pid == 0)
 	{
 		sign_child();
-		ft_execve(cmd_table->cmd_arr[0].single_cmd, &cmd_table->env);
+		ft_execve(cmd_table->cmd_arr[0].single_cmd, &cmd_table->env, NULL);
 	}
 	waitpid(pid, &status, 0);
 	cmd_table->latest_exit_code = WEXITSTATUS(status);

@@ -10,12 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/execute.h"
+#include "../../inc/pipes.h"
 
 #define READ 0
 #define WRITE 1
 
 #include <unistd.h>
+#include <stdlib.h>
+
+void	free_pipes_and_pids(int (*fd)[2], pid_t *pids, int cmd_count)
+{
+	int	i;
+
+	i = 0;
+	if (fd)
+	{
+		while (i < cmd_count - 1)
+			free(fd[i++]);
+		free(fd);
+	}
+	if (pids)
+	{
+		i = 0;
+		while (i < cmd_count)
+			free(pids[i++]);
+		free(pids);
+	}
+}
 
 void	close_all_pipes(int (*fd)[2], int pipe_count)
 {

@@ -16,7 +16,7 @@
 # include "env_init.h"
 
 char	*get_paths(char **envp);
-void	ft_execve(char **cmd, t_env **env_head);
+void	ft_execve(char **cmd, t_env **env_head, int (*fd)[2]);
 char	*get_right_path(char **paths, char **cmd);
 
 #endif

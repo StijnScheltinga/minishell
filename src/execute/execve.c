@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../inc/execve.h"
+#include "../../inc/pipes.h"
 #include "../../inc/env_utils.h"
 #include "../../inc/error.h"
 #include "../../inc/signals.h"
@@ -75,7 +76,7 @@ static void	path_not_found(char *cmd)
 	exit(127);
 }
 
-void	ft_execve(char **cmd, t_env **env_head)
+void	ft_execve(char **cmd, t_env **env_head, int (*fd)[2])
 {
 	char	**envp;
 	char	*path;
@@ -91,6 +92,7 @@ void	ft_execve(char **cmd, t_env **env_head)
 	paths = ft_split(path + 5, ':');
 	cmdpath = get_right_path(paths, cmd);
 	execve(cmdpath, cmd, envp);
+	free_pipes_and_pids(fd, NULL, 2);
 	free(cmdpath);
 	free_envp(envp);
 	execve_error(cmd[0]);

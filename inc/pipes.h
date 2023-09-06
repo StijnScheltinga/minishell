@@ -13,10 +13,12 @@
 #ifndef PIPES_H
 # define PIPES_H
 
-# include "execute.h"
-
 # define READ 0
 # define WRITE 1
+
+#include <sys/types.h>
+
+void	free_pipes_and_pids(int (*fd)[2], pid_t *pids, int cmd_count);
 
 void	close_all_pipes(int (*fd)[2], int pipe_count);
 void	redirect_first_cmd(int (*fd)[2], int pipe_count);
