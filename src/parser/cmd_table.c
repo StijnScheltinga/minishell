@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:54:14 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/05 13:09:57 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/07 13:14:05 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	fill_cmd_table(t_cmd_table *cmd_table, t_token **head)
 	cmd_table->cmd_count = cmd_n; 
 	cmd_table->cmd_arr = malloc(cmd_n * sizeof(t_command));
 	if (!cmd_table->cmd_arr)
-		malloc_error(NULL, cmd_table);
+		malloc_error(NULL, NULL, cmd_table);
 	fill_cmd_arr(cmd_table, head);
 }
 
@@ -54,7 +54,7 @@ void	fill_cmd_arr(t_cmd_table *cmd_table, t_token **head)
 		cmd_table->cmd_arr[i].num_of_arguments = arg_n;
 		cmd_table->cmd_arr[i].single_cmd = single_command(head, arg_n, i);
 		if (!cmd_table->cmd_arr[i].single_cmd)
-			malloc_error(NULL, cmd_table);
+			malloc_error(NULL, NULL, cmd_table);
 		create_redirect_arr(&(cmd_table->cmd_arr[i]), head, i);
 		i++;
 	}

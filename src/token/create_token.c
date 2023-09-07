@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 11:54:07 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/06 14:22:01 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/07 13:34:40 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	create_redirection_token(char *str, t_token **head, t_cmd_table *cmd_table)
 	}
 	text = ft_substr(str, 0, i);
 	if (!text)
-		malloc_error(NULL, cmd_table);
+		malloc_error(NULL, NULL, cmd_table);
 	create_token(REDIRECT, text, cmd_table, head);
 	return (i);
 }

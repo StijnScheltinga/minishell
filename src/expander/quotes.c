@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 14:39:10 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/06 14:22:01 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/07 13:56:52 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,19 @@
 char    *expand_var_quotes(char *text, t_cmd_table *cmd_table)
 {
     char    *expanded_string;
-    int     len_expanded_string;
     int     i;
 
-    expanded_string = NULL;
+    expanded_string = malloc(1 * sizeof(char));
+    if (!expanded_string)
+        malloc_error(text, NULL, cmd_table);
+    expanded_string[0] = '\0';
+    i = 0;
     while (text[i])
     {
-        if (text[i] != '$')
-            add_char(expanded_string, text, i, cmd_table);
-        if ((text[i] == '$'))
-            i += join_env_var(text, &expanded_string, cmd_table);
+        if (text[i] != '$' || (text[i] == '$' && !text[i + 1]))
+            expanded_string = add_char(expanded_string, text, i, cmd_table);
+        if ((text[i] == '$' && text[i + 1]))
+            i += join_env_var(&text[i], &expanded_string, cmd_table);
 		else
         	i++;
     }
@@ -39,16 +42,9 @@ char    *add_char(char *expanded_string, char *text, int i, t_cmd_table *cmd_tab
 {
     char    *added_char;
 
-    if (!expanded_string)
-    {
-        expanded_string = malloc(1 * sizeof(char));
-        if (!expanded_string)
-            malloc_error(text, NULL, cmd_table);
-        expanded_string[0] = '\0';
-    }
     added_char = ft_substr(text, i, 1);
     if (!added_char)
-        malloc_error(text, NULL, cmd_table);
+        malloc_error(text, expanded_string, cmd_table);
     expanded_string = ft_strjoin_free(expanded_string, added_char);
     if (!expanded_string)
         malloc_error(text, NULL, cmd_table);
