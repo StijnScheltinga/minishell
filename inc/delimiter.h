@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delimiter.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 16:06:28 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/01 13:07:24 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/10 17:25:04 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "parser.h"
 
-bool	check_if_del_is_input(t_redirect *redirect_arr, int redirect_count);
+bool	del_is_input(t_redirect *redirect_arr, int redirect_count);
 int 	delimiter(t_redirect *redirect_arr, int redirect_count, t_cmd_table *cmd_table);
 
 #endif

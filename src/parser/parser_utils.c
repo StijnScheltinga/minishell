@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 13:06:23 by sschelti          #+#    #+#             */
 /*   Updated: 2023/09/05 16:51:51 by sschelti         ###   ########.fr       */
@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../inc/parser.h"
+#include "../../inc/pipes.h"
 
 void	free_func_cmd_table(t_cmd_table *cmd_table)
 {
@@ -26,6 +27,7 @@ void	free_func_cmd_table(t_cmd_table *cmd_table)
 	}
 	// env free function free(cmd_table->env)
 	free(cmd_table->cmd_arr);
+	free_pids_and_pipes(cmd_table);
 	cmd_table->cmd_arr = NULL;
 }
 

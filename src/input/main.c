@@ -6,6 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:10:05 by sschelti          #+#    #+#             */
+/*   Updated: 2023/09/11 12:07:53 by alex             ###   ########.fr       */
 /*   Updated: 2023/09/06 14:22:01 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -15,6 +16,7 @@
 #include "../../inc/parser.h"
 #include "../../inc/execute.h"
 #include "../../inc/signals.h"
+#include "../../inc/builtin.h"
 
 void	leaks(void)
 {
@@ -34,7 +36,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		sign_init();
-		input_string = get_line();
+		input_string = get_line(cmd_table->latest_exit_code);
 		if (!input_string)
 			continue ;
 		cmd_table->input_string = input_string;

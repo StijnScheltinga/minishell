@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../inc/parser.h"
+#include "../../inc/execute.h"
 #include "../../inc/error.h"
 
 t_cmd_table	*init_cmd_table(t_token **head, char **envp)
@@ -26,6 +27,10 @@ t_cmd_table	*init_cmd_table(t_token **head, char **envp)
 	cmd_table->cmd_count = 0;
 	cmd_table->token_head = head;
 	cmd_table->cmd_arr = NULL;
+	cmd_table->home =  NULL;
+  cmd_table->get_home_cmd_table(&cmd_table->env)
+	create_pipes(cmd_table);
+	create_pid_array(cmd_table);
 	return (cmd_table);
 }
 

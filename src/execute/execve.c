@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:36:53 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/01 14:44:37 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/11 16:26:05 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/execve.h"
+#include "../../inc/pipes.h"
 #include "../../inc/env_utils.h"
 #include "../../inc/error.h"
 #include "../../inc/signals.h"
@@ -47,6 +48,7 @@ char	*get_paths(char **envp)
 	char	*ret;
 
 	i = 0;
+	ret = NULL;
 	while (envp[i])
 	{
 		ret = ft_strnstr(envp[i], "PATH=", 5);
@@ -67,7 +69,14 @@ static void	free_envp(char **envp)
 	free(envp);
 }
 
-void	ft_execve(char **cmd, t_env **env_head)
+static void	path_not_found(char *cmd)
+{
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+	exit(127);
+}
+
+void	ft_execve(char **cmd, t_env **env_head, int (*fd)[2])
 {
 	char	**envp;
 	char	*path;
@@ -78,6 +87,8 @@ void	ft_execve(char **cmd, t_env **env_head)
 		exit(0);
 	envp = linked_list_to_double_array(env_head);
 	path = get_paths(envp);
+	if (!path)
+		path_not_found(cmd[0]);
 	paths = ft_split(path + 5, ':');
 	cmdpath = get_right_path(paths, cmd);
 	execve(cmdpath, cmd, envp);

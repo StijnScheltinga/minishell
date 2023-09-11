@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delimiter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:59:18 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/01 13:08:52 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/11 11:53:06 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	delimiter_count(t_redirect *redirect_arr, int redirect_count)
 	return (del_count);
 }
 
-bool	check_if_del_is_input(t_redirect *redirect_arr, int redirect_count)
+bool	del_is_input(t_redirect *redirect_arr, int redirect_count)
 {
 	t_type	type;
 
@@ -62,11 +62,11 @@ static void	exec_delim(char *eof, int del_count, int fd[2], bool is_input, t_cmd
 			exit(130);
 		if (!ft_strncmp(input_string, eof, ft_strlen(eof) + 1))
 			break ;
-		if (del_count == 0 && is_input == true)
+		if (del_count == 0 && is_input)
 		{
 			input_string = expand_var_quotes(input_string, cmd_table);
-			ft_putstr_fd(input_string, fd[1]);
-			ft_putstr_fd("\n", fd[1]);
+			ft_putstr_fd(input_string, fd[WRITE]);
+			ft_putstr_fd("\n", fd[WRITE]);
 		}
 		free(input_string);
 	}
@@ -77,9 +77,9 @@ static int	dup_and_close(int fd[2])
 {
 	int	rd;
 
-	rd = dup(fd[0]);
-	close(fd[0]);
-	close(fd[1]);
+	rd = dup(fd[READ]);
+	close(fd[READ]);
+	close(fd[WRITE]);
 	return (rd);
 }
 
@@ -94,7 +94,7 @@ int	delimiter(t_redirect *redirect_arr, int redirect_count, t_cmd_table *cmd_tab
 	del_count = delimiter_count(redirect_arr, redirect_count);
 	if (del_count == 0)
 		return (0);
-	is_input = check_if_del_is_input(redirect_arr, redirect_count);
+	is_input = del_is_input(redirect_arr, redirect_count);
 	pipe(fd);
 	i = 0;
 	sign_delimiter();
@@ -107,7 +107,7 @@ int	delimiter(t_redirect *redirect_arr, int redirect_count, t_cmd_table *cmd_tab
 		}
 		i++;
 	}
-	if (is_input == false)
+	if (!is_input)
 		return (0);
 	return (dup_and_close(fd));
 }

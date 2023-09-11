@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 12:05:39 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/30 23:36:58 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/11 12:08:33 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 //SIG EXEC-
 void	sign_interrupt(int signum);
 void	sign_interrupt_delimiter(int signum);
-void	ctrl_d(void);
+void	ctrl_d(int latest_exit_code);
 
 //SIG INIT
 void	sign_child(void);

@@ -13,7 +13,7 @@
 #include "../../inc/main.h"
 #include "../../inc/signals.h"
 
-char *get_line(void)
+char *get_line(int latest_exit_code)
 {
 	static char	*input_string;
 
@@ -24,7 +24,7 @@ char *get_line(void)
 	}
 	input_string = readline("Minishell: ");
 	if (!input_string)
-		ctrl_d();
+		ctrl_d(latest_exit_code);
 	if (input_string[0] == '\0')
 		return(NULL);
 	add_history(input_string);

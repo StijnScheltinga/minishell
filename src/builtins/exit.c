@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:11:48 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/01 15:18:56 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/11 12:04:36 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static void	exit_error(char *s, int error)
 	{
 		ft_putstr_fd("exit\nexit: ", STDERR_FILENO);
 		ft_putstr_fd("too many arguments\n", STDERR_FILENO);
-		exit(1);
 	}
 }
 
@@ -102,14 +101,14 @@ static long long	ll_atoi(char *s)
 	return (val * sign);
 }
 
-void	ms_exit(char **arg)
+void	ms_exit(char **arg, t_cmd_table *cmd_table)
 {
 	long long	exit_code;
 
 	if (!arg[1])
 	{
 		ft_putstr_fd("exit\n", STDERR_FILENO);
-		exit(0);
+		exit(cmd_table->latest_exit_code);
 	}
 	if (!arg[1][0])
 		exit_error(arg[1], NUMERIC);
@@ -117,7 +116,13 @@ void	ms_exit(char **arg)
 	is_numeric(arg[1]);
 	is_in_range(arg[1]);
 	if (arg[2])
+	{
 		exit_error(NULL, TOO_MANY);
-	ft_putstr_fd("exit\n", STDERR_FILENO);
-	exit((int)(ll_atoi(arg[1]) % (long long)256));
+		cmd_table->latest_exit_code = 1;
+	}
+	else
+	{
+		ft_putstr_fd("exit\n", STDERR_FILENO);
+		exit((int)(ll_atoi(arg[1]) % (long long)256));
+	}
 }

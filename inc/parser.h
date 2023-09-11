@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:51:46 by sschelti          #+#    #+#             */
 /*   Updated: 2023/09/05 13:13:24 by sschelti         ###   ########.fr       */
@@ -35,8 +35,11 @@ typedef struct s_command {
 
 typedef struct s_cmd_table {
 	t_command		*cmd_arr;
-	unsigned int	cmd_count;
+	int				cmd_count;
+	int				(*pipes)[2];
 	int				latest_exit_code;
+	char			*home;
+	pid_t			*pids;
 	char			*input_string;
 	t_token			**token_head;
 	t_env			*env;

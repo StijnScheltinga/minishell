@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:50:14 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/25 18:57:32 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/05 13:31:53 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "../../inc/env_init.h"
 #include "../../inc/error.h"
 
+#include <unistd.h>
+
 static void	print_export(t_cmd_table *cmd_table)
 {
 	t_env	*env_head;
@@ -23,10 +25,15 @@ static void	print_export(t_cmd_table *cmd_table)
 	env_head = cmd_table->env;
 	while (env_head)
 	{
+		ft_putstr_fd("declare -x ", STDOUT_FILENO);
+		ft_putstr_fd(env_head->variable, STDOUT_FILENO);
 		if (env_head->value)
-			printf("declare -x %s=\"%s\"\n", env_head->variable, env_head->value);
-		else
-			printf("declare -x %s\n", env_head->variable);
+		{
+			ft_putstr_fd("=\"", STDOUT_FILENO);
+			ft_putstr_fd(env_head->value, STDOUT_FILENO);
+			ft_putstr_fd("\"", STDOUT_FILENO);
+		}
+		ft_putstr_fd("\n", STDOUT_FILENO);
 		env_head = env_head->next;
 	}
 }
