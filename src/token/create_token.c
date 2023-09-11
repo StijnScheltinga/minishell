@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 11:54:07 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/07 13:34:40 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/11 18:01:54 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,14 @@
 //return amount of char within quote
 int	handle_quotes(char *str, t_token **head, t_cmd_table *cmd_table)
 {
-	int		i;
 	char	*text;
-	int		last_quote_pos;
 
-	i = 1;
-	last_quote_pos = 0;
-	while (str[i] && str[i] != '|')
-	{
-		if (str[i] == str[0])
-			last_quote_pos = i;
-		i++;
-	}
-	text = ft_substr(str, 1, last_quote_pos - 1);
+	text = get_quote_text(str, cmd_table);
 	if (!text)
-		malloc_error(NULL, NULL, cmd_table);
-	if (str[0] == '"')
-		text = expand_var_quotes(text, cmd_table);
+		return (-1);
 	create_token(WORD, text, cmd_table, head);
-	return (last_quote_pos + 1);
+	printf("text: %s, first char: %c\n", text, str[0]);
+	return (ft_strlen(text) + 2);
 }
 
 void	create_io_file_tokens(t_token **head)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:38:34 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/04 18:37:43 by stijn            ###   ########.fr       */
+/*   Updated: 2023/09/11 13:39:36 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,19 @@
 int	tokenize_string(char *input_string, t_token **head, t_cmd_table *cmd_table)
 {
 	int		i;
+	int		temp;
 
 	i = 0;
+	temp = 0;
 	while (input_string[i])
 	{
 		if (input_string[i] && !ft_iswhitespace(input_string[i]))
-			i += assign_token(&input_string[i], head, cmd_table);
+		{
+			temp = assign_token(&input_string[i], head, cmd_table);
+			if (temp == -1)
+				return (1);
+			i += temp;
+		}
 		else
 			i++;
 		if (i >= ft_strlen(input_string))
