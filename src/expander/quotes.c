@@ -3,88 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 14:39:10 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/31 19:16:05 by stijn            ###   ########.fr       */
+/*   Updated: 2023/09/07 13:56:52 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/expansions.h"
 #include "../../inc/token.h"
+#include "../../inc/error.h"
 
 //if env variable is found expand to value, else delete variable from string
 char    *expand_var_quotes(char *text, t_cmd_table *cmd_table)
 {
     char    *expanded_string;
     int     i;
-    int     start_sub;
 
-    expanded_string = NULL;
+    expanded_string = malloc(1 * sizeof(char));
+    if (!expanded_string)
+        malloc_error(text, NULL, cmd_table);
+    expanded_string[0] = '\0';
     i = 0;
-    start_sub = 0;
     while (text[i])
     {
-        if (text[i] == '$' && !ft_iswhitespace(text[i + 1]) && text[i + 1])
-        {
-            if (expanded_string && (i - start_sub) > 0)
-                expanded_string = ft_strjoin(expanded_string, ft_substr(text, start_sub, (i - start_sub)));
-            else if (!expanded_string)
-                expanded_string = ft_substr(text, start_sub, i);
+        if (text[i] != '$' || (text[i] == '$' && !text[i + 1]))
+            expanded_string = add_char(expanded_string, text, i, cmd_table);
+        if ((text[i] == '$' && text[i + 1]))
             i += join_env_var(&text[i], &expanded_string, cmd_table);
-            start_sub = i;
-        }
 		else
         	i++;
     }
-	if (start_sub != i && expanded_string)
-		expanded_string = ft_strjoin(expanded_string, ft_substr(text, start_sub, (i - start_sub)));
-	if (!expanded_string)
-		expanded_string = ft_strdup(text);
     free(text);
     return (expanded_string);
 }
 
-int join_env_var(char *var_name, char **expanded_string, t_cmd_table *cmd_table)
+char    *add_char(char *expanded_string, char *text, int i, t_cmd_table *cmd_table)
 {
-    char    *var_value;
-    int     i;
+    char    *added_char;
 
-    var_value = find_var_val(var_name, cmd_table);
-    i = 1;
-    if (var_value)
-        *expanded_string = ft_strjoin(*expanded_string, var_value);
-    while (var_name[i] && !ft_iswhitespace(var_name[i]) && var_name[i] != '$')
-	{
-		if (var_name[i] == '?')
-		{
-			i++;
-			break ;
-		}
-        i++;
-	}
-    return(i);
+    added_char = ft_substr(text, i, 1);
+    if (!added_char)
+        malloc_error(text, expanded_string, cmd_table);
+    expanded_string = ft_strjoin_free(expanded_string, added_char);
+    if (!expanded_string)
+        malloc_error(text, NULL, cmd_table);
+    return (expanded_string);
 }
 
-//pass &text[i] where dollar sign is found
-char    *find_var_val(char *var, t_cmd_table *cmd_table)
+int join_env_var(char *str, char **expanded_string, t_cmd_table *cmd_table)
 {
-    t_env   *iterate;
-    char    *var_name;
-    int     i;
+    char    *var_value;
+	char	*var_name;
+    int     var_name_len;
 
-    iterate = cmd_table->env;
-    i = 1;
-    while (var[i] && !ft_iswhitespace(var[i]) && var[i] != '$')
-        i++;
-    var_name = ft_substr(var, 1, (i - 1));
-    if (!ft_strncmp(var_name, "?", 1))
-        return (ft_itoa(cmd_table->latest_exit_code));
-    while (iterate != NULL)
+	var_name_len = get_var_name(str, &var_name, cmd_table);
+    var_value = find_var_value(var_name, cmd_table);
+    if (var_value)
     {
-        if (!ft_strncmp(iterate->variable, var_name, ft_strlen(var_name)))
-            return(iterate->value);
-        iterate = iterate->next;
+        *expanded_string = ft_strjoin_free(*expanded_string, var_value);
+        if (!(*expanded_string))
+            malloc_error(*expanded_string, var_value, cmd_table);
     }
-    return(NULL);
+    return(var_name_len); 
 }
