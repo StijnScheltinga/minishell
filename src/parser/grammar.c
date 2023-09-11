@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 13:42:21 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/04 17:14:50 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/11 13:21:23 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	double_metachar_check(t_token **head, t_cmd_table *cmd_table)
 			&& iterate->next == NULL)
 			return (syntax_error("newline", cmd_table));
 		else if ((iterate->type == PIPE || iterate->type == REDIRECT) 
-			&& (iterate->next->type == PIPE || iterate->next->type == REDIRECT))
+				&& iterate->next->type == PIPE)
 			return (syntax_error(iterate->next->text, cmd_table));
 		iterate = iterate->next;
 	}
