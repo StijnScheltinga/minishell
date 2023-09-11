@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:51:46 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/04 17:18:16 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/11 16:10:11 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@ typedef struct s_command {
 
 typedef struct s_cmd_table {
 	t_command		*cmd_arr;
-	unsigned int	cmd_count;
+	int				cmd_count;
+	int				(*pipes)[2];
 	int				latest_exit_code;
 	char			*home;
+	pid_t			*pids;
 	t_env			*env;
 }	t_cmd_table;
 

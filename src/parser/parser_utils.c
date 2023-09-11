@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 13:06:23 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/15 13:07:47 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/11 16:16:06 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parser.h"
+#include "../../inc/pipes.h"
 
 void	free_func_cmd_table(t_cmd_table *cmd_table, t_token **head)
 {
@@ -25,6 +26,7 @@ void	free_func_cmd_table(t_cmd_table *cmd_table, t_token **head)
 		i++;
 	}
 	free(cmd_table->cmd_arr);
+	free_pids_and_pipes(cmd_table);
 }
 
 void	free_redirect_array(t_redirect *redirect_arr, unsigned int redirect_count)

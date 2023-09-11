@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:10:05 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/04 17:27:19 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/11 12:07:53 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		sign_init();
-		input_string = get_line();
+		input_string = get_line(cmd_table->latest_exit_code);
 		if (!input_string)
 			continue ;
 		if (!tokenize_string(input_string, &token_head, cmd_table))

@@ -18,6 +18,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <unistd.h>
+#include <stdbool.h>
 
 static void	redirect_error(char *file)
 {
@@ -31,6 +32,7 @@ static void	redirect_error(char *file)
 		ft_putstr_fd(file, STDERR_FILENO);
 		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
 	}
+	exit(1);
 }
 
 int	 redirect_input(t_redirect *redirect_arr, int redirect_count)
@@ -46,19 +48,18 @@ int	 redirect_input(t_redirect *redirect_arr, int redirect_count)
 		{
 			in_file = open(redirect_arr[i].file_name, O_RDONLY);
 			if (in_file == -1)
-			{
 				redirect_error(redirect_arr[i].file_name);
-				return (1);
-			}
 		}
 		i++;
 	}
-	if (in_file != 0 && !check_if_del_is_input(redirect_arr, redirect_count))
+	if (in_file == 0)
+		return (0);
+	if (in_file != 0 && !del_is_input(redirect_arr, redirect_count))
 		dup2(in_file, STDIN_FILENO);
-	return (0);
+	return (1);
 }
 
-int	redirect_output(int (*fd)[2], t_redirect *red, int red_count, int is_last_cmd)
+int	redirect_output(t_redirect *red, int red_count)
 {
 	int		out_file;
 	int		i;
@@ -68,66 +69,36 @@ int	redirect_output(int (*fd)[2], t_redirect *red, int red_count, int is_last_cm
 	i = 0;
 	while (i < red_count)
 	{
+		file = red[i].file_name;
 		if (red[i].type == OUTFILE)
-			out_file = open(red[i].file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			out_file = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		else if (red[i].type == APPEND)
-			out_file = open(red[i].file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			out_file = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		i++;
 	}
-	if (out_file == 0 && !is_last_cmd)
-	{
-		dup2(out_file, STDOUT_FILENO);
+	if (out_file == 0)
 		return (0);
-	}
-	else if (out_file > 0)
-		dup2(out_file, STDOUT_FILENO);
-	return (0);
+	dup2(out_file, STDOUT_FILENO);
+	return (1);
 }
 
-int	redirect_output_single_cmd(t_redirect *red, int red_count)
+int	redirect_child(t_cmd_table *cmd_table, int cmd_i)
 {
-	int		out_file;
-	int		i;
-
-	out_file = 0;
-	i = 0;
-	while (i < red_count)
-	{
-		if (red[i].type == OUTFILE)
-			out_file = open(red[i].file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		else if (red[i].type == APPEND)
-			out_file = open(red[i].file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		i++;
-	}
-	if (out_file > 0)
-		dup2(out_file, STDOUT_FILENO);
-	return (0);
-}
-
-int	redirect_child(t_cmd_table *cmd_table, int (*fd)[2], int cmd_i)
-{
-	t_redirect	*redirect_arr;
-	int			redirect_count;
-	int			is_last_cmd;
+	t_redirect *red;
 	int			fd_delimiter;
+	int			red_count;
 
-	redirect_arr = cmd_table->cmd_arr[cmd_i].redirect_arr;
-	redirect_count = cmd_table->cmd_arr[cmd_i].redirect_count;
+	red = cmd_table->cmd_arr[cmd_i].redirect_arr;
+	red_count = cmd_table->cmd_arr[cmd_i].redirect_count;
+	fd_delimiter = delimiter(red, red_count, cmd_table);
+	if (fd_delimiter > 0)
+		dup2(fd_delimiter, STDIN_FILENO);
 	if (cmd_i == 0)
-		redirect_first_cmd(fd, cmd_table->cmd_count - 1);
+		redirect_first_cmd(cmd_table, &cmd_table->cmd_arr[cmd_i]);
 	else if (cmd_i != cmd_table->cmd_count - 1)
-		redirect_middle_cmd(fd, cmd_i, cmd_table->cmd_count - 1);
+		redirect_middle_cmd(cmd_table, &cmd_table->cmd_arr[cmd_i], cmd_i);
 	else
-		redirect_last_cmd(fd, cmd_table->cmd_count - 1);
-	is_last_cmd = cmd_i == cmd_table->cmd_count - 1;
-	// fd_delimiter = delimiter(redirect_arr, redirect_count, cmd_table);
-	// if (fd_delimiter > 0)
-	// 	dup2(fd_delimiter, STDIN_FILENO);
-	// if (redirect_count > 0)
-	// {
-	// 	redirect_input(redirect_arr, redirect_count);
-	// 	redirect_output(fd, redirect_arr, redirect_count, is_last_cmd);
-	// }
+		redirect_last_cmd(cmd_table, &cmd_table->cmd_arr[cmd_i]);
 	return (0);
 }
 
@@ -135,18 +106,16 @@ int	redirect_single_child(t_cmd_table *cmd_table)
 {
 	t_redirect	*redirect_arr;
 	int			redirect_count;
-	int			fd;
+	int			fd_delimiter;
 
 	redirect_arr = cmd_table->cmd_arr[0].redirect_arr;
 	redirect_count = cmd_table->cmd_arr[0].redirect_count;
 	if (!redirect_count)
 		return (0);
-	fd = delimiter(redirect_arr, redirect_count, cmd_table);
-	if (fd > 0)
-		dup2(fd, STDIN_FILENO);
-	if (redirect_input(redirect_arr, redirect_count))
-		exit(1);
-	if (redirect_output_single_cmd(redirect_arr, redirect_count))
-		exit(1);
+	fd_delimiter = delimiter(redirect_arr, redirect_count, cmd_table);
+	if (fd_delimiter > 0)
+		dup2(fd_delimiter, STDIN_FILENO);
+	redirect_input(redirect_arr, redirect_count);
+	redirect_output(redirect_arr, redirect_count);
 	return (0);
 }

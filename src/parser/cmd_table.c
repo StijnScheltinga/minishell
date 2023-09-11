@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_table.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:54:14 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/25 17:05:04 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/11 15:47:48 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parser.h"
+#include "../../inc/execute.h"
 
 void	init_cmd_table(t_cmd_table *cmd_table, t_token **head)
 {
 	cmd_table->cmd_count = count_cmd(head); 
-	cmd_table->latest_exit_code = 0;
 	cmd_table->cmd_arr = malloc(count_cmd(head) * sizeof(t_command));
+	create_pid_array(cmd_table);
+	create_pipes(cmd_table);
 	fill_cmd_arr(cmd_table, head);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:48:01 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/21 14:43:53 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/10 17:47:01 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	echo(char **arg)
 		if (arg[i])
 			write(STDOUT_FILENO, " ", 1);
 	}
-	if (n_option(arg[1]) == false)
+	if (!n_option(arg[1]))
 		write(STDOUT_FILENO, "\n", 1);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:11:48 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/06 13:18:46 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/11 12:04:36 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	ms_exit(char **arg, t_cmd_table *cmd_table)
 	if (!arg[1])
 	{
 		ft_putstr_fd("exit\n", STDERR_FILENO);
-		exit(0);
+		exit(cmd_table->latest_exit_code);
 	}
 	if (!arg[1][0])
 		exit_error(arg[1], NUMERIC);

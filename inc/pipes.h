@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 18:45:11 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/05 17:43:42 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/11 16:06:56 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@
 # define READ 0
 # define WRITE 1
 
+#include "parser.h"
+
 #include <sys/types.h>
 
-void	free_pipes_and_pids(int (*fd)[2], pid_t *pids, int cmd_count);
+void	free_pids_and_pipes(t_cmd_table *cmd_table);
+void	close_all_pipes(t_cmd_table *cmd_table);
+void	redirect_first_cmd(t_cmd_table *cmd_table, t_command *cmd);
+void	redirect_middle_cmd(t_cmd_table *cmd_table, t_command *cmd, int cmd_index);
+void	redirect_last_cmd(t_cmd_table *cmd_table, t_command *cmd);
 
-void	close_all_pipes(int (*fd)[2], int pipe_count);
-void	redirect_first_cmd(int (*fd)[2], int pipe_count);
-void	redirect_middle_cmd(int (*fd)[2], int cmd_index, int pipe_count);
-void	redirect_last_cmd(int (*fd)[2], int pipe_count);
+void	close_pipes(t_cmd_table *cmd_table, int pipe_index, int pipe_to_close);
 
 #endif

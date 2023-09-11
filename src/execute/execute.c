@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/05 18:07:09 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/11 16:19:48 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,49 +20,34 @@
 
 #include <fcntl.h>
 
-void	execute_with_child(t_cmd_table *cmd_table, int (*fd)[2], int cmd_i)
+void	execute_with_child(t_cmd_table *cmd_table, int cmd_i)
 {
 	sign_child();
-	if (redirect_child(cmd_table, fd, cmd_i))
-		exit(1);
-	if (!cmd_table->cmd_arr[cmd_i].single_cmd[0])
-		exit(1);
-	if (is_builtin(cmd_table->cmd_arr[cmd_i].single_cmd[0]) == true)
+	redirect_child(cmd_table, cmd_i);
+	if (is_builtin(cmd_table->cmd_arr[cmd_i].single_cmd[0]))
 		execute_builtin(cmd_table, cmd_i);
-	else
-		ft_execve(cmd_table->cmd_arr[cmd_i].single_cmd, &cmd_table->env, fd);
+	ft_execve(cmd_table->cmd_arr[cmd_i].single_cmd, &cmd_table->env, cmd_table->pipes);
 }
 
 void	execute_multiple_cmd(t_cmd_table *cmd_table)
 {
 	int		i;
-	int		status;
-	int		(*fd)[2];
 	pid_t	pid;
-	pid_t	*pids = malloc(sizeof(pid_t) * cmd_table->cmd_count);
 
 	i = 0;
-	fd = malloc(sizeof(int[2]) * (cmd_table->cmd_count - 1));
-	for (size_t j = 0; j < cmd_table->cmd_count - 1; j++)
-		pipe(fd[j]);
 	while (i < cmd_table->cmd_count)
 	{
 		pid = fork();
 		if (pid < 0)
 			exit(EXIT_FAILURE);
 		if (pid == 0)
-			execute_with_child(cmd_table, fd, i);
-		pids[i] = pid;
+			execute_with_child(cmd_table, i);
+		cmd_table->pids[i] = pid;
 		i++;
 	}
-	close_all_pipes(fd, cmd_table->cmd_count - 1);
-	for (size_t i = 0; i < cmd_table->cmd_count; i++)
-		waitpid((pid_t)pids[i], &status, 0);
-	free_pipes_and_pids(fd, pids, cmd_table->cmd_count);
-	cmd_table->latest_exit_code = WEXITSTATUS(status);
+	close_all_pipes(cmd_table);
+	wait_for_children(cmd_table);
 }
-
-// check if its a builtin with no other commands
 
 void	execute_single_cmd(t_cmd_table *cmd_table)
 {
@@ -70,7 +55,7 @@ void	execute_single_cmd(t_cmd_table *cmd_table)
 	pid_t	pid;
 
 	redirect_single_child(cmd_table);
-	if (is_builtin(cmd_table->cmd_arr[0].single_cmd[0]) == true)
+	if (is_builtin(cmd_table->cmd_arr[0].single_cmd[0]))
 	{
 		execute_builtin(cmd_table, 0);
 		return ;
@@ -86,8 +71,6 @@ void	execute_single_cmd(t_cmd_table *cmd_table)
 	waitpid(pid, &status, 0);
 	cmd_table->latest_exit_code = WEXITSTATUS(status);
 }
-
-//restoring stdin and stdout after executing one or more command(s)
 
 void	execute(t_cmd_table *cmd_table)
 {
