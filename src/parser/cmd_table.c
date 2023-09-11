@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_table.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:54:14 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/07 13:14:05 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/11 17:03:06 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parser.h"
 #include "../../inc/execute.h"
 #include "../../inc/error.h"
+#include "../../inc/builtin.h"
 
 t_cmd_table	*init_cmd_table(t_token **head, char **envp)
 {
@@ -27,10 +28,7 @@ t_cmd_table	*init_cmd_table(t_token **head, char **envp)
 	cmd_table->cmd_count = 0;
 	cmd_table->token_head = head;
 	cmd_table->cmd_arr = NULL;
-	cmd_table->home =  NULL;
-  cmd_table->get_home_cmd_table(&cmd_table->env)
-	create_pipes(cmd_table);
-	create_pid_array(cmd_table);
+	cmd_table->home = get_home_cmd_table(&cmd_table->env);
 	return (cmd_table);
 }
 
@@ -43,6 +41,8 @@ void	fill_cmd_table(t_cmd_table *cmd_table, t_token **head)
 	cmd_table->cmd_arr = malloc(cmd_n * sizeof(t_command));
 	if (!cmd_table->cmd_arr)
 		malloc_error(NULL, NULL, cmd_table);
+	create_pipes(cmd_table);
+	create_pid_array(cmd_table);
 	fill_cmd_arr(cmd_table, head);
 }
 
