@@ -6,11 +6,12 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/08/31 17:26:21 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/07 13:13:22 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/token.h"
+#include "../../inc/error.h"
 
 int	ft_iswhitespace(char a)
 {
@@ -58,12 +59,14 @@ void free_func_token(t_token **head)
 	}
 }
 
-void	create_token(t_type type, char *text, t_token **head)
+void	create_token(t_type type, char *text, t_cmd_table *cmd_table, t_token **head)
 {
 	t_token	*new_token;
 
+	if (!text)
+		malloc_error(NULL, NULL, cmd_table);
 	new_token = ft_lstnew(type, text);
 	if (!new_token)	
-		exit(EXIT_FAILURE);
+		malloc_error(text, NULL, cmd_table);
 	ft_lstadd_back(head, new_token);
 }

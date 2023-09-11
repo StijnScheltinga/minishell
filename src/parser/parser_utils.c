@@ -6,27 +6,29 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 13:06:23 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/11 16:16:06 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/05 16:51:51 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parser.h"
 #include "../../inc/pipes.h"
 
-void	free_func_cmd_table(t_cmd_table *cmd_table, t_token **head)
+void	free_func_cmd_table(t_cmd_table *cmd_table)
 {
 	int	i;
 
 	i = 0;
-	while (i != count_cmd(head))
+	while (i != cmd_table->cmd_count && cmd_table->cmd_arr)
 	{
 		free_double_array(cmd_table->cmd_arr[i].single_cmd);
 		if (cmd_table->cmd_arr[i].redirect_arr)
 			free_redirect_array(cmd_table->cmd_arr[i].redirect_arr, cmd_table->cmd_arr[i].redirect_count);
 		i++;
 	}
+	// env free function free(cmd_table->env)
 	free(cmd_table->cmd_arr);
 	free_pids_and_pipes(cmd_table);
+	cmd_table->cmd_arr = NULL;
 }
 
 void	free_redirect_array(t_redirect *redirect_arr, unsigned int redirect_count)

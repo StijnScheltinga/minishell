@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 11:54:07 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/01 14:40:50 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/07 13:34:40 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ int	handle_quotes(char *str, t_token **head, t_cmd_table *cmd_table)
 		i++;
 	}
 	text = ft_substr(str, 1, last_quote_pos - 1);
+	if (!text)
+		malloc_error(NULL, NULL, cmd_table);
 	if (str[0] == '"')
 		text = expand_var_quotes(text, cmd_table);
-	create_token(WORD, text, head);
+	create_token(WORD, text, cmd_table, head);
 	return (last_quote_pos + 1);
 }
 
@@ -58,7 +60,7 @@ void	create_io_file_tokens(t_token **head)
 	}
 }
 
-int	create_redirection_token(char *str, t_token **head)
+int	create_redirection_token(char *str, t_token **head, t_cmd_table *cmd_table)
 {
 	char	*text;
 	int		i;
@@ -71,11 +73,13 @@ int	create_redirection_token(char *str, t_token **head)
 		i++;
 	}
 	text = ft_substr(str, 0, i);
-	create_token(REDIRECT, text, head);
+	if (!text)
+		malloc_error(NULL, NULL, cmd_table);
+	create_token(REDIRECT, text, cmd_table, head);
 	return (i);
 }
 
-int	create_word_token(char *str, t_token **head)
+int	create_word_token(char *str, t_token **head, t_cmd_table *cmd_table)
 {
 	char	*text;
 	int		i;
@@ -84,6 +88,8 @@ int	create_word_token(char *str, t_token **head)
 	while (str[i] && !ft_iswhitespace(str[i]) && !ismetachar(str[i]))
 		i++;
 	text = ft_substr(str, 0, i);
-	create_token(WORD, text, head);
+	if (!text)
+		malloc_error(NULL, NULL, cmd_table);
+	create_token(WORD, text, cmd_table, head);
 	return (i);
 }
