@@ -52,9 +52,9 @@ int	 redirect_input(t_redirect *redirect_arr, int redirect_count)
 		}
 		i++;
 	}
-	if (in_file == 0)
+	if (in_file == 0 && !del_is_input(redirect_arr, redirect_count))
 		return (0);
-	if (in_file != 0 && !del_is_input(redirect_arr, redirect_count))
+	if (!del_is_input(redirect_arr, redirect_count))
 		dup2(in_file, STDIN_FILENO);
 	return (1);
 }

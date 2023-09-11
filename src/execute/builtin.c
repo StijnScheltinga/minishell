@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:29:55 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/05 12:25:00 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/11 16:46:03 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../inc/execute.h"
 #include "../../libft/libft.h"
 
-char	*get_home_cmd_table(t_env **env_head, t_cmd_table *cmd_table)
+char	*get_home_cmd_table(t_env **env_head)
 {
 	size_t	i;
 	t_env	*iter;
