@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:40:36 by sschelti          #+#    #+#             */
-/*   Updated: 2023/07/06 15:35:28 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/12 13:48:55 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	**ft_split(char const *s, char c)
 
 	i = 0;
 	j = 0;
-	ptr = malloc((word_count(s, c) + 1) * sizeof(char *));
+	ptr = ft_malloc((word_count(s, c) + 1) * sizeof(char *));
 	if (!ptr || !s)
 		return (ptr);
 	while (j < word_count(s, c))

@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 11:54:07 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/07 13:34:40 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 13:47:34 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,28 @@
 //return amount of char within quote
 int	handle_quotes(char *str, t_token **head, t_cmd_table *cmd_table)
 {
-	int		i;
 	char	*text;
-	int		last_quote_pos;
+	char	*temp;
+	char	quote;
+	int		str_i;
 
-	i = 1;
-	last_quote_pos = 0;
-	while (str[i] && str[i] != '|')
+	str_i = 0;
+	text = ft_malloc(1 * sizeof(char));
+	text[0] = '\0';
+	while (str[str_i] == '\'' || str[str_i] == '"')
 	{
-		if (str[i] == str[0])
-			last_quote_pos = i;
-		i++;
+		quote = str[str_i];
+		temp = get_quote_text(&str[str_i], cmd_table);
+		if (!temp)
+			return (free(text), -1);
+		text = ft_strjoin_free(text, temp);
+		str_i++;
+		while (str[str_i] != quote)
+			str_i++;
+		str_i++;
 	}
-	text = ft_substr(str, 1, last_quote_pos - 1);
-	if (!text)
-		malloc_error(NULL, NULL, cmd_table);
-	if (str[0] == '"')
-		text = expand_var_quotes(text, cmd_table);
 	create_token(WORD, text, cmd_table, head);
-	return (last_quote_pos + 1);
+	return (str_i);
 }
 
 void	create_io_file_tokens(t_token **head)
@@ -73,8 +76,6 @@ int	create_redirection_token(char *str, t_token **head, t_cmd_table *cmd_table)
 		i++;
 	}
 	text = ft_substr(str, 0, i);
-	if (!text)
-		malloc_error(NULL, NULL, cmd_table);
 	create_token(REDIRECT, text, cmd_table, head);
 	return (i);
 }
@@ -88,8 +89,6 @@ int	create_word_token(char *str, t_token **head, t_cmd_table *cmd_table)
 	while (str[i] && !ft_iswhitespace(str[i]) && !ismetachar(str[i]))
 		i++;
 	text = ft_substr(str, 0, i);
-	if (!text)
-		malloc_error(NULL, NULL, cmd_table);
 	create_token(WORD, text, cmd_table, head);
 	return (i);
 }

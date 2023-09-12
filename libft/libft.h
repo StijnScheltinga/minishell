@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 17:05:25 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/01 18:14:43 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 13:34:27 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ char	**ft_split(char const *s, char c);
 //Minishell
 char	*ft_strjoin_with_char(char const *s1, char const *s2, char c);
 char	*ft_strjoin_free(char const *s1, char const *s2);
+void    *ft_malloc(size_t size);
 
 #endif

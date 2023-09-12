@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 15:45:44 by sschelti          #+#    #+#             */
-/*   Updated: 2022/10/18 13:33:54 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 13:48:41 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,7 @@ char	*ft_itoa(int n)
 	else
 		value = n;
 	size += sizeint(value);
-	str = malloc(sizeof(char) * size + 1);
-	if (!str)
-		return (str);
+	str = ft_malloc(sizeof(char) * size + 1);
 	str[size] = '\0';
 	size--;
 	return (fillstring(str, value, size));
