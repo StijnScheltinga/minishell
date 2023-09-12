@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 13:06:23 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/05 16:51:51 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 17:04:48 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,40 @@
 
 void	free_func_cmd_table(t_cmd_table *cmd_table)
 {
-	int	i;
+	t_command	cmd_arr;
+	int			i;
 
 	i = 0;
 	while (i != cmd_table->cmd_count && cmd_table->cmd_arr)
 	{
-		free_double_array(cmd_table->cmd_arr[i].single_cmd);
-		if (cmd_table->cmd_arr[i].redirect_arr)
-			free_redirect_array(cmd_table->cmd_arr[i].redirect_arr, cmd_table->cmd_arr[i].redirect_count);
+		cmd_arr = cmd_table->cmd_arr[i];
+		free_double_array(cmd_arr.single_cmd);
+		if (cmd_arr.redirect_arr)
+			free_redirect_arr(cmd_arr.redirect_arr, cmd_arr.redirect_count);
 		i++;
 	}
-	// env free function free(cmd_table->env)
 	free(cmd_table->cmd_arr);
 	free_pids_and_pipes(cmd_table);
 	cmd_table->cmd_arr = NULL;
 }
 
-void	free_redirect_array(t_redirect *redirect_arr, unsigned int redirect_count)
+void	free_redirect_arr(t_redirect *redir_arr, unsigned int redir_count)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
-	while (i < redirect_count)
+	while (i < redir_count)
 	{
-		free(redirect_arr[i].file_name);
+		free(redir_arr[i].file_name);
 		i++;
 	}
-	free(redirect_arr);
+	free(redir_arr);
 }
 
 void	free_double_array(char	**double_array)
 {
 	int	i;
-	
+
 	i = 0;
 	while (double_array[i])
 	{

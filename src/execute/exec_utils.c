@@ -20,7 +20,7 @@ void	create_pid_array(t_cmd_table *cmd_table)
 void	create_pipes(t_cmd_table *cmd_table)
 {
 	int	i;
-	
+
 	i = 0;
 	cmd_table->pipes = ft_malloc(sizeof(int) * (cmd_table->cmd_count - 1) * 2);
 	while (i < cmd_table->cmd_count - 1)

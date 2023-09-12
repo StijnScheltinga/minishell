@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:54:14 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 13:44:50 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:56:24 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@
 t_cmd_table	*init_cmd_table(t_token **head, char **envp)
 {
 	t_cmd_table	*cmd_table;
-	
+
 	cmd_table = ft_malloc(sizeof(t_cmd_table));
-	//env list needs malloc checks and cleanup function
 	cmd_table->env = env_to_linkedlist(envp);
 	cmd_table->latest_exit_code = 0;
 	cmd_table->cmd_count = 0;
@@ -33,9 +32,9 @@ t_cmd_table	*init_cmd_table(t_token **head, char **envp)
 void	fill_cmd_table(t_cmd_table *cmd_table, t_token **head)
 {
 	int	cmd_n;
-	
+
 	cmd_n = count_cmd(head);
-	cmd_table->cmd_count = cmd_n; 
+	cmd_table->cmd_count = cmd_n;
 	cmd_table->cmd_arr = ft_malloc(cmd_n * sizeof(t_command));
 	create_pipes(cmd_table);
 	create_pid_array(cmd_table);
@@ -54,7 +53,7 @@ void	fill_cmd_arr(t_cmd_table *cmd_table, t_token **head)
 		arg_n = num_of_arguments(head, i);
 		cmd_table->cmd_arr[i].num_of_arguments = arg_n;
 		cmd_table->cmd_arr[i].single_cmd = single_command(head, arg_n, i);
-		create_redirect_arr(&(cmd_table->cmd_arr[i]), head, i);
+		create_redir_arr(&(cmd_table->cmd_arr[i]), head, i);
 		i++;
 	}
 }

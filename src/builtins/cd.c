@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:48:24 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/12 15:41:27 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/12 17:05:22 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,9 @@ static void	error_msg(t_cmd_table* cmd_table, char *arg, char *error_msg)
 
 char	*get_home(t_env **env_head, t_cmd_table *cmd_table)
 {
-	size_t	i;
 	char	*ret;
 	t_env	*iter;
 
-	i = 0;
 	ret = NULL;
 	iter = *env_head;
 	while (iter)

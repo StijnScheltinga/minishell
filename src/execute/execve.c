@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:36:53 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/11 16:26:05 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/12 17:12:25 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	path_not_found(char *cmd)
 	exit(127);
 }
 
-void	ft_execve(char **cmd, t_env **env_head, int (*fd)[2])
+void	ft_execve(char **cmd, t_env **env_head)
 {
 	char	**envp;
 	char	*path;

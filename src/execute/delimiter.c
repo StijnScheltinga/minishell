@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delimiter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:59:18 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/11 11:53:06 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/12 17:17:22 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ static int	dup_and_close(int fd[2])
 int	delimiter(t_redirect *redirect_arr, int redirect_count, t_cmd_table *cmd_table)
 {
 	int		i;
-	int		rd;
 	int		fd[2];
 	int		del_count;
 	bool	is_input;

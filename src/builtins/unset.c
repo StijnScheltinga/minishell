@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:06:53 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/11 20:27:50 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/12 17:10:54 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static void	unset_cmd(t_cmd_table *cmd_table, char *var)
 	t_env	*env_head;
 	t_env	*holder;
 
-	holder = env_head;
 	env_head = cmd_table->env;
 	while (env_head)
 	{

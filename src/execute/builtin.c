@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:29:55 by aolde-mo          #+#    #+#             */
 /*   Updated: 2023/09/12 14:09:45 by alex             ###   ########.fr       */
@@ -16,10 +16,8 @@
 
 char	*get_home_cmd_table(t_env **env_head)
 {
-	size_t	i;
 	t_env	*iter;
 
-	i = 0;
 	iter = *env_head;
 	while (iter)
 	{

@@ -6,18 +6,18 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 13:23:23 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 13:34:18 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:55:00 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void    *ft_malloc(size_t size)
+void	*ft_malloc(size_t size)
 {
-    void    *ret;
-    
-    ret = malloc(size);
-    if (!ret)
-        exit(1);
-    return(ret);
+	void	*ret;
+
+	ret = malloc(size);
+	if (!ret)
+		exit(1);
+	return (ret);
 }

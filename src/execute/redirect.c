@@ -35,7 +35,7 @@ static void	redirect_error(char *file)
 	exit(1);
 }
 
-int	 redirect_input(t_redirect *redirect_arr, int redirect_count)
+int	redirect_input(t_redirect *redirect_arr, int redirect_count)
 {
 	int		in_file;
 	int		i;
@@ -84,7 +84,7 @@ int	redirect_output(t_redirect *red, int red_count)
 
 int	redirect_child(t_cmd_table *cmd_table, int cmd_i)
 {
-	t_redirect *red;
+	t_redirect	*red;
 	int			fd_delimiter;
 	int			red_count;
 
