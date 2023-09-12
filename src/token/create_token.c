@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 11:54:07 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 12:08:32 by stijn            ###   ########.fr       */
+/*   Updated: 2023/09/12 13:47:34 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	handle_quotes(char *str, t_token **head, t_cmd_table *cmd_table)
 	int		str_i;
 
 	str_i = 0;
-	text = malloc(1 * sizeof(char));
+	text = ft_malloc(1 * sizeof(char));
 	text[0] = '\0';
 	while (str[str_i] == '\'' || str[str_i] == '"')
 	{
@@ -76,8 +76,6 @@ int	create_redirection_token(char *str, t_token **head, t_cmd_table *cmd_table)
 		i++;
 	}
 	text = ft_substr(str, 0, i);
-	if (!text)
-		malloc_error(NULL, NULL, cmd_table);
 	create_token(REDIRECT, text, cmd_table, head);
 	return (i);
 }
@@ -91,8 +89,6 @@ int	create_word_token(char *str, t_token **head, t_cmd_table *cmd_table)
 	while (str[i] && !ft_iswhitespace(str[i]) && !ismetachar(str[i]))
 		i++;
 	text = ft_substr(str, 0, i);
-	if (!text)
-		malloc_error(NULL, NULL, cmd_table);
 	create_token(WORD, text, cmd_table, head);
 	return (i);
 }

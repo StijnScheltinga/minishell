@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/07 13:13:22 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 13:47:17 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,6 @@ void	create_token(t_type type, char *text, t_cmd_table *cmd_table, t_token **hea
 {
 	t_token	*new_token;
 
-	if (!text)
-		malloc_error(NULL, NULL, cmd_table);
 	new_token = ft_lstnew(type, text);
-	if (!new_token)	
-		malloc_error(text, NULL, cmd_table);
 	ft_lstadd_back(head, new_token);
 }

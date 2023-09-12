@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:17:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/06 14:22:01 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:01:06 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ int	expand_env_var(char *str, t_token **head, t_cmd_table *cmd_table)
 	
 	len_var_name = get_var_name(str, &var_name, cmd_table);
 	var_value = find_var_value(var_name, cmd_table);
-	if (!var_value)
-		create_token(WORD, ft_strdup(""), cmd_table, head);
-	else
+	if (var_value)
 		create_token(WORD, var_value, cmd_table, head);
 	return (len_var_name);
 }
@@ -45,8 +43,6 @@ int	get_var_name(char *str, char **var_name, t_cmd_table *cmd_table)
     while (str[i] && !ft_iswhitespace(str[i]) && str[i] != '$' && str[i - 1] != '?')
         i++;
     *var_name = ft_substr(str, 1, (i - 1));
-	if (!(*var_name))
-		malloc_error(NULL, NULL, cmd_table);
 	return (i);
 }
 
@@ -74,8 +70,6 @@ char	*find_var_value(char *var_name, t_cmd_table *cmd_table)
 			iterate = iterate->next;
 		}	
 	}
-	if (!var_val)
-		malloc_error(NULL, var_name, cmd_table);
 	if (!iterate)
 		var_val = NULL;
 	free (var_name);
