@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:48:01 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/10 17:47:01 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/11 20:27:29 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static bool	n_option(char *s)
 	return (true);
 }
 
-void	echo(char **arg)
+void	echo(t_cmd_table *cmd_table, char **arg)
 {
 	int	i;
 
@@ -51,6 +51,7 @@ void	echo(char **arg)
 	}
 	if (!n_option(arg[1]))
 		write(STDOUT_FILENO, "\n", 1);
+	cmd_table->latest_exit_code = 0;
 }
 
 // int main(void)
