@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:48:24 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/04 17:23:39 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/11 20:14:17 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,15 @@ void	cd(char *arg, t_env **env_head, t_cmd_table *cmd_table)
 	if (!path)
 		return ;
 	if (chdir(path))
-		printf("cd: %s: %s\n", path, strerror(errno));
+	{
+		ft_putstr_fd(arg, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(strerror(errno), STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
+		cmd_table->latest_exit_code = 1;
+	}
+	else
+		cmd_table->latest_exit_code = 0;
 }
 
 // int main(int argc, char **argv, char **envp)

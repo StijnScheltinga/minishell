@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:06:53 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/21 17:19:18 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/11 20:27:50 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,5 @@ void	unset(t_cmd_table *cmd_table, char **cmd)
 		return ;
 	while (cmd[i])
 		unset_cmd(cmd_table, cmd[i++]);
+	cmd_table->latest_exit_code = 0;
 }
