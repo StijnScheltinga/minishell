@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:10:05 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 14:37:58 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 16:39:11 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,14 @@
 #include "../../inc/signals.h"
 #include "../../inc/builtin.h"
 
-void	leaks(void)
-{
-	system("leaks minishell");
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	char		*input_string;
 	t_token		*token_head;
 	t_cmd_table	*cmd_table;
 
-	argc = 0;
-	argv = NULL;
+	argc++;
+	argv++;
 	token_head = NULL;
 	cmd_table = init_cmd_table(&token_head, envp);
 	while (1)

@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:38:34 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 14:33:17 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 17:04:09 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	tokenize_string(char *input_string, t_cmd_table *cmd_table)
 		}
 		else
 			i++;
-		if (i >= ft_strlen(input_string))
+		if (i >= (int)ft_strlen(input_string))
 			break ;
 	}
 	if (grammar_check(cmd_table->token_head, cmd_table))

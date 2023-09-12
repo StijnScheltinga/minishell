@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/11 16:19:48 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/12 17:13:26 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,14 @@
 
 void	execute_with_child(t_cmd_table *cmd_table, int cmd_i)
 {
+	char	**cmd;
+
+	cmd = cmd_table->cmd_arr[cmd_i].single_cmd;
 	sign_child();
 	redirect_child(cmd_table, cmd_i);
 	if (is_builtin(cmd_table->cmd_arr[cmd_i].single_cmd[0]))
 		execute_builtin(cmd_table, cmd_i);
-	ft_execve(cmd_table->cmd_arr[cmd_i].single_cmd, &cmd_table->env, cmd_table->pipes);
+	ft_execve(cmd, &cmd_table->env);
 }
 
 void	execute_multiple_cmd(t_cmd_table *cmd_table)
@@ -66,7 +69,7 @@ void	execute_single_cmd(t_cmd_table *cmd_table)
 	if (pid == 0)
 	{
 		sign_child();
-		ft_execve(cmd_table->cmd_arr[0].single_cmd, &cmd_table->env, NULL);
+		ft_execve(cmd_table->cmd_arr[0].single_cmd, &cmd_table->env);
 	}
 	waitpid(pid, &status, 0);
 	cmd_table->latest_exit_code = WEXITSTATUS(status);

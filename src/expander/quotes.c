@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 14:39:10 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 14:42:28 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 17:16:37 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*expand_var_quotes(char *text, t_cmd_table *cmd_table)
 	while (text[i])
 	{
 		if (text[i] != '$' || (text[i] == '$' && !text[i + 1]))
-			expanded_string = add_char(expanded_string, text, i, cmd_table);
+			expanded_string = add_char(expanded_string, text, i);
 		if ((text[i] == '$' && text[i + 1]))
 			i += join_env_var(&text[i], &expanded_string, cmd_table);
 		else
@@ -52,7 +52,7 @@ char	*expand_var_quotes(char *text, t_cmd_table *cmd_table)
 	return (expanded_string);
 }
 
-char	*add_char(char *exp_string, char *text, int i, t_cmd_table *cmd_table)
+char	*add_char(char *exp_string, char *text, int i)
 {
 	char	*added_char;
 
@@ -67,7 +67,7 @@ int	join_env_var(char *str, char **expanded_string, t_cmd_table *cmd_table)
 	char	*var_name;
 	int		var_name_len;
 
-	var_name_len = get_var_name(str, &var_name, cmd_table);
+	var_name_len = get_var_name(str, &var_name);
 	var_value = find_var_value(var_name, cmd_table);
 	if (var_value)
 		*expanded_string = ft_strjoin_free(*expanded_string, var_value);

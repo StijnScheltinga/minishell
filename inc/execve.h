@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:40:25 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/15 18:21:21 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/12 17:12:33 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "env_init.h"
 
 char	*get_paths(char **envp);
-void	ft_execve(char **cmd, t_env **env_head, int (*fd)[2]);
+void	ft_execve(char **cmd, t_env **env_head);
 char	*get_right_path(char **paths, char **cmd);
 
 #endif

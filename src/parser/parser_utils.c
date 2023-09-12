@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 13:06:23 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 14:53:42 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 17:04:48 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_func_cmd_table(t_cmd_table *cmd_table)
 
 void	free_redirect_arr(t_redirect *redir_arr, unsigned int redir_count)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
 	while (i < redir_count)

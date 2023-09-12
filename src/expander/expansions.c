@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:17:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 14:32:49 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 17:14:52 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	expand_env_var(char *str, t_cmd_table *cmd_table)
 	char	*var_name;
 	int		len_var_name;
 
-	len_var_name = get_var_name(str, &var_name, cmd_table);
+	len_var_name = get_var_name(str, &var_name);
 	var_value = find_var_value(var_name, cmd_table);
 	if (var_value)
 		create_token(WORD, var_value, cmd_table);
@@ -35,7 +35,7 @@ int	expand_exit_status(char *str, t_cmd_table *cmd_table)
 	return (2);
 }
 
-int	get_var_name(char *str, char **var_name, t_cmd_table *cmd_table)
+int	get_var_name(char *str, char **var_name)
 {
 	int		i;
 
@@ -52,7 +52,6 @@ char	*find_var_value(char *var_name, t_cmd_table *cmd_table)
 {
 	t_env	*i;
 	char	*var_val;
-	int		var_name_len;
 
 	i = cmd_table->env;
 	if (!var_name[0])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:11:48 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/11 12:04:36 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/12 17:08:02 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,6 @@ static long long	ll_atoi(char *s)
 
 void	ms_exit(char **arg, t_cmd_table *cmd_table)
 {
-	long long	exit_code;
-
 	if (!arg[1])
 	{
 		ft_putstr_fd("exit\n", STDERR_FILENO);
@@ -112,7 +110,6 @@ void	ms_exit(char **arg, t_cmd_table *cmd_table)
 	}
 	if (!arg[1][0])
 		exit_error(arg[1], NUMERIC);
-	exit_code = ll_atoi(arg[1]);
 	is_numeric(arg[1]);
 	is_in_range(arg[1]);
 	if (arg[2])

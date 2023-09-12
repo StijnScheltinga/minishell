@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 18:45:11 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/11 16:21:37 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/12 16:59:19 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ void	redirect_first_cmd(t_cmd_table *cmd_table, t_command *cmd)
 		close_pipes(cmd_table, i++, BOTH);
 }
 
-void	redirect_middle_cmd(t_cmd_table *cmd_table, t_command *cmd, int cmd_index)
+void	redirect_middle_cmd(t_cmd_table *cmd_table, t_command *cmd, int cmd_i)
 {
 	int	i;
 
 	i = 0;
 	while (i < cmd_table->cmd_count - 1)
 	{
-		if (i == cmd_index - 1)
+		if (i == cmd_i - 1)
 		{
 			if (redirect_input(cmd->redirect_arr, cmd->redirect_count))
 				close_pipes(cmd_table, i, READ);
@@ -97,17 +97,4 @@ void	redirect_last_cmd(t_cmd_table *cmd_table, t_command *cmd)
 	while (i < cmd_table->cmd_count - 2)
 		close_pipes(cmd_table, i++, BOTH);
 	close_pipes(cmd_table, i, WRITE);
-}
-
-void	close_pipes(t_cmd_table *cmd_table, int pipe_index, int pipe_to_close)
-{
-	if (pipe_to_close == READ)
-		close(cmd_table->pipes[pipe_index][READ]);
-	else if (pipe_to_close == WRITE)
-		close(cmd_table->pipes[pipe_index][WRITE]);
-	else if (pipe_to_close == BOTH)
-	{
-		close(cmd_table->pipes[pipe_index][READ]);
-		close(cmd_table->pipes[pipe_index][WRITE]);
-	}
 }
