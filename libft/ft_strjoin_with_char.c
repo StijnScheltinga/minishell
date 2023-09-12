@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin_with_char.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 13:48:13 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/21 16:57:15 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:09:20 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strjoin_with_char(char const *s1, char const *s2, char c)
 	i = 0;
 	j = 0;
 	total_len = ft_strlen(s1) + ft_strlen(s2);
-	new_str = (char *)malloc(total_len * sizeof(char) + 2);
+	new_str = (char *)ft_malloc(total_len * sizeof(char) + 2);
 	if (!new_str)
 		return (NULL);
 	while (s1[i++])

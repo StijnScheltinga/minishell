@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:23:43 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/04 16:57:17 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 13:47:00 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ t_token	*ft_lstnew(t_type type, char *text)
 {
 	t_token	*new;
 
-	new = malloc(sizeof(t_token));
-	if (!new)
-		return (NULL);
+	new = ft_malloc(sizeof(t_token));
 	new->type = type;
 	new->text = text;
 	new->next = NULL;
