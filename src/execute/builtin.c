@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:29:55 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/11 20:28:02 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/12 14:09:45 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	execute_builtin(t_cmd_table *cmd_table, int cmd_index)
 	if (ft_strncmp("echo", arg[0], ft_strlen(arg[0]) + 1) == 0)
 		echo(cmd_table, arg);
 	else if (ft_strncmp("cd", arg[0], ft_strlen(arg[0]) + 1) == 0)
-		cd(arg[1], &cmd_table->env, cmd_table);
+		cd(arg, &cmd_table->env, cmd_table);
 	else if (ft_strncmp("pwd", arg[0], ft_strlen(arg[0]) + 1) == 0)
 		pwd(cmd_table);
 	else if (ft_strncmp("export", arg[0], ft_strlen(arg[0]) + 1) == 0)
