@@ -19,6 +19,15 @@
 
 //not implementing error code
 
+static void	error_msg(t_cmd_table* cmd_table, char *arg, char *error_msg)
+{
+	ft_putstr_fd(arg, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(error_msg, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	cmd_table->latest_exit_code = 1;
+}
+
 char	*get_home(t_env **env_head, t_cmd_table *cmd_table)
 {
 	char	*ret;
@@ -44,34 +53,39 @@ char	*get_home(t_env **env_head, t_cmd_table *cmd_table)
 
 //uses envp from seperate int main -> no other envp yet
 
-static char	*find_right_path(char *arg, t_env **env_head, t_cmd_table *cmd_tab)
+static char	*find_right_path(char **arg, t_env **env_head, t_cmd_table *cmd_tab)
 {
 	char	*path;
 
 	path = NULL;
-	if (arg == NULL)
+	if (arg[1] == NULL)
 		path = get_home(env_head, cmd_tab);
-	else if (ft_strncmp(arg, "~", sizeof(arg)) == 0)
+	else if (ft_strncmp(arg[1], "~", sizeof(arg[1])) == 0)
 		path = cmd_tab->home;
 	else
-		path = arg;
+		path = arg[1];
 	return (path);
 }
 
 //does not return error code but prints the error
 
-void	cd(char *arg, t_env **env_head, t_cmd_table *cmd_table)
+void	cd(char **arg, t_env **env_head, t_cmd_table *cmd_table)
 {
 	char	*path;
 
+	if (arg[1])
+	{
+		if (arg[2])
+		{
+			error_msg(cmd_table, arg[0], "too many arguments");
+			return ;
+		}
+	}
 	path = find_right_path(arg, env_head, cmd_table);
 	if (!path)
 		return ;
 	if (chdir(path))
-		printf("cd: %s: %s\n", path, strerror(errno));
+		error_msg(cmd_table, arg[1], strerror(errno));
+	else
+		cmd_table->latest_exit_code = 0;
 }
-
-// int main(int argc, char **argv, char **envp)
-// {
-// 	cd(NULL, envp);
-// }

@@ -49,4 +49,5 @@ void	unset(t_cmd_table *cmd_table, char **cmd)
 		return ;
 	while (cmd[i])
 		unset_cmd(cmd_table, cmd[i++]);
+	cmd_table->latest_exit_code = 0;
 }

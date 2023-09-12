@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:50:14 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/05 13:31:53 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/11 20:17:02 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,8 @@ void	export(t_cmd_table *cmd_table, char **cmd)
 		}
 		else
 		{
-			create_export_variable(cmd_table, cmd[i]);
+			create_export_variable(cmd_table, cmd[i++]);
 			cmd_table->latest_exit_code = 0;
-			i++;
 		}
 	}
 }
