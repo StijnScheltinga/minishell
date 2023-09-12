@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 13:47:17 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:35:00 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,25 @@ int	count_cmd(t_token **head)
 	return (num_of_cmd);
 }
 
-
-void free_func_token(t_token **head)
+void	free_func_token(t_token **head)
 {
-	t_token *temp;
+	t_token	*temp;
 	t_token	*first;
-	
+
 	while (*head != NULL)
 	{
 		first = *head;
 		temp = first->next;
 		free(first->text);
-		free(first);	
+		free(first);
 		*head = temp;
 	}
 }
 
-void	create_token(t_type type, char *text, t_cmd_table *cmd_table, t_token **head)
+void	create_token(t_type type, char *text, t_cmd_table *cmd_table)
 {
 	t_token	*new_token;
 
 	new_token = ft_lstnew(type, text);
-	ft_lstadd_back(head, new_token);
+	ft_lstadd_back(cmd_table->token_head, new_token);
 }

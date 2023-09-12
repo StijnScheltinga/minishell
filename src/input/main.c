@@ -6,8 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:10:05 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/11 12:07:53 by alex             ###   ########.fr       */
-/*   Updated: 2023/09/06 14:22:01 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:37:58 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +39,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!input_string)
 			continue ;
 		cmd_table->input_string = input_string;
-		if (!tokenize_string(input_string, &token_head, cmd_table))
+		if (!tokenize_string(input_string, cmd_table))
 		{
 			fill_cmd_table(cmd_table, &token_head);
 			execute(cmd_table);

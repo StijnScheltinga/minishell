@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 14:39:10 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 13:43:57 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:42:28 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,62 +14,62 @@
 #include "../../inc/token.h"
 #include "../../inc/error.h"
 
-char    *get_quote_text(char *str, t_cmd_table *cmd_table)
+char	*get_quote_text(char *str, t_cmd_table *cmd_table)
 {
-    char    *text;
-    int     i;
+	char	*text;
+	int		i;
 
-    i = 1;
-    while (str[i] != str[0] && str[i])
+	i = 1;
+	while (str[i] != str[0] && str[i])
 		i++;
 	if (!str[i])
 		return (NULL);
 	text = ft_substr(str, 1, i - 1);
 	if (str[0] == '"')
 		text = expand_var_quotes(text, cmd_table);
-    return (text);
+	return (text);
 }
 
 //if env variable is found expand to value, else delete variable from string
-char    *expand_var_quotes(char *text, t_cmd_table *cmd_table)
+char	*expand_var_quotes(char *text, t_cmd_table *cmd_table)
 {
-    char    *expanded_string;
-    int     i;
+	char	*expanded_string;
+	int		i;
 
-    expanded_string = ft_malloc(1 * sizeof(char));
-    expanded_string[0] = '\0';
-    i = 0;
-    while (text[i])
-    {
-        if (text[i] != '$' || (text[i] == '$' && !text[i + 1]))
-            expanded_string = add_char(expanded_string, text, i, cmd_table);
-        if ((text[i] == '$' && text[i + 1]))
-            i += join_env_var(&text[i], &expanded_string, cmd_table);
+	expanded_string = ft_malloc(1 * sizeof(char));
+	expanded_string[0] = '\0';
+	i = 0;
+	while (text[i])
+	{
+		if (text[i] != '$' || (text[i] == '$' && !text[i + 1]))
+			expanded_string = add_char(expanded_string, text, i, cmd_table);
+		if ((text[i] == '$' && text[i + 1]))
+			i += join_env_var(&text[i], &expanded_string, cmd_table);
 		else
-        	i++;
-    }
-    free(text);
-    return (expanded_string);
+			i++;
+	}
+	free(text);
+	return (expanded_string);
 }
 
-char    *add_char(char *expanded_string, char *text, int i, t_cmd_table *cmd_table)
+char	*add_char(char *exp_string, char *text, int i, t_cmd_table *cmd_table)
 {
-    char    *added_char;
+	char	*added_char;
 
-    added_char = ft_substr(text, i, 1);
-    expanded_string = ft_strjoin_free(expanded_string, added_char);
-    return (expanded_string);
+	added_char = ft_substr(text, i, 1);
+	exp_string = ft_strjoin_free(exp_string, added_char);
+	return (exp_string);
 }
 
-int join_env_var(char *str, char **expanded_string, t_cmd_table *cmd_table)
+int	join_env_var(char *str, char **expanded_string, t_cmd_table *cmd_table)
 {
-    char    *var_value;
+	char	*var_value;
 	char	*var_name;
-    int     var_name_len;
+	int		var_name_len;
 
 	var_name_len = get_var_name(str, &var_name, cmd_table);
-    var_value = find_var_value(var_name, cmd_table);
-    if (var_value)
-        *expanded_string = ft_strjoin_free(*expanded_string, var_value);
-    return(var_name_len); 
+	var_value = find_var_value(var_name, cmd_table);
+	if (var_value)
+		*expanded_string = ft_strjoin_free(*expanded_string, var_value);
+	return (var_name_len);
 }

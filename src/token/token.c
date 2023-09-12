@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:38:34 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/11 13:39:36 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:33:17 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../inc/parser.h"
 #include "../../inc/expansions.h"
 
-int	tokenize_string(char *input_string, t_token **head, t_cmd_table *cmd_table)
+int	tokenize_string(char *input_string, t_cmd_table *cmd_table)
 {
 	int		i;
 	int		temp;
@@ -25,7 +25,7 @@ int	tokenize_string(char *input_string, t_token **head, t_cmd_table *cmd_table)
 	{
 		if (input_string[i] && !ft_iswhitespace(input_string[i]))
 		{
-			temp = assign_token(&input_string[i], head, cmd_table);
+			temp = assign_token(&input_string[i], cmd_table);
 			if (temp == -1)
 				return (1);
 			i += temp;
@@ -33,27 +33,27 @@ int	tokenize_string(char *input_string, t_token **head, t_cmd_table *cmd_table)
 		else
 			i++;
 		if (i >= ft_strlen(input_string))
-			break;
+			break ;
 	}
-	if (grammar_check(head, cmd_table))
+	if (grammar_check(cmd_table->token_head, cmd_table))
 		return (1);
-	create_io_file_tokens(head);
+	create_io_file_tokens(cmd_table->token_head);
 	return (0);
 }
 
-int	assign_token(char *str, t_token **head, t_cmd_table *cmd_table)
+int	assign_token(char *str, t_cmd_table *cmd_table)
 {
 	if (*str == '|')
-		create_token(PIPE, ft_strdup("|"), cmd_table, head);
+		create_token(PIPE, ft_strdup("|"), cmd_table);
 	else if (*str == '>' || *str == '<')
-		return (create_redirection_token(str, head, cmd_table));
+		return (create_redirection_token(str, cmd_table));
 	else if (*str == '"' || *str == '\'')
-		return (handle_quotes(str, head, cmd_table));
+		return (handle_quotes(str, cmd_table));
 	else if (*str == '$' && *(str + 1) == '?')
-		return (expand_exit_status(str, head, cmd_table));
+		return (expand_exit_status(str, cmd_table));
 	else if (*str == '$')
-		return (expand_env_var(str, head, cmd_table));
+		return (expand_env_var(str, cmd_table));
 	else
-		return (create_word_token(str, head, cmd_table));
+		return (create_word_token(str, cmd_table));
 	return (1);
 }

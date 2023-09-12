@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 11:54:07 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 13:47:34 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:34:12 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../../inc/expansions.h"
 
 //return amount of char within quote
-int	handle_quotes(char *str, t_token **head, t_cmd_table *cmd_table)
+int	handle_quotes(char *str, t_cmd_table *cmd_table)
 {
 	char	*text;
 	char	*temp;
@@ -37,33 +37,33 @@ int	handle_quotes(char *str, t_token **head, t_cmd_table *cmd_table)
 			str_i++;
 		str_i++;
 	}
-	create_token(WORD, text, cmd_table, head);
+	create_token(WORD, text, cmd_table);
 	return (str_i);
 }
 
 void	create_io_file_tokens(t_token **head)
 {
-	t_token	*iterate;
+	t_token	*i;
 
-	iterate = *head;
-	while (iterate != NULL)
-	{	
-		if (iterate->type == REDIRECT && iterate->next != NULL)
+	i = *head;
+	while (i != NULL)
+	{
+		if (i->type == REDIRECT && i->next != NULL)
 		{
-			if (!ft_strncmp(iterate->text, ">>", 2) && iterate->next != NULL)
-				iterate->next->type = APPEND;
-			else if (!ft_strncmp(iterate->text, "<<", 2) && iterate->next != NULL)
-				iterate->next->type = DELIMITER;	
-			else if (!ft_strncmp(iterate->text, "<", 1) && iterate->next != NULL)
-				iterate->next->type = INFILE;
-			else if (!ft_strncmp(iterate->text, ">", 1) && iterate->next != NULL)
-				iterate->next->type = OUTFILE;
+			if (!ft_strncmp(i->text, ">>", 2) && i->next != NULL)
+				i->next->type = APPEND;
+			else if (!ft_strncmp(i->text, "<<", 2) && i->next != NULL)
+				i->next->type = DELIMITER;
+			else if (!ft_strncmp(i->text, "<", 1) && i->next != NULL)
+				i->next->type = INFILE;
+			else if (!ft_strncmp(i->text, ">", 1) && i->next != NULL)
+				i->next->type = OUTFILE;
 		}
-		iterate = iterate->next;
+		i = i->next;
 	}
 }
 
-int	create_redirection_token(char *str, t_token **head, t_cmd_table *cmd_table)
+int	create_redirection_token(char *str, t_cmd_table *cmd_table)
 {
 	char	*text;
 	int		i;
@@ -76,11 +76,11 @@ int	create_redirection_token(char *str, t_token **head, t_cmd_table *cmd_table)
 		i++;
 	}
 	text = ft_substr(str, 0, i);
-	create_token(REDIRECT, text, cmd_table, head);
+	create_token(REDIRECT, text, cmd_table);
 	return (i);
 }
 
-int	create_word_token(char *str, t_token **head, t_cmd_table *cmd_table)
+int	create_word_token(char *str, t_cmd_table *cmd_table)
 {
 	char	*text;
 	int		i;
@@ -89,6 +89,6 @@ int	create_word_token(char *str, t_token **head, t_cmd_table *cmd_table)
 	while (str[i] && !ft_iswhitespace(str[i]) && !ismetachar(str[i]))
 		i++;
 	text = ft_substr(str, 0, i);
-	create_token(WORD, text, cmd_table, head);
+	create_token(WORD, text, cmd_table);
 	return (i);
 }
