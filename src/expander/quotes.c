@@ -6,13 +6,31 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 14:39:10 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/07 13:56:52 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/11 18:00:40 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/expansions.h"
 #include "../../inc/token.h"
 #include "../../inc/error.h"
+
+char    *get_quote_text(char *str, t_cmd_table *cmd_table)
+{
+    char    *text;
+    int     i;
+
+    i = 1;
+    while (str[i] != str[0] && str[i])
+		i++;
+	if (!str[i])
+		return (NULL);
+	text = ft_substr(str, 1, i - 1);
+	if (!text)
+		malloc_error(NULL, NULL, cmd_table);
+	if (str[0] == '"')
+		text = expand_var_quotes(text, cmd_table);
+    return (text);
+}
 
 //if env variable is found expand to value, else delete variable from string
 char    *expand_var_quotes(char *text, t_cmd_table *cmd_table)
