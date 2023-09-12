@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:17:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/06 14:22:01 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 13:30:28 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ int	expand_env_var(char *str, t_token **head, t_cmd_table *cmd_table)
 	
 	len_var_name = get_var_name(str, &var_name, cmd_table);
 	var_value = find_var_value(var_name, cmd_table);
-	if (!var_value)
-		create_token(WORD, ft_strdup(""), cmd_table, head);
-	else
+	if (var_value)
 		create_token(WORD, var_value, cmd_table, head);
 	return (len_var_name);
 }
