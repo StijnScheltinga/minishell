@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 11:54:07 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/11 18:01:54 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 12:08:32 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,27 @@
 int	handle_quotes(char *str, t_token **head, t_cmd_table *cmd_table)
 {
 	char	*text;
+	char	*temp;
+	char	quote;
+	int		str_i;
 
-	text = get_quote_text(str, cmd_table);
-	if (!text)
-		return (-1);
+	str_i = 0;
+	text = malloc(1 * sizeof(char));
+	text[0] = '\0';
+	while (str[str_i] == '\'' || str[str_i] == '"')
+	{
+		quote = str[str_i];
+		temp = get_quote_text(&str[str_i], cmd_table);
+		if (!temp)
+			return (free(text), -1);
+		text = ft_strjoin_free(text, temp);
+		str_i++;
+		while (str[str_i] != quote)
+			str_i++;
+		str_i++;
+	}
 	create_token(WORD, text, cmd_table, head);
-	printf("text: %s, first char: %c\n", text, str[0]);
-	return (ft_strlen(text) + 2);
+	return (str_i);
 }
 
 void	create_io_file_tokens(t_token **head)
