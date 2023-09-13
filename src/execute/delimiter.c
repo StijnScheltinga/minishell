@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delimiter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:59:18 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/12 17:17:22 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/13 14:00:22 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "../../inc/signals.h"
 #include "../../inc/token.h"
 #include "../../inc/expansions.h"
+#include "../../inc/pipes.h"
+#include "../../inc/builtin.h"
 
 #include <readline/readline.h>
 #include <stdbool.h>
@@ -73,15 +75,6 @@ static void	exec_delim(char *eof, int del_count, int fd[2], bool is_input, t_cmd
 	free(input_string);
 }
 
-static int	dup_and_close(int fd[2])
-{
-	int	rd;
-
-	rd = dup(fd[READ]);
-	close(fd[READ]);
-	close(fd[WRITE]);
-	return (rd);
-}
 
 int	delimiter(t_redirect *redirect_arr, int redirect_count, t_cmd_table *cmd_table)
 {
@@ -109,4 +102,21 @@ int	delimiter(t_redirect *redirect_arr, int redirect_count, t_cmd_table *cmd_tab
 	if (!is_input)
 		return (0);
 	return (dup_and_close(fd));
+}
+
+void	delimiter_single_builtin(t_cmd_table *cmd_table)
+{
+	t_redirect	*redirect_arr;
+	int		i;
+
+	sign_delimiter();
+	redirect_arr = cmd_table->cmd_arr[0].redirect_arr;
+	i = 0;
+	while (i < cmd_table->cmd_arr[0].redirect_count)
+	{
+		if (cmd_table->cmd_arr[0].redirect_arr[i].type == DELIMITER)
+			exec_delimiter_single_builtin(redirect_arr->file_name);
+		i++;
+	}
+	exit(0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 18:45:11 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/12 16:59:19 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 16:41:58 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@
 
 void	free_pids_and_pipes(t_cmd_table *cmd_table)
 {
-	int	i;
-
-	i = 0;
 	if (cmd_table->pids)
 		free(cmd_table->pids);
 	if (cmd_table->pipes)

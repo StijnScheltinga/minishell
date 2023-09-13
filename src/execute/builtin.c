@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:29:55 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/12 14:09:45 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/13 14:00:38 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/builtin.h"
 #include "../../inc/execute.h"
+#include "../../inc/redirect.h"
+#include "../../inc/delimiter.h"
 #include "../../libft/libft.h"
+
+#include <readline/readline.h>
 
 char	*get_home_cmd_table(t_env **env_head)
 {
@@ -72,4 +76,38 @@ void	execute_builtin(t_cmd_table *cmd_table, int cmd_index)
 		exit(0);
 }
 
-//ECHO: ARG[0] = "echo", ARG[1] = "-n hello";
+void	builtin_single_cmd(t_cmd_table *cmd_table)
+{
+	t_redirect	*redirect_arr;
+	int			redirect_count;
+	pid_t		pid;
+
+	redirect_arr = cmd_table->cmd_arr[0].redirect_arr;
+	redirect_count = cmd_table->cmd_arr[0].redirect_count;
+	pid = fork();
+	if (pid == -1)
+		exit(EXIT_FAILURE);
+	if (pid == 0)
+		delimiter_single_builtin(cmd_table);
+	wait(NULL);
+	redirect_input(redirect_arr, redirect_count);
+	redirect_output(redirect_arr, redirect_count);
+	execute_builtin(cmd_table, 0);
+}
+
+void	exec_delimiter_single_builtin(char *eof)
+{
+	char	*input_string;
+
+	input_string = NULL;
+	while (1)
+	{
+		input_string = readline("> ");
+		if (!input_string)
+			exit(130);
+		if (!ft_strncmp(input_string, eof, ft_strlen(eof) + 1))
+			break ;
+		free(input_string);
+	}
+	free(input_string);
+}
