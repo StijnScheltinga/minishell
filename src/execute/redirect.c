@@ -102,7 +102,7 @@ int	redirect_child(t_cmd_table *cmd_table, int cmd_i)
 	return (0);
 }
 
-int	redirect_single_child(t_cmd_table *cmd_table)
+void	redirect_single_child(t_cmd_table *cmd_table)
 {
 	t_redirect	*redirect_arr;
 	int			redirect_count;
@@ -111,11 +111,10 @@ int	redirect_single_child(t_cmd_table *cmd_table)
 	redirect_arr = cmd_table->cmd_arr[0].redirect_arr;
 	redirect_count = cmd_table->cmd_arr[0].redirect_count;
 	if (!redirect_count)
-		return (0);
+		return ;
 	fd_delimiter = delimiter(redirect_arr, redirect_count, cmd_table);
 	if (fd_delimiter > 0)
 		dup2(fd_delimiter, STDIN_FILENO);
 	redirect_input(redirect_arr, redirect_count);
 	redirect_output(redirect_arr, redirect_count);
-	return (0);
 }

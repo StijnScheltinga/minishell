@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:58:35 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 16:59:14 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 18:36:12 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,14 @@ void	close_pipes(t_cmd_table *cmd_table, int pipe_index, int pipe_to_close)
 		close(cmd_table->pipes[pipe_index][READ]);
 		close(cmd_table->pipes[pipe_index][WRITE]);
 	}
+}
+
+int	dup_and_close(int fd[2])
+{
+	int	rd;
+
+	rd = dup(fd[READ]);
+	close(fd[READ]);
+	close(fd[WRITE]);
+	return (rd);
 }

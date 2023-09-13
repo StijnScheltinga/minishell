@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/12 17:13:26 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/13 13:54:58 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/execute.h"
 #include "../../inc/builtin.h"
 #include "../../inc/execve.h"
-#include "../../inc/parser.h"
 #include "../../inc/redirect.h"
 #include "../../inc/signals.h"
 #include "../../inc/pipes.h"
+#include "../../inc/delimiter.h"
 
 #include <fcntl.h>
 
-void	execute_with_child(t_cmd_table *cmd_table, int cmd_i)
+static void	execute_with_child(t_cmd_table *cmd_table, int cmd_i)
 {
 	char	**cmd;
 
@@ -30,6 +30,13 @@ void	execute_with_child(t_cmd_table *cmd_table, int cmd_i)
 	if (is_builtin(cmd_table->cmd_arr[cmd_i].single_cmd[0]))
 		execute_builtin(cmd_table, cmd_i);
 	ft_execve(cmd, &cmd_table->env);
+}
+
+static void	execute_single_child(t_cmd_table *cmd_table)
+{
+	sign_child();
+	redirect_single_child(cmd_table);
+	ft_execve(cmd_table->cmd_arr[0].single_cmd, &cmd_table->env);
 }
 
 void	execute_multiple_cmd(t_cmd_table *cmd_table)
@@ -57,20 +64,16 @@ void	execute_single_cmd(t_cmd_table *cmd_table)
 	int		status;
 	pid_t	pid;
 
-	redirect_single_child(cmd_table);
 	if (is_builtin(cmd_table->cmd_arr[0].single_cmd[0]))
 	{
-		execute_builtin(cmd_table, 0);
+		builtin_single_cmd(cmd_table);
 		return ;
 	}
 	pid = fork();
 	if (pid == -1)
 		exit(EXIT_FAILURE);
 	if (pid == 0)
-	{
-		sign_child();
-		ft_execve(cmd_table->cmd_arr[0].single_cmd, &cmd_table->env);
-	}
+		execute_single_child(cmd_table);
 	waitpid(pid, &status, 0);
 	cmd_table->latest_exit_code = WEXITSTATUS(status);
 }
@@ -90,10 +93,3 @@ void	execute(t_cmd_table *cmd_table)
 	dup2(stdin, STDIN_FILENO);
 	dup2(stdout, STDOUT_FILENO);
 }
-
-// int main(int argc, char **argv, char **envp)
-// {
-// 	env = envp;
-// 	execute();
-// 	return (0);
-// }

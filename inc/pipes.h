@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 18:45:11 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/12 16:57:46 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/12 18:36:35 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ void	redirect_middle_cmd(t_cmd_table *cmd_table, t_command *cmd, int cmd_i);
 void	redirect_last_cmd(t_cmd_table *cmd_table, t_command *cmd);
 
 void	close_pipes(t_cmd_table *cmd_table, int pipe_index, int pipe_to_close);
+int		dup_and_close(int fd[2]);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:07:18 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/11 16:08:52 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/12 17:26:12 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include "parser.h"
 
 //EXECUTE
-void	execute_with_child(t_cmd_table *cmd_table, int cmd_i);
 void	execute_multiple_cmd(t_cmd_table *cmd_table);
 void	execute_single_cmd(t_cmd_table *cmd_table);
 void	execute(t_cmd_table *cmd_table);
