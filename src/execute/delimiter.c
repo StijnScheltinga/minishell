@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:59:18 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/15 16:55:20 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/15 18:32:37 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ bool	del_is_input(t_redirect *redirect_arr, int redirect_count)
 		type = redirect_arr[redirect_count - 1].type;
 		if (type == DELIMITER)
 			return (true);
-		else if (type == INFILE)
+		if (type == INFILE)
 			return (false);
 		redirect_count--;
 	}
