@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:38:34 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/15 14:43:16 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/15 15:17:01 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,14 @@ int	handle_quotes_and_words_and_expansion(char *str, t_cmd_table *cmd_table)
 	total_text[0] = '\0';
 	str_i = 0;
 	while (str[str_i] && !ft_iswhitespace(str[str_i]) && str[str_i] != '|'
-		&& (str[str_i] != '>' || str[str_i] != '<'))
+		&& str[str_i] != '>' && str[str_i] != '<')
 	{
-		if (str[str_i] == '\'' || str[str_i] == '"')
-		{
-			temp_str_i = handle_quotes(&str[str_i], &temp, cmd_table);
-			if (temp_str_i == -1)
-				return (free(total_text), -1);
-			str_i += temp_str_i;
-		}
-		else if (str[str_i] && str[str_i] == '?')
-			str_i += expand_exit_status(&str[str_i], &temp, cmd_table);
-		else if (str[str_i] == '$')
-			str_i += expand_env_var(&str[str_i], &temp, cmd_table);
-		else
-			str_i += create_word_token(&str[str_i], &temp, cmd_table);
+		temp_str_i = select_type(str, str_i, &temp, cmd_table);
+		if (temp_str_i == -1)
+			return (free(total_text), -1);
+		str_i += temp_str_i;
+		printf("str_i %d\n", str_i);
+
 		if (temp)
 			total_text = ft_strjoin_free(total_text, temp);
 	}
@@ -85,7 +78,19 @@ int	handle_quotes_and_words_and_expansion(char *str, t_cmd_table *cmd_table)
 	return (str_i);
 }
 
-// void	select_type(char *str, int *str_i, t_cmd_table *cmd_table)
-// {
-	
-// }
+int	select_type(char *str, int str_i, char **temp, t_cmd_table *cmd_table)
+{
+	int	temp_str_i;
+
+	temp_str_i = 0;
+	if (str[str_i] == '\'' || str[str_i] == '"')
+		temp_str_i = handle_quotes(&str[str_i], temp, cmd_table);
+	else if (str[str_i] && str[str_i] == '?')
+		temp_str_i = expand_exit_status(&str[str_i], temp, cmd_table);
+	else if (str[str_i] == '$')
+		temp_str_i = expand_env_var(&str[str_i], temp, cmd_table);
+	else
+		temp_str_i = create_word_token(&str[str_i], temp, cmd_table);
+	printf("temp_str_i %d\n", temp_str_i);
+	return (temp_str_i);
+}
