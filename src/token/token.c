@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:38:34 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/15 12:15:51 by stijn            ###   ########.fr       */
+/*   Updated: 2023/09/15 14:43:16 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ int	handle_quotes_and_words_and_expansion(char *str, t_cmd_table *cmd_table)
 		{
 			temp_str_i = handle_quotes(&str[str_i], &temp, cmd_table);
 			if (temp_str_i == -1)
-				return (-1);
+				return (free(total_text), -1);
 			str_i += temp_str_i;
 		}
-		else if (*str == '$' && *(str + 1) == '?')
+		else if (str[str_i] && str[str_i] == '?')
 			str_i += expand_exit_status(&str[str_i], &temp, cmd_table);
-		else if (*str == '$')
+		else if (str[str_i] == '$')
 			str_i += expand_env_var(&str[str_i], &temp, cmd_table);
 		else
 			str_i += create_word_token(&str[str_i], &temp, cmd_table);
@@ -84,3 +84,8 @@ int	handle_quotes_and_words_and_expansion(char *str, t_cmd_table *cmd_table)
 	create_token(WORD, total_text, cmd_table);
 	return (str_i);
 }
+
+// void	select_type(char *str, int *str_i, t_cmd_table *cmd_table)
+// {
+	
+// }
