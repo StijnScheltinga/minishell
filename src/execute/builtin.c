@@ -6,17 +6,17 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:29:55 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/13 14:00:38 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/15 19:19:04 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/builtin.h"
-#include "../../inc/execute.h"
 #include "../../inc/redirect.h"
 #include "../../inc/delimiter.h"
-#include "../../libft/libft.h"
 
 #include <readline/readline.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 char	*get_home_cmd_table(t_env **env_head)
 {

@@ -3,19 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:36:53 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/12 17:12:25 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/15 19:15:42 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/execve.h"
-#include "../../inc/pipes.h"
 #include "../../inc/env_utils.h"
 #include "../../inc/error.h"
-#include "../../inc/signals.h"
-#include "../../libft/libft.h"
 
 #include <errno.h>
 #include <stdio.h>
@@ -37,8 +34,6 @@ char	*get_right_path(char **paths, char **cmd)
 		i++;
 	}
 	ret = ft_strdup(cmd[0]);
-	if (!ret)
-		exit(EXIT_FAILURE);
 	return (ret);
 }
 

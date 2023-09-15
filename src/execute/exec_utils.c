@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:44:06 by alex              #+#    #+#             */
-/*   Updated: 2023/09/12 13:41:02 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/15 19:19:05 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/execute.h"
+
+#include <sys/types.h>
+#include <sys/wait.h>
 
 void	create_pid_array(t_cmd_table *cmd_table)
 {

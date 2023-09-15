@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../inc/redirect.h"
-#include "../../inc/parser.h"
 #include "../../inc/delimiter.h"
 #include "../../inc/pipes.h"
 
