@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 14:35:00 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/15 16:32:41 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_iswhitespace(char a)
 
 int	ismetachar(char a)
 {
-	if (a == '|' || a == '<' || a == '>' || a == '$')
+	if (a == '|' || a == '<' || a == '>' || a == '$' || a == '\'' || a == '"')
 		return (1);
 	return (0);
 }
@@ -43,19 +43,12 @@ int	count_cmd(t_token **head)
 	return (num_of_cmd);
 }
 
-void	free_func_token(t_token **head)
+int	is_valid_var_name_char(char a)
 {
-	t_token	*temp;
-	t_token	*first;
-
-	while (*head != NULL)
-	{
-		first = *head;
-		temp = first->next;
-		free(first->text);
-		free(first);
-		*head = temp;
-	}
+	if ((a >= 'a' && a <= 'z') || (a >= 'A' && a <= 'Z')
+		|| (a >= '0' && a <= 9) || a == '_' || a == '?')
+		return (1);
+	return (0);
 }
 
 void	create_token(t_type type, char *text, t_cmd_table *cmd_table)

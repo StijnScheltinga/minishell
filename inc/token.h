@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:42:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 14:38:22 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/15 16:33:28 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ int		assign_token(char *str, t_cmd_table *cmd_table);
 void	create_token(t_type type, char *text, t_cmd_table *cmd_table);
 void	create_io_file_tokens(t_token **head);
 int		create_redirection_token(char *str, t_cmd_table *cmd_table);
-int		create_word_token(char *str, t_cmd_table *cmd_table);
-int		handle_quotes(char *str, t_cmd_table *cmd_table);
+int		create_word_token(char *str, char **temp, t_cmd_table *cmd_table);
+int		handle_quotes(char *str, char **temp, t_cmd_table *cmd_table);
+int		handle_quotes_and_words_and_expansion(char *str, t_cmd_table *cmd_table);
+int		select_type(char *str, int str_i, char **temp, t_cmd_table *cmd_table);
 
 int		count_cmd(t_token **head);
 int		ft_iswhitespace(char a);
@@ -52,5 +54,6 @@ int		ismetachar(char a);
 void	ft_lstadd_back(t_token **head, t_token *new);
 t_token	*ft_lstnew(t_type type, char *text);
 void	free_func_token(t_token **head);
+int		is_valid_var_name_char(char a);
 
 #endif

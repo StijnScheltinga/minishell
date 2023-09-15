@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 11:54:07 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 14:34:12 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/15 16:02:42 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include "../../inc/expansions.h"
 
 //return amount of char within quote
-int	handle_quotes(char *str, t_cmd_table *cmd_table)
+int	handle_quotes(char *str, char **temp, t_cmd_table *cmd_table)
 {
 	char	*text;
-	char	*temp;
+	char	*temporary;
 	char	quote;
 	int		str_i;
 
@@ -28,16 +28,16 @@ int	handle_quotes(char *str, t_cmd_table *cmd_table)
 	while (str[str_i] == '\'' || str[str_i] == '"')
 	{
 		quote = str[str_i];
-		temp = get_quote_text(&str[str_i], cmd_table);
-		if (!temp)
+		temporary = get_quote_text(&str[str_i], cmd_table);
+		if (!temporary)
 			return (free(text), -1);
-		text = ft_strjoin_free(text, temp);
+		text = ft_strjoin_free(text, temporary);
 		str_i++;
 		while (str[str_i] != quote)
 			str_i++;
 		str_i++;
 	}
-	create_token(WORD, text, cmd_table);
+	*temp = text;
 	return (str_i);
 }
 
@@ -80,7 +80,7 @@ int	create_redirection_token(char *str, t_cmd_table *cmd_table)
 	return (i);
 }
 
-int	create_word_token(char *str, t_cmd_table *cmd_table)
+int	create_word_token(char *str, char **temp, t_cmd_table *cmd_table)
 {
 	char	*text;
 	int		i;
@@ -89,6 +89,6 @@ int	create_word_token(char *str, t_cmd_table *cmd_table)
 	while (str[i] && !ft_iswhitespace(str[i]) && !ismetachar(str[i]))
 		i++;
 	text = ft_substr(str, 0, i);
-	create_token(WORD, text, cmd_table);
+	*temp = text;
 	return (i);
 }
