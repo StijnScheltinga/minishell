@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:10:05 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 16:39:11 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/14 21:06:59 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,21 @@
 #include "../../inc/execute.h"
 #include "../../inc/signals.h"
 #include "../../inc/builtin.h"
+
+static void	print_token(t_token **head)
+{
+	t_token	*iterate;
+	int		i;
+
+	iterate = *head;
+	i = 1;
+	while (iterate != NULL)
+	{
+		printf("token %d: %s\n", i, iterate->text);
+		iterate = iterate->next;
+		i++;
+	}
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -36,6 +51,7 @@ int	main(int argc, char **argv, char **envp)
 		cmd_table->input_string = input_string;
 		if (!tokenize_string(input_string, cmd_table))
 		{
+			print_token(&token_head);
 			fill_cmd_table(cmd_table, &token_head);
 			execute(cmd_table);
 			free_func_cmd_table(cmd_table);

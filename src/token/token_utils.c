@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 14:35:00 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/14 22:20:20 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_iswhitespace(char a)
 
 int	ismetachar(char a)
 {
-	if (a == '|' || a == '<' || a == '>' || a == '$')
+	if (a == '|' || a == '<' || a == '>' || a == '$' || a == '\'' || a == '"')
 		return (1);
 	return (0);
 }

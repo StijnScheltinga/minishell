@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:17:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 17:14:52 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/14 23:07:42 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../../inc/error.h"
 #include <stdio.h>
 
-int	expand_env_var(char *str, t_cmd_table *cmd_table)
+int	expand_env_var(char *str, char **temp, t_cmd_table *cmd_table)
 {
 	char	*var_value;
 	char	*var_name;
@@ -24,14 +24,16 @@ int	expand_env_var(char *str, t_cmd_table *cmd_table)
 	len_var_name = get_var_name(str, &var_name);
 	var_value = find_var_value(var_name, cmd_table);
 	if (var_value)
-		create_token(WORD, var_value, cmd_table);
+		*temp = var_value;
+	else
+		*temp = NULL;
 	return (len_var_name);
 }
 
-int	expand_exit_status(char *str, t_cmd_table *cmd_table)
+int	expand_exit_status(char *str, char **temp, t_cmd_table *cmd_table)
 {
 	if (*(str + 1) == '?')
-		create_token(WORD, ft_itoa(cmd_table->latest_exit_code), cmd_table);
+		*temp = ft_itoa(cmd_table->latest_exit_code);
 	return (2);
 }
 

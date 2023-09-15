@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:42:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 14:38:22 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/14 23:09:32 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ int		assign_token(char *str, t_cmd_table *cmd_table);
 void	create_token(t_type type, char *text, t_cmd_table *cmd_table);
 void	create_io_file_tokens(t_token **head);
 int		create_redirection_token(char *str, t_cmd_table *cmd_table);
-int		create_word_token(char *str, t_cmd_table *cmd_table);
-int		handle_quotes(char *str, t_cmd_table *cmd_table);
+int		create_word_token(char *str, char **temp, t_cmd_table *cmd_table);
+int		handle_quotes(char *str, char **temp, t_cmd_table *cmd_table);
+int		handle_quotes_and_words_and_expansion(char *str, t_cmd_table *cmd_table);
 
 int		count_cmd(t_token **head);
 int		ft_iswhitespace(char a);

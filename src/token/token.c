@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:38:34 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 17:04:09 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/15 12:15:51 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,40 @@ int	assign_token(char *str, t_cmd_table *cmd_table)
 		create_token(PIPE, ft_strdup("|"), cmd_table);
 	else if (*str == '>' || *str == '<')
 		return (create_redirection_token(str, cmd_table));
-	else if (*str == '"' || *str == '\'')
-		return (handle_quotes(str, cmd_table));
-	else if (*str == '$' && *(str + 1) == '?')
-		return (expand_exit_status(str, cmd_table));
-	else if (*str == '$')
-		return (expand_env_var(str, cmd_table));
 	else
-		return (create_word_token(str, cmd_table));
+		return (handle_quotes_and_words_and_expansion(str, cmd_table));
 	return (1);
+}
+
+int	handle_quotes_and_words_and_expansion(char *str, t_cmd_table *cmd_table)
+{
+	char	*total_text;
+	char	*temp;
+	int		str_i;
+	int		temp_str_i;
+
+	total_text = ft_malloc(1 * sizeof(char));
+	total_text[0] = '\0';
+	str_i = 0;
+	while (str[str_i] && !ft_iswhitespace(str[str_i]) && str[str_i] != '|'
+		&& (str[str_i] != '>' || str[str_i] != '<'))
+	{
+		if (str[str_i] == '\'' || str[str_i] == '"')
+		{
+			temp_str_i = handle_quotes(&str[str_i], &temp, cmd_table);
+			if (temp_str_i == -1)
+				return (-1);
+			str_i += temp_str_i;
+		}
+		else if (*str == '$' && *(str + 1) == '?')
+			str_i += expand_exit_status(&str[str_i], &temp, cmd_table);
+		else if (*str == '$')
+			str_i += expand_env_var(&str[str_i], &temp, cmd_table);
+		else
+			str_i += create_word_token(&str[str_i], &temp, cmd_table);
+		if (temp)
+			total_text = ft_strjoin_free(total_text, temp);
+	}
+	create_token(WORD, total_text, cmd_table);
+	return (str_i);
 }
