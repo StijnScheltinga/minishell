@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:59:18 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/13 14:00:22 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/15 18:32:37 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ bool	del_is_input(t_redirect *redirect_arr, int redirect_count)
 		type = redirect_arr[redirect_count - 1].type;
 		if (type == DELIMITER)
 			return (true);
-		else if (type == INFILE)
+		if (type == INFILE)
 			return (false);
 		redirect_count--;
 	}
 	return (false);
 }
 
-static void	exec_delim(char *eof, int del_count, int fd[2], bool is_input, t_cmd_table *cmd_table)
+static void	exec_delim(char *eof, int del_count, int fd[2], t_cmd_table *cmd_table)
 {
 	char	*input_string;
 
@@ -64,7 +64,7 @@ static void	exec_delim(char *eof, int del_count, int fd[2], bool is_input, t_cmd
 			exit(130);
 		if (!ft_strncmp(input_string, eof, ft_strlen(eof) + 1))
 			break ;
-		if (del_count == 0 && is_input)
+		if (del_count == 0)
 		{
 			input_string = expand_var_quotes(input_string, cmd_table);
 			ft_putstr_fd(input_string, fd[WRITE]);
@@ -79,27 +79,21 @@ static void	exec_delim(char *eof, int del_count, int fd[2], bool is_input, t_cmd
 int	delimiter(t_redirect *redirect_arr, int redirect_count, t_cmd_table *cmd_table)
 {
 	int		i;
-	int		fd[2];
 	int		del_count;
-	bool	is_input;
+	int		fd[2];
 
-	del_count = delimiter_count(redirect_arr, redirect_count);
-	if (del_count == 0)
-		return (0);
-	is_input = del_is_input(redirect_arr, redirect_count);
-	pipe(fd);
-	i = 0;
 	sign_delimiter();
+	del_count = delimiter_count(redirect_arr, redirect_count);
+	if (pipe(fd) == -1)
+		exit(EXIT_FAILURE);
+	i = 0;
 	while (del_count > 0)
 	{
 		if (redirect_arr[i].type == DELIMITER)
-		{
-			del_count--;
-			exec_delim(redirect_arr[i].file_name, del_count, fd, is_input, cmd_table);
-		}
+			exec_delim(redirect_arr[i].file_name, --del_count, fd, cmd_table);
 		i++;
 	}
-	if (!is_input)
+	if (!del_is_input(redirect_arr, redirect_count))
 		return (0);
 	return (dup_and_close(fd));
 }
@@ -107,15 +101,15 @@ int	delimiter(t_redirect *redirect_arr, int redirect_count, t_cmd_table *cmd_tab
 void	delimiter_single_builtin(t_cmd_table *cmd_table)
 {
 	t_redirect	*redirect_arr;
-	int		i;
+	int			i;
 
 	sign_delimiter();
 	redirect_arr = cmd_table->cmd_arr[0].redirect_arr;
 	i = 0;
 	while (i < cmd_table->cmd_arr[0].redirect_count)
 	{
-		if (cmd_table->cmd_arr[0].redirect_arr[i].type == DELIMITER)
-			exec_delimiter_single_builtin(redirect_arr->file_name);
+		if (redirect_arr[i].type == DELIMITER)
+			exec_delimiter_single_builtin(redirect_arr[i].file_name);
 		i++;
 	}
 	exit(0);
