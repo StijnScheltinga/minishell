@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:17:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/15 14:02:05 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/15 16:33:50 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ int	get_var_name(char *str, char **var_name)
 	int		i;
 
 	i = 1;
-	while (str[i] && !ft_iswhitespace(str[i]) && str[i] != ','
-		&& !ismetachar(str[i]) && str[i - 1] != '?' && str[i] != '.')
+	while (is_valid_var_name_char(str[i]) && str[i - 1] != '?')
 		i++;
 	*var_name = ft_substr(str, 1, (i - 1));
 	return (i);

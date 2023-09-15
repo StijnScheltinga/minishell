@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:42:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/15 14:56:30 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/15 16:33:28 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ int		ismetachar(char a);
 void	ft_lstadd_back(t_token **head, t_token *new);
 t_token	*ft_lstnew(t_type type, char *text);
 void	free_func_token(t_token **head);
+int		is_valid_var_name_char(char a);
 
 #endif

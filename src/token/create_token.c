@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 11:54:07 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/15 15:01:50 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/15 16:02:42 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int	create_word_token(char *str, char **temp, t_cmd_table *cmd_table)
 	while (str[i] && !ft_iswhitespace(str[i]) && !ismetachar(str[i]))
 		i++;
 	text = ft_substr(str, 0, i);
-	printf("t: %s\n", text);
 	*temp = text;
 	return (i);
 }

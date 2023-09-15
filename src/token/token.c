@@ -6,13 +6,14 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:38:34 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/15 15:17:01 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/15 16:03:30 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/token.h"
 #include "../../inc/parser.h"
 #include "../../inc/expansions.h"
+#include "../../inc/error.h"
 
 int	tokenize_string(char *input_string, t_cmd_table *cmd_table)
 {
@@ -27,7 +28,7 @@ int	tokenize_string(char *input_string, t_cmd_table *cmd_table)
 		{
 			temp = assign_token(&input_string[i], cmd_table);
 			if (temp == -1)
-				return (1);
+				return (printf("syntax error near unexpected token: '\\n'\n"));
 			i += temp;
 		}
 		else
@@ -69,8 +70,6 @@ int	handle_quotes_and_words_and_expansion(char *str, t_cmd_table *cmd_table)
 		if (temp_str_i == -1)
 			return (free(total_text), -1);
 		str_i += temp_str_i;
-		printf("str_i %d\n", str_i);
-
 		if (temp)
 			total_text = ft_strjoin_free(total_text, temp);
 	}
@@ -91,6 +90,5 @@ int	select_type(char *str, int str_i, char **temp, t_cmd_table *cmd_table)
 		temp_str_i = expand_env_var(&str[str_i], temp, cmd_table);
 	else
 		temp_str_i = create_word_token(&str[str_i], temp, cmd_table);
-	printf("temp_str_i %d\n", temp_str_i);
 	return (temp_str_i);
 }
