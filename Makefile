@@ -14,7 +14,7 @@ BUILD		:=	build
 VPATH		:=	src/ src/input src/token src/parser src/builtins src/execute src/error src/env src/expander src/signals
 OBJECTS		:=	$(addprefix $(BUILD)/, $(SOURCES:.c=.o))
 NAME		:=	minishell
-FLAGS		:=	-I$(shell brew --prefix readline)/include
+FLAGS		:=	-I$(shell brew --prefix readline)/include -Wall -Wextra -Werror -fsanitize=address
 CC			:=	gcc 
 HEADER		:=	inc/main.h libft/libft.h inc/token.h inc/parser.h inc/builtin.h inc/execute.h inc/execve.h inc/pipes.h inc/redirect.h inc/env_init.h inc/env_utils.h inc/expansions.h inc/signals.h inc/delimiter.h
 LIBFT		:=	libft/libft.a
