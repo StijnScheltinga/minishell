@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 18:45:11 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/12 18:36:35 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/17 14:33:26 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # define WRITE 1
 
 # include "parser.h"
-
-# include <sys/types.h>
 
 void	free_pids_and_pipes(t_cmd_table *cmd_table);
 void	close_all_pipes(t_cmd_table *cmd_table);

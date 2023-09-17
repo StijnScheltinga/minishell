@@ -6,15 +6,13 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:48:24 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/15 19:05:25 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/17 14:34:48 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/builtin.h"
-#include "../../inc/env_init.h"
 
 #include <errno.h>
-#include <unistd.h>
 #include <string.h>
 
 //not implementing error code

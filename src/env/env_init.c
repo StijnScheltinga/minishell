@@ -3,19 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 15:38:00 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/12 13:38:08 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/17 14:34:27 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/env_init.h"
 #include "../../inc/env_utils.h"
 #include "../../libft/libft.h"
-
-#include <stdlib.h>
-#include <stdio.h>
 
 char	*get_env_variable(char *s)
 {
