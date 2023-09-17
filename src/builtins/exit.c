@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:11:48 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/12 17:08:02 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/17 14:36:47 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/builtin.h"
 
-#include <stdbool.h>
-#include <unistd.h>
 #include <limits.h>
 
 #define NUMERIC 0

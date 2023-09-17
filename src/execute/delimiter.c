@@ -6,14 +6,11 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:59:18 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/15 18:32:37 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/15 19:18:21 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/delimiter.h"
-#include "../../inc/redirect.h"
 #include "../../inc/signals.h"
-#include "../../inc/token.h"
 #include "../../inc/expansions.h"
 #include "../../inc/pipes.h"
 #include "../../inc/builtin.h"

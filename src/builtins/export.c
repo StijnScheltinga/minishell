@@ -6,14 +6,12 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:50:14 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/11 20:17:02 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/17 14:36:11 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/builtin.h"
 #include "../../inc/parser.h"
 #include "../../inc/env_utils.h"
-#include "../../inc/env_init.h"
 #include "../../inc/error.h"
 
 #include <unistd.h>

@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/13 13:54:58 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/15 19:17:16 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 #include "../../inc/redirect.h"
 #include "../../inc/signals.h"
 #include "../../inc/pipes.h"
-#include "../../inc/delimiter.h"
 
-#include <fcntl.h>
+#include <sys/wait.h>
 
 static void	execute_with_child(t_cmd_table *cmd_table, int cmd_i)
 {

@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:48:24 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/12 17:05:22 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/17 14:34:48 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/builtin.h"
-#include "../../inc/env_init.h"
 
 #include <errno.h>
-#include <unistd.h>
 #include <string.h>
 
 //not implementing error code
@@ -46,7 +44,7 @@ char	*get_home(t_env **env_head, t_cmd_table *cmd_table)
 		write(STDERR_FILENO, "cd: HOME not set\n", 17);
 		cmd_table->latest_exit_code = 1;
 	}
-	else if (iter->variable)
+	else
 		ret = iter->value;
 	return (ret);
 }

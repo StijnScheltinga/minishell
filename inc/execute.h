@@ -6,18 +6,13 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:07:18 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/12 17:26:12 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/15 19:16:27 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTE_H
 # define EXECUTE_H
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdbool.h>
-# include <sys/types.h>
-# include <sys/wait.h>
 # include "parser.h"
 
 //EXECUTE

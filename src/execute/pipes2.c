@@ -6,13 +6,11 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:58:35 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 18:36:12 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/15 19:14:36 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/pipes.h"
 #include "../../inc/redirect.h"
-#include "../../inc/delimiter.h"
 
 #define READ 0
 #define WRITE 1

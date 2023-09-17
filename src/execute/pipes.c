@@ -6,13 +6,12 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 18:45:11 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/12 16:41:58 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/15 19:14:55 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/pipes.h"
 #include "../../inc/redirect.h"
-#include "../../inc/delimiter.h"
 
 #define READ 0
 #define WRITE 1
@@ -84,14 +83,16 @@ void	redirect_middle_cmd(t_cmd_table *cmd_table, t_command *cmd, int cmd_i)
 void	redirect_last_cmd(t_cmd_table *cmd_table, t_command *cmd)
 {
 	int	i;
+	int	pipe_i;
 
 	i = 0;
+	pipe_i = cmd_table->cmd_count - 2;
 	if (redirect_input(cmd->redirect_arr, cmd->redirect_count))
-		close_pipes(cmd_table, i, READ);
+		close_pipes(cmd_table, pipe_i, READ);
 	else
-		dup2(cmd_table->pipes[i][READ], STDIN_FILENO);
+		dup2(cmd_table->pipes[pipe_i][READ], STDIN_FILENO);
 	redirect_output(cmd->redirect_arr, cmd->redirect_count);
-	while (i < cmd_table->cmd_count - 2)
+	while (i < pipe_i)
 		close_pipes(cmd_table, i++, BOTH);
-	close_pipes(cmd_table, i, WRITE);
+	close_pipes(cmd_table, pipe_i, WRITE);
 }
