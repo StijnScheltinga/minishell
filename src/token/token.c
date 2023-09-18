@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:38:34 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/18 14:09:06 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/18 14:35:58 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	select_type(char *str, int str_i, char **temp, t_cmd_table *cmd_table)
 	temp_str_i = 0;
 	if (str[str_i] == '\'' || str[str_i] == '"')
 		temp_str_i = handle_quotes(&str[str_i], temp, cmd_table);
-	else if (str[str_i] && str[str_i] == '?')
+	else if (str[str_i] == '$' && str[str_i + 1] == '?')
 		temp_str_i = expand_exit_status(&str[str_i], temp, cmd_table);
 	else if (str[str_i] == '$')
 		temp_str_i = expand_env_var(&str[str_i], temp, cmd_table);
