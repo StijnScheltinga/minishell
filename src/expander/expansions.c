@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:17:15 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/15 16:33:50 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/18 15:43:25 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,14 @@ char	*find_var_value(char *var_name, t_cmd_table *cmd_table)
 		{
 			if (!ft_strncmp(i->variable, var_name, ft_strlen(var_name) + 1))
 			{
-				var_val = ft_strdup(i->value);
+				if (i->value)
+					var_val = ft_strdup(i->value);
 				break ;
 			}
 			i = i->next;
 		}
 	}
-	if (!i)
+	if (!i || !i->value)
 		var_val = NULL;
 	free (var_name);
 	return (var_val);
