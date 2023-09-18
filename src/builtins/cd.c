@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:48:24 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/18 14:13:32 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/18 17:19:29 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/builtin.h"
+#include "../../inc/error.h"
+#include "../../inc/env_utils.h"
 
 #include <errno.h>
 #include <string.h>
 
-//not implementing error code
-
-static void	error_msg(t_cmd_table *cmd_table, char *arg, char *error_msg)
+static void	cd_error_msg(t_cmd_table *cmd_table, char *arg, char *error_msg)
 {
 	ft_putstr_fd(arg, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
@@ -65,7 +65,27 @@ static char	*find_right_path(char **arg, t_env **env_head, t_cmd_table *cmd_tab)
 	return (path);
 }
 
-//does not return error code but prints the error
+void	change_env_pwd(t_env **env_head, char *pwd)
+{
+	t_env	*iter;
+	char	buffer[FILENAME_MAX];
+
+	iter = *env_head;
+	getcwd(buffer, FILENAME_MAX);
+	while (iter)
+	{
+		if (!ft_strncmp(iter->variable, pwd, ft_strlen(pwd) + 1))
+			break ;
+		iter = iter->next;
+	}
+	if (!iter && !ft_strncmp(pwd, "PWD", 4))
+		lst_delone(env_head, "OLDPWD");
+	if (iter)
+	{
+		free(iter->value);
+		iter->value = ft_strdup(buffer);
+	}
+}
 
 void	cd(char **arg, t_env **env_head, t_cmd_table *cmd_table)
 {
@@ -75,15 +95,19 @@ void	cd(char **arg, t_env **env_head, t_cmd_table *cmd_table)
 	{
 		if (arg[2])
 		{
-			error_msg(cmd_table, arg[0], "too many arguments");
+			cd_error_msg(cmd_table, arg[0], "too many arguments");
 			return ;
 		}
 	}
 	path = find_right_path(arg, env_head, cmd_table);
 	if (!path)
 		return ;
+	change_env_pwd(env_head, "OLDPWD");
 	if (chdir(path))
-		error_msg(cmd_table, arg[1], strerror(errno));
+		cd_error_msg(cmd_table, arg[1], strerror(errno));
 	else
+	{
+		change_env_pwd(env_head, "PWD");
 		cmd_table->latest_exit_code = 0;
+	}
 }
