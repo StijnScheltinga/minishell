@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:14:55 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/17 14:35:25 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/18 14:13:48 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	cd(char **arg, t_env **env_head, t_cmd_table *cmd_table);
 void	env(t_cmd_table *cmd_table, t_env **head);
 void	ms_exit(char **arg, t_cmd_table *cmd_table);
 void	export(t_cmd_table *cmd_table, char **cmd);
-void	pwd(t_cmd_table * cmd_table);
+void	pwd(t_cmd_table *cmd_table);
 void	unset(t_cmd_table *cmd_table, char **cmd);
 
 char	*get_home_cmd_table(t_env **env_head);

@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:48:04 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/12 14:38:34 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/18 14:19:35 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_line(int latest_exit_code)
 		free(input_string);
 		input_string = NULL;
 	}
-	input_string = readline("Minishell: ");
+	input_string = readline("minishell$ ");
 	if (!input_string)
 		ctrl_d(latest_exit_code);
 	if (input_string[0] == '\0')

@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:38:34 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/15 16:03:30 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/18 14:09:06 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ int	assign_token(char *str, t_cmd_table *cmd_table)
 	else if (*str == '>' || *str == '<')
 		return (create_redirection_token(str, cmd_table));
 	else
-		return (handle_quotes_and_words_and_expansion(str, cmd_table));
+		return (handle_words(str, cmd_table));
 	return (1);
 }
 
-int	handle_quotes_and_words_and_expansion(char *str, t_cmd_table *cmd_table)
+int	handle_words(char *str, t_cmd_table *cmd_table)
 {
 	char	*total_text;
 	char	*temp;
@@ -89,6 +89,6 @@ int	select_type(char *str, int str_i, char **temp, t_cmd_table *cmd_table)
 	else if (str[str_i] == '$')
 		temp_str_i = expand_env_var(&str[str_i], temp, cmd_table);
 	else
-		temp_str_i = create_word_token(&str[str_i], temp, cmd_table);
+		temp_str_i = create_word_token(&str[str_i], temp);
 	return (temp_str_i);
 }

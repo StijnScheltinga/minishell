@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 11:54:07 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/15 16:02:42 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/18 13:15:22 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	create_redirection_token(char *str, t_cmd_table *cmd_table)
 	return (i);
 }
 
-int	create_word_token(char *str, char **temp, t_cmd_table *cmd_table)
+int	create_word_token(char *str, char **temp)
 {
 	char	*text;
 	int		i;
