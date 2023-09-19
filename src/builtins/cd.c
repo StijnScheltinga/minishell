@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:48:24 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/19 15:59:36 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/19 17:06:12 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ char	*get_home(t_env **env_head, t_cmd_table *cmd_table)
 		ret = iter->value;
 	return (ret);
 }
-
 
 static char	*find_right_path(char **arg, t_env **env_head, t_cmd_table *cmd_tab)
 {
