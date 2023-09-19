@@ -36,8 +36,8 @@ static void	redirect_error(char *file)
 
 int	redirect_input(t_redirect *redirect_arr, int redirect_count)
 {
-	int		in_file;
-	int		i;
+	int	in_file;
+	int	i;
 
 	in_file = 0;
 	i = 0;
@@ -73,6 +73,8 @@ int	redirect_output(t_redirect *red, int red_count)
 			out_file = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		else if (red[i].type == APPEND)
 			out_file = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (out_file == -1)
+			redirect_error(file);
 		i++;
 	}
 	if (out_file == 0)

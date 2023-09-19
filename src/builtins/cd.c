@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:48:24 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/18 17:19:29 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/19 15:59:36 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ char	*get_home(t_env **env_head, t_cmd_table *cmd_table)
 	return (ret);
 }
 
-//uses envp from seperate int main -> no other envp yet
 
 static char	*find_right_path(char **arg, t_env **env_head, t_cmd_table *cmd_tab)
 {
@@ -58,8 +57,8 @@ static char	*find_right_path(char **arg, t_env **env_head, t_cmd_table *cmd_tab)
 	path = NULL;
 	if (arg[1] == NULL)
 		path = get_home(env_head, cmd_tab);
-	else if (ft_strncmp(arg[1], "~", sizeof(arg[1])) == 0)
-		path = cmd_tab->home;
+	else if (arg[1][0] == '~')
+		path = ft_strjoin(cmd_tab->home, arg[1] + 1);
 	else
 		path = arg[1];
 	return (path);
