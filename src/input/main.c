@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:10:05 by sschelti          #+#    #+#             */
-/*   Updated: 2023/09/18 17:07:23 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/19 13:29:06 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ int	main(int argc, char **argv, char **envp)
 	t_token		*token_head;
 	t_cmd_table	*cmd_table;
 
-	argc++;
 	argv++;
 	token_head = NULL;
 	cmd_table = init_cmd_table(&token_head, envp);
+	if (argc != 1)
+		return (printf("can't accept multiple arguments\n"), 1);
 	while (1)
 	{
 		sign_init();
