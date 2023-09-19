@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 15:39:26 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/18 17:18:42 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/19 11:48:22 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_env	*env_lstnew(char *s)
 
 int	lst_size(t_env **env_head)
 {
-	int	size;
+	int		size;
 	t_env	*env;
 
 	size = 0;
