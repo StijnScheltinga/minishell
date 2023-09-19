@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:36:53 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/15 19:15:42 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/19 15:30:12 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	*get_right_path(char **paths, char **cmd)
 
 	i = 0;
 	ret = NULL;
+	if (!paths)
+		return (ft_strdup(cmd[0]));
 	while (paths[i])
 	{
 		ret = ft_strjoin_with_char(paths[i], cmd[0], '/');
@@ -33,8 +35,7 @@ char	*get_right_path(char **paths, char **cmd)
 		free(ret);
 		i++;
 	}
-	ret = ft_strdup(cmd[0]);
-	return (ret);
+	return (ft_strdup(cmd[0]));
 }
 
 char	*get_paths(char **envp)
@@ -64,28 +65,22 @@ static void	free_envp(char **envp)
 	free(envp);
 }
 
-static void	path_not_found(char *cmd)
-{
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-	exit(127);
-}
-
 void	ft_execve(char **cmd, t_env **env_head)
 {
 	char	**envp;
 	char	*path;
-	char	**paths;
+	char	**splitted_paths;
 	char	*cmdpath;
 
 	if (!cmd[0])
 		exit(0);
+	path = NULL;
+	splitted_paths = NULL;
 	envp = linked_list_to_double_array(env_head);
 	path = get_paths(envp);
-	if (!path)
-		path_not_found(cmd[0]);
-	paths = ft_split(path + 5, ':');
-	cmdpath = get_right_path(paths, cmd);
+	if (path)
+		splitted_paths = ft_split(path + 5, ':');
+	cmdpath = get_right_path(splitted_paths, cmd);
 	execve(cmdpath, cmd, envp);
 	free(cmdpath);
 	free_envp(envp);
