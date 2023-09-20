@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:48:24 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/19 17:06:12 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/20 01:27:47 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,6 @@
 
 #include <errno.h>
 #include <string.h>
-
-static void	cd_error_msg(t_cmd_table *cmd_table, char *arg, char *error_msg)
-{
-	ft_putstr_fd(arg, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putstr_fd(error_msg, STDERR_FILENO);
-	ft_putstr_fd("\n", STDERR_FILENO);
-	cmd_table->latest_exit_code = 1;
-}
 
 char	*get_home(t_env **env_head, t_cmd_table *cmd_table)
 {
@@ -89,17 +80,13 @@ void	cd(char **arg, t_env **env_head, t_cmd_table *cmd_table)
 {
 	char	*path;
 
-	if (arg[1])
+	path = NULL;
+	if (arg[1] && arg[2])
 	{
-		if (arg[2])
-		{
-			cd_error_msg(cmd_table, arg[0], "too many arguments");
-			return ;
-		}
+		cd_error_msg(cmd_table, arg[0], "too many arguments");
+		return ;
 	}
 	path = find_right_path(arg, env_head, cmd_table);
-	if (!path)
-		return ;
 	change_env_pwd(env_head, "OLDPWD");
 	if (chdir(path))
 		cd_error_msg(cmd_table, arg[1], strerror(errno));
@@ -108,4 +95,6 @@ void	cd(char **arg, t_env **env_head, t_cmd_table *cmd_table)
 		change_env_pwd(env_head, "PWD");
 		cmd_table->latest_exit_code = 0;
 	}
+	if (arg[1] && arg[1][0] == '~')
+		free(path);
 }

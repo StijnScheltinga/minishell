@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:27:04 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/08/31 18:09:43 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/09/20 01:25:40 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,13 @@ void	execve_error(char *cmd)
 		exit(126);
 	}
 	exit(1);
+}
+
+void	cd_error_msg(t_cmd_table *cmd_table, char *arg, char *error_msg)
+{
+	ft_putstr_fd(arg, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(error_msg, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	cmd_table->latest_exit_code = 1;
 }
