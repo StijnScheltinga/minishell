@@ -37,25 +37,27 @@ static void	redirect_error(char *file)
 
 int	redirect_input(t_redirect *redirect_arr, int redirect_count)
 {
-	int	in_file;
+	int	in_fd;
+	int	in_count;
 	int	i;
 
-	in_file = 0;
-	i = 0;
-	while (i < redirect_count)
+	in_fd = 0;
+	i = -1;
+	in_count = count_red(redirect_arr, redirect_count, INFILE, INFILE);
+	if (!in_count)
+		return (0);
+	while (++i < redirect_count)
 	{
 		if (redirect_arr[i].type == INFILE)
 		{
-			in_file = open(redirect_arr[i].file_name, O_RDONLY);
-			if (in_file == -1)
+			in_fd = open(redirect_arr[i].file_name, O_RDONLY);
+			if (in_fd == -1)
 				redirect_error(redirect_arr[i].file_name);
+			if (in_fd && !del_is_input(redirect_arr, redirect_count))
+				dup2(in_fd, STDIN_FILENO);
+			close(in_fd);
 		}
-		i++;
 	}
-	if (in_file == 0 && !del_is_input(redirect_arr, redirect_count))
-		return (0);
-	if (!del_is_input(redirect_arr, redirect_count))
-		dup2(in_file, STDIN_FILENO);
 	return (1);
 }
 
@@ -78,14 +80,13 @@ int	redirect_output(t_redirect *red, int red_count)
 			out_fd = open(red[i].file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (out_fd == -1)
 			redirect_error(red[i].file_name);
-		if (out_fd && --out_count > 0)
+		if (out_fd)
 		{
+			dup2(out_fd, STDOUT_FILENO);
 			close(out_fd);
 			out_fd = 0;
 		}
 	}
-	dup2(out_fd, STDOUT_FILENO);
-	close(out_fd);
 	return (1);
 }
 
