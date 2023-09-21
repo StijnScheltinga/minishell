@@ -13,6 +13,7 @@
 #include "../../inc/redirect.h"
 #include "../../inc/delimiter.h"
 #include "../../inc/pipes.h"
+#include "../../inc/execute.h"
 
 #include <fcntl.h>
 #include <errno.h>
@@ -60,30 +61,35 @@ int	redirect_input(t_redirect *redirect_arr, int redirect_count)
 
 int	redirect_output(t_redirect *red, int red_count)
 {
-	int		out_file;
-	int		i;
-	char	*file;
+	int	out_fd;
+	int	out_count;
+	int	i;
 
-	out_file = 0;
-	i = 0;
-	while (i < red_count)
-	{
-		file = red[i].file_name;
-		if (red[i].type == OUTFILE)
-			out_file = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		else if (red[i].type == APPEND)
-			out_file = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (out_file == -1)
-			redirect_error(file);
-		i++;
-	}
-	if (out_file == 0)
+	out_fd = 0;
+	i = -1;
+	out_count = count_red(red, red_count, OUTFILE, APPEND);
+	if (!out_count)
 		return (0);
-	dup2(out_file, STDOUT_FILENO);
+	while (++i < red_count)
+	{
+		if (red[i].type == OUTFILE)
+			out_fd = open(red[i].file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (red[i].type == APPEND)
+			out_fd = open(red[i].file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (out_fd == -1)
+			redirect_error(red[i].file_name);
+		if (out_fd && --out_count > 0)
+		{
+			close(out_fd);
+			out_fd = 0;
+		}
+	}
+	dup2(out_fd, STDOUT_FILENO);
+	close(out_fd);
 	return (1);
 }
 
-int	redirect_child(t_cmd_table *cmd_table, int cmd_i)
+void	redirect_child(t_cmd_table *cmd_table, int cmd_i)
 {
 	t_redirect	*red;
 	int			fd_delimiter;
@@ -100,7 +106,6 @@ int	redirect_child(t_cmd_table *cmd_table, int cmd_i)
 		redirect_middle_cmd(cmd_table, &cmd_table->cmd_arr[cmd_i], cmd_i);
 	else
 		redirect_last_cmd(cmd_table, &cmd_table->cmd_arr[cmd_i]);
-	return (0);
 }
 
 void	redirect_single_child(t_cmd_table *cmd_table)

@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:11:48 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/17 14:36:47 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/21 14:06:26 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 #include <limits.h>
 
-#define NUMERIC 0
-#define TOO_MANY 1
+#define READ 0
+#define WRITE 1
+#define NUMERIC 2
+#define TOO_MANY 3
 
 static void	exit_error(char *s, int error)
 {
@@ -24,7 +26,7 @@ static void	exit_error(char *s, int error)
 		ft_putstr_fd("exit\nexit: ", STDERR_FILENO);
 		ft_putstr_fd(s, STDERR_FILENO);
 		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-		exit(255);
+		exit(2);
 	}
 	if (error == TOO_MANY)
 	{
@@ -99,8 +101,10 @@ static long long	ll_atoi(char *s)
 	return (val * sign);
 }
 
-void	ms_exit(char **arg, t_cmd_table *cmd_table)
+void	ms_exit(char **arg, t_cmd_table *cmd_table, int io[2])
 {
+	close(io[READ]);
+	close(io[WRITE]);
 	if (!arg[1])
 	{
 		ft_putstr_fd("exit\n", STDERR_FILENO);

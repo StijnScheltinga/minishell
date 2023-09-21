@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delimiter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:59:18 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/18 14:13:15 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/09/21 15:03:14 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <readline/readline.h>
 #include <stdbool.h>
 
-static int	delimiter_count(t_redirect *redirect_arr, int redirect_count)
+int	delimiter_count(t_redirect *redirect_arr, int redirect_count)
 {
 	int	i;
 	int	del_count;
@@ -80,6 +80,8 @@ int	delimiter(t_redirect *redir_arr, int redir_n, t_cmd_table *cmd_table)
 
 	sign_delimiter();
 	del_count = delimiter_count(redir_arr, redir_n);
+	if (!del_count)
+		return (0);
 	if (pipe(fd) == -1)
 		exit(EXIT_FAILURE);
 	i = 0;
@@ -90,15 +92,17 @@ int	delimiter(t_redirect *redir_arr, int redir_n, t_cmd_table *cmd_table)
 		i++;
 	}
 	if (!del_is_input(redir_arr, redir_n))
-		return (0);
+		return (close_one_pipe(fd));
 	return (dup_and_close(fd));
 }
 
-void	delimiter_single_builtin(t_cmd_table *cmd_table)
+void	delimiter_single_builtin(t_cmd_table *cmd_table, int io[2])
 {
 	t_redirect	*redirect_arr;
 	int			i;
 
+	close(io[READ]);
+	close(io[WRITE]);
 	sign_delimiter();
 	redirect_arr = cmd_table->cmd_arr[0].redirect_arr;
 	i = 0;
