@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:40:51 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/15 19:17:16 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/21 14:08:00 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	execute_with_child(t_cmd_table *cmd_table, int cmd_i)
 	sign_child();
 	redirect_child(cmd_table, cmd_i);
 	if (is_builtin(cmd_table->cmd_arr[cmd_i].single_cmd[0]))
-		execute_builtin(cmd_table, cmd_i);
+		execute_builtin(cmd_table, cmd_i, 0);
 	ft_execve(cmd, &cmd_table->env);
 }
 
@@ -79,16 +79,9 @@ void	execute_single_cmd(t_cmd_table *cmd_table)
 
 void	execute(t_cmd_table *cmd_table)
 {
-	int	stdin;
-	int	stdout;
-
-	stdin = dup(STDIN_FILENO);
-	stdout = dup(STDOUT_FILENO);
 	sign_ignore();
 	if (cmd_table->cmd_count == 1)
 		execute_single_cmd(cmd_table);
 	else
 		execute_multiple_cmd(cmd_table);
-	dup2(stdin, STDIN_FILENO);
-	dup2(stdout, STDOUT_FILENO);
 }

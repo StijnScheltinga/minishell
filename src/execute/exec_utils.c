@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:44:06 by alex              #+#    #+#             */
-/*   Updated: 2023/09/15 19:19:05 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/21 17:23:13 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 #include <sys/types.h>
 #include <sys/wait.h>
+
+#define READ 0
+#define WRITE 1
 
 void	create_pid_array(t_cmd_table *cmd_table)
 {
@@ -43,4 +46,28 @@ void	wait_for_children(t_cmd_table *cmd_table)
 	while (i < cmd_table->cmd_count)
 		waitpid(cmd_table->pids[i++], &status, 0);
 	cmd_table->latest_exit_code = WEXITSTATUS(status);
+}
+
+int	count_red(t_redirect *red, int red_count, t_type type1, t_type type2)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (i < red_count)
+	{
+		if (red[i].type == type1 || red[i].type == type2)
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+void	reset_stdin_stdout(int io[2])
+{
+	dup2(io[READ], STDIN_FILENO);
+	dup2(io[WRITE], STDOUT_FILENO);
+	close(io[READ]);
+	close(io[WRITE]);
 }

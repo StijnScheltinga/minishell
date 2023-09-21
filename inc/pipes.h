@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 18:45:11 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/17 14:33:26 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/20 16:45:58 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ void	redirect_last_cmd(t_cmd_table *cmd_table, t_command *cmd);
 
 void	close_pipes(t_cmd_table *cmd_table, int pipe_index, int pipe_to_close);
 int		dup_and_close(int fd[2]);
+int 	close_one_pipe(int fd[2]);
 
 #endif

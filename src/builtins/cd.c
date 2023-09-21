@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:48:24 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/20 01:27:47 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/21 13:58:06 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	change_env_pwd(t_env **env_head, char *pwd)
 	char	buffer[FILENAME_MAX];
 
 	iter = *env_head;
-	getcwd(buffer, FILENAME_MAX);
+	if (!getcwd(buffer, FILENAME_MAX))
+		return ;
 	while (iter)
 	{
 		if (!ft_strncmp(iter->variable, pwd, ft_strlen(pwd) + 1))
