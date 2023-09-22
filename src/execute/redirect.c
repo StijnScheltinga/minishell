@@ -20,8 +20,9 @@
 #include <unistd.h>
 #include <stdbool.h>
 
-static void	redirect_error(char *file)
+static void	redirect_error(t_cmd_table *cmd_tab, char *file)
 {
+	close_all_pipes(cmd_tab);
 	if (errno == ENOENT)
 	{
 		ft_putstr_fd(file, STDERR_FILENO);
@@ -35,25 +36,23 @@ static void	redirect_error(char *file)
 	exit(1);
 }
 
-int	redirect_input(t_redirect *redirect_arr, int redirect_count)
+int	redirect_input(t_cmd_table *cmd_tab, t_redirect *red, int red_count)
 {
 	int	in_fd;
-	int	in_count;
 	int	i;
 
 	in_fd = 0;
 	i = -1;
-	in_count = count_red(redirect_arr, redirect_count, INFILE, INFILE);
-	if (!in_count)
+	if (!count_red(red, red_count, INFILE, INFILE))
 		return (0);
-	while (++i < redirect_count)
+	while (++i < red_count)
 	{
-		if (redirect_arr[i].type == INFILE)
+		if (red[i].type == INFILE)
 		{
-			in_fd = open(redirect_arr[i].file_name, O_RDONLY);
+			in_fd = open(red[i].file_name, O_RDONLY);
 			if (in_fd == -1)
-				redirect_error(redirect_arr[i].file_name);
-			if (in_fd && !del_is_input(redirect_arr, redirect_count))
+				redirect_error(cmd_tab, red[i].file_name);
+			if (in_fd && !del_is_input(red, red_count))
 				dup2(in_fd, STDIN_FILENO);
 			close(in_fd);
 		}
@@ -61,16 +60,14 @@ int	redirect_input(t_redirect *redirect_arr, int redirect_count)
 	return (1);
 }
 
-int	redirect_output(t_redirect *red, int red_count)
+int	redirect_output(t_cmd_table *cmd_tab, t_redirect *red, int red_count)
 {
 	int	out_fd;
-	int	out_count;
 	int	i;
 
 	out_fd = 0;
 	i = -1;
-	out_count = count_red(red, red_count, OUTFILE, APPEND);
-	if (!out_count)
+	if (!count_red(red, red_count, OUTFILE, APPEND))
 		return (0);
 	while (++i < red_count)
 	{
@@ -79,7 +76,7 @@ int	redirect_output(t_redirect *red, int red_count)
 		if (red[i].type == APPEND)
 			out_fd = open(red[i].file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (out_fd == -1)
-			redirect_error(red[i].file_name);
+			redirect_error(cmd_tab, red[i].file_name);
 		if (out_fd)
 		{
 			dup2(out_fd, STDOUT_FILENO);
@@ -122,6 +119,6 @@ void	redirect_single_child(t_cmd_table *cmd_table)
 	fd_delimiter = delimiter(redirect_arr, redirect_count, cmd_table);
 	if (fd_delimiter > 0)
 		dup2(fd_delimiter, STDIN_FILENO);
-	redirect_input(redirect_arr, redirect_count);
-	redirect_output(redirect_arr, redirect_count);
+	redirect_input(cmd_table, redirect_arr, redirect_count);
+	redirect_output(cmd_table, redirect_arr, redirect_count);
 }
