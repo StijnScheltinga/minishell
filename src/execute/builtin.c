@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:29:55 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/09/21 17:23:10 by alex             ###   ########.fr       */
+/*   Updated: 2023/09/22 14:05:56 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ void	builtin_single_cmd(t_cmd_table *cmd_table)
 			delimiter_single_builtin(cmd_table, io);
 		wait(NULL);
 	}
-	redirect_input(redirect_arr, redirect_count);
-	redirect_output(redirect_arr, redirect_count);
+	redirect_input(cmd_table, redirect_arr, redirect_count);
+	redirect_output(cmd_table, redirect_arr, redirect_count);
 	execute_builtin(cmd_table, 0, io);
 }
 
